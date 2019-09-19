@@ -5,12 +5,13 @@ import org.a3.mandarin.back.exception.ApiUnauthorizedException;
 import org.a3.mandarin.back.model.RESTfulResponse;
 import org.a3.mandarin.common.annotation.Permission;
 import org.a3.mandarin.common.aop.dao.repository.UserRepository;
+import org.a3.mandarin.common.entity.Role;
 import org.a3.mandarin.common.entity.User;
-import org.a3.mandarin.common.util.UserUtil;
 import org.a3.mandarin.common.enums.PermissionType;
 import org.a3.mandarin.common.enums.RoleType;
 import org.a3.mandarin.common.exception.PayException;
 import org.a3.mandarin.common.util.PayUtil;
+import org.a3.mandarin.common.util.RoleUtil;
 import org.a3.mandarin.common.util.ValidateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.Instant;
-import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/api")
@@ -55,8 +56,8 @@ public class ReaderController {
         }
 
         User user=new User(name, phoneNumber, email, Instant.now(), password);
+        user.getRoles().add(RoleUtil.readerRole);
         userRepository.save(user);
-        UserUtil.setRoleByUserId(user.getUserId(), RoleType.READER);
 
         session.setAttribute("userId", user.getUserId());
         response.addCookie(new Cookie("userId", user.getUserId().toString()));
@@ -75,12 +76,13 @@ public class ReaderController {
                                                         HttpSession session){
         // TODO: can librarian reset reader's password?
         Integer operatorUserId=(Integer) session.getAttribute("userId");
+        User operatorUser=userRepository.findById(operatorUserId).orElse(null);
         User targetUser=userRepository.findById(targetUserId).orElse(null);
 
         if (null == targetUser)
             throw new ApiNotFoundException("no such user");
 
-        List<RoleType> roles=UserUtil.getRolesByUserId(operatorUserId);
+        Set<Role> roles=operatorUser.getRoles();
         logger.debug("OPERATOR ID: "+operatorUserId.toString());
         logger.debug("TARGET ID: "+targetUserId.toString());
 
@@ -89,8 +91,8 @@ public class ReaderController {
         // admin can not use this function
 
         // so, only librarian and reader(self) can use it
-        if (!roles.contains(RoleType.LIBRARIAN) &&
-                !(roles.contains(RoleType.READER) && operatorUserId.equals(targetUserId)))
+        if (!roles.contains(RoleUtil.librarianRole) &&
+                !(roles.contains(RoleUtil.readerRole) && operatorUserId.equals(targetUserId)))
             throw new ApiUnauthorizedException("role validation not passed");
 
         validateUserInformation(password, phoneNumber, email, name, targetUser.getUserId());
@@ -117,7 +119,7 @@ public class ReaderController {
         if (null!=email && !ValidateUtil.validateEmail(email))
             throw new ApiNotFoundException("email is not available");
 
-        User tmpUser=null;
+        User tmpUser;
         if (null!=name) {
             tmpUser = userRepository.findByName(name);
             if (null != tmpUser && !tmpUser.getUserId().equals(userId))

@@ -5,11 +5,11 @@ import org.a3.mandarin.common.aop.dao.repository.UserRepository;
 import org.a3.mandarin.common.entity.Role;
 import org.a3.mandarin.common.entity.User;
 import org.a3.mandarin.common.enums.RoleType;
-import org.a3.mandarin.common.util.UserUtil;
+import org.a3.mandarin.common.util.RoleUtil;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 
 import java.time.Instant;
+import java.util.*;
 
 public class Initializer {
     private UserRepository userRepository;
@@ -29,23 +29,24 @@ public class Initializer {
         roleRepository.save(new Role(RoleType.READER.toString()));
         roleRepository.save(new Role(RoleType.LIBRARIAN.toString()));
         roleRepository.save(new Role(RoleType.ADMIN.toString()));
+        RoleUtil.initRoles();
     }
 
     private void generateMockData(){
         User librarian=new User("librarian", "1234", "1234@1234.com", Instant.now(), "passwd");
-        userRepository.saveAndFlush(librarian);
-        UserUtil.setRoleByUserId(librarian.getUserId(), RoleType.LIBRARIAN);
+        librarian.getRoles().add(RoleUtil.librarianRole);
+        userRepository.save(librarian);
 
         User admin=new User("admin", "2234", "2234@2234.com", Instant.now(), "passwd");
-        userRepository.saveAndFlush(admin);
-        UserUtil.setRoleByUserId(admin.getUserId(), RoleType.ADMIN);
+        admin.getRoles().add(RoleUtil.adminRole);
+        userRepository.save(admin);
 
         User reader1=new User("reader1", "3234", "3234@2234.com", Instant.now(), "passwd");
-        userRepository.saveAndFlush(reader1);
-        UserUtil.setRoleByUserId(reader1.getUserId(), RoleType.READER);
+        reader1.getRoles().add(RoleUtil.readerRole);
+        userRepository.save(reader1);
 
         User reader2=new User("reader2", "4234", "4234@2234.com", Instant.now(), "passwd");
-        userRepository.saveAndFlush(reader2);
-        UserUtil.setRoleByUserId(reader2.getUserId(), RoleType.READER);
+        reader2.getRoles().add(RoleUtil.readerRole);
+        userRepository.save(reader2);
     }
 }

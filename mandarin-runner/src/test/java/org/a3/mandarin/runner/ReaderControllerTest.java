@@ -46,7 +46,6 @@ public class ReaderControllerTest extends MandarinRunnerApplicationTests{
                 .andExpect(jsonPath("$.success").value(false));
 
         // librarian role
-        // should pass
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/api/reader/")
                 .param("name", "reader3")

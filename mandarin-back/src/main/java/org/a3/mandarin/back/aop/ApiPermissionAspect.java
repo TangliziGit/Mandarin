@@ -7,16 +7,13 @@ import org.a3.mandarin.common.aop.AbstractPermissonAspect;
 import org.a3.mandarin.common.aop.dao.repository.UserRepository;
 import org.a3.mandarin.common.entity.User;
 import org.a3.mandarin.common.enums.PermissionType;
-import org.a3.mandarin.common.util.UserUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -60,10 +57,11 @@ public class ApiPermissionAspect extends AbstractPermissonAspect {
         if (null == user)
             throw new ApiNotFoundException("no such user, please login again");
 
-        if (!checkPermission(permissionTypes, userId))
+        logger.info("ROLE TYPE: "+ user.getRoles().toString());
+
+        if (!checkPermission(permissionTypes, user))
             throw new ApiUnauthorizedException("permission error");
 
-        logger.info("ROLE TYPE: "+ UserUtil.getRolesByUserId(userId));
         logger.info("PERMISSION PASSED: "+request.getRequestURL().toString());
         return joinPoint.proceed();
     }
