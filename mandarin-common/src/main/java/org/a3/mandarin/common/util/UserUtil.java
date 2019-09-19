@@ -4,8 +4,10 @@ import org.a3.mandarin.common.aop.dao.repository.UserRepository;
 import org.a3.mandarin.common.enums.RoleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class UserUtil {
@@ -31,6 +33,8 @@ public class UserUtil {
     }
 
     public static List<RoleType> getRolesByUserId(Integer userId){
-        return userRepository.findRolesByUserId(userId);
+        return userRepository.findRolesByUserId(userId).stream()
+                .map(RoleType::valueOf)
+                .collect(Collectors.toList());
     }
 }

@@ -19,7 +19,7 @@ public class User {
     @Column(columnDefinition = "VARCHAR(40)", nullable = false, unique = true)
     private String email;
 
-    @Column(columnDefinition = "VARCHAR(40)", nullable = false, unique = true)
+    @Column(columnDefinition = "VARCHAR(40)", nullable = false)
     private String passwordHash;
 
     @Column(nullable = false)
