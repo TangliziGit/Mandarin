@@ -2,6 +2,8 @@ package org.a3.mandarin.common.entity;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -25,6 +27,12 @@ public class User {
     @Column(nullable = false)
     private Instant signupTime;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "roleId"))
+    private Set<Role> roles=new HashSet<>();
+
     public User() {}
 
     public User(String name, String phoneNumber, String email, Instant signupTime, String password) {
@@ -46,13 +54,19 @@ public class User {
                 '}';
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     public Boolean verifyPassword(String password){
-        // TODO
         return this.passwordHash.equals(password);
     }
 
     public void changePassword(String password){
-        // TODO
         this.passwordHash=password;
     }
 
