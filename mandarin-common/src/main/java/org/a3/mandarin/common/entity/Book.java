@@ -18,11 +18,15 @@ public class Book {
 
     @OneToMany(mappedBy = "book")
     @JsonIgnore
-    private List<ReservationHistory> reservationHistories=new ArrayList<>();
+    private List<ReservingHistory> reservationHistories=new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "book_description_isbn", referencedColumnName = "ISBN")
     private BookDescription bookDescription;
+
+    @OneToOne(mappedBy = "book")
+    @JsonIgnore
+    private DeletingHistory deletingHistory;
 
     public Book() {}
 
@@ -30,11 +34,11 @@ public class Book {
         this.ISBN = ISBN;
     }
 
-    public List<ReservationHistory> getReservationHistories() {
+    public List<ReservingHistory> getReservationHistories() {
         return reservationHistories;
     }
 
-    public void setReservationHistories(List<ReservationHistory> reservationHistories) {
+    public void setReservationHistories(List<ReservingHistory> reservationHistories) {
         this.reservationHistories = reservationHistories;
     }
 

@@ -5,7 +5,7 @@ import org.a3.mandarin.back.exception.ApiUnauthorizedException;
 import org.a3.mandarin.back.model.RESTfulResponse;
 import org.a3.mandarin.common.annotation.Permission;
 import org.a3.mandarin.common.dao.repository.UserRepository;
-import org.a3.mandarin.common.entity.ReservationHistory;
+import org.a3.mandarin.common.entity.ReservingHistory;
 import org.a3.mandarin.common.entity.Role;
 import org.a3.mandarin.common.entity.User;
 import org.a3.mandarin.common.enums.PermissionType;
@@ -96,15 +96,15 @@ public class ReaderController {
     @ResponseBody
     @Transactional
     @Permission({PermissionType.READER, PermissionType.LIBRARIAN})
-    public ResponseEntity<RESTfulResponse<List<ReservationHistory>>>  getReaderReservationHistories(@PathVariable("id") Integer targetUserId,
-                                                                                                    HttpSession session){
+    public ResponseEntity<RESTfulResponse<List<ReservingHistory>>>  getReaderReservationHistories(@PathVariable("id") Integer targetUserId,
+                                                                                                  HttpSession session){
         Integer operatorUserId=(Integer) session.getAttribute("userId");
         User operatorUser=userRepository.findById(operatorUserId).orElse(null);
         User targetUser=userRepository.findById(targetUserId).orElse(null);
 
         validateOperatorPermission(targetUser, operatorUser);
 
-        RESTfulResponse<List<ReservationHistory>> response=RESTfulResponse.ok();
+        RESTfulResponse<List<ReservingHistory>> response=RESTfulResponse.ok();
         response.setData(targetUser.getReservationHistories());
 
         return ResponseEntity.ok(response);

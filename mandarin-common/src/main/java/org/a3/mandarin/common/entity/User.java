@@ -32,9 +32,14 @@ public class User {
     private Instant signupTime;
 
     @OneToMany(mappedBy = "reader")
-    @OrderBy("reserveTime DESC")
+    @OrderBy("reservingTime DESC")
     @JsonIgnore
-    private List<ReservationHistory> reservationHistories;
+    private List<ReservingHistory> reservationHistories;
+
+    @OneToMany(mappedBy = "librarian")
+    @OrderBy("deletingTime DESC")
+    @JsonIgnore
+    private List<DeletingHistory> deletingHistories;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
@@ -63,11 +68,11 @@ public class User {
                 '}';
     }
 
-    public List<ReservationHistory> getReservationHistories() {
+    public List<ReservingHistory> getReservationHistories() {
         return reservationHistories;
     }
 
-    public void setReservationHistories(List<ReservationHistory> reservationHistories) {
+    public void setReservationHistories(List<ReservingHistory> reservationHistories) {
         this.reservationHistories = reservationHistories;
     }
 

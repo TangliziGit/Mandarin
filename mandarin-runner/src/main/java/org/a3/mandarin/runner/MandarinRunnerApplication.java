@@ -17,6 +17,7 @@ public class MandarinRunnerApplication {
                 MandarinFrontApplication.class
         }, args);
 
-        (new Initializer(applicationContext)).init();
+        Initializer initializer=new Initializer(applicationContext);
+        initializer.init();
     }
 }

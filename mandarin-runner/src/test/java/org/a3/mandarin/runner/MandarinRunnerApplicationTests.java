@@ -2,6 +2,7 @@ package org.a3.mandarin.runner;
 
 import org.a3.mandarin.back.MandarinBackApplication;
 import org.a3.mandarin.common.MandarinCommonApplication;
+import org.a3.mandarin.common.dao.repository.BookRepository;
 import org.a3.mandarin.front.MandarinFrontApplication;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -13,6 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import javax.annotation.Resource;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -30,6 +33,9 @@ public class MandarinRunnerApplicationTests {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
+
+    @Resource
+    protected BookRepository bookRepository;
 
     @Before
     public void setup() throws Exception{

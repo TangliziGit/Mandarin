@@ -8,7 +8,6 @@ import org.springframework.context.ApplicationContext;
 
 import java.time.Instant;
 
-// can not be public
 class Initializer {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
@@ -16,6 +15,7 @@ class Initializer {
     private CategoryRepository categoryRepository;
     private BookDescriptionRepository bookDescriptionRepository;
     private ReservationHistoryRepository reservationHistoryRepository;
+    private DeletingHistoryRepository deletingHistoryRepository;
 
     Initializer(ApplicationContext applicationContext){
         this.roleRepository=applicationContext.getBean(RoleRepository.class);
@@ -24,9 +24,10 @@ class Initializer {
         this.categoryRepository=applicationContext.getBean(CategoryRepository.class);
         this.bookDescriptionRepository=applicationContext.getBean(BookDescriptionRepository.class);
         this.reservationHistoryRepository=applicationContext.getBean(ReservationHistoryRepository.class);
+        this.deletingHistoryRepository=applicationContext.getBean(DeletingHistoryRepository.class);
     }
 
-    private void init(){
+    void init(){
         generateInitialData();
         generateMockUsers();
         generateMockBooks();
@@ -88,9 +89,12 @@ class Initializer {
     private void generateMockUserBookRelation(){
         Book book=bookRepository.findById(1).orElse(null);
         User reader=userRepository.findByName("reader1");
+        User librarian=userRepository.findByName("librarian");
 
-        ReservationHistory reservationHistory=new ReservationHistory(book, reader, Instant.now(), false);
+        ReservingHistory reservingHistory=new ReservingHistory(book, reader, Instant.now(), false);
+        DeletingHistory deletingHistory=new DeletingHistory(book, librarian, Instant.now());
 
-        reservationHistoryRepository.save(reservationHistory);
+        reservationHistoryRepository.save(reservingHistory);
+        deletingHistoryRepository.save(deletingHistory);
     }
 }

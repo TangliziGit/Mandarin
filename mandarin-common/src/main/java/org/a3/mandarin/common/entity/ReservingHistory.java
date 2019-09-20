@@ -6,7 +6,7 @@ import java.time.Instant;
 
 @Entity
 @Table
-public class ReservationHistory {
+public class ReservingHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer reservationId;
@@ -20,17 +20,17 @@ public class ReservationHistory {
     private User reader;
 
     @Column(nullable = false)
-    private Instant reserveTime;
+    private Instant reservingTime;
 
     @Column(nullable = false)
     private Boolean fetched;
 
-    public ReservationHistory() {}
+    public ReservingHistory() {}
 
-    public ReservationHistory(Book book, User reader, Instant reserveTime, Boolean fetched) {
+    public ReservingHistory(Book book, User reader, Instant reservingTime, Boolean fetched) {
         this.book=book;
         this.reader = reader;
-        this.reserveTime = reserveTime;
+        this.reservingTime = reservingTime;
         this.fetched = fetched;
     }
 
@@ -56,12 +56,12 @@ public class ReservationHistory {
         this.reader = reader;
     }
 
-    public Instant getReserveTime() {
-        return reserveTime;
+    public Instant getReservingTime() {
+        return reservingTime;
     }
 
-    public void setReserveTime(Instant reserveTime) {
-        this.reserveTime = reserveTime;
+    public void setReservingTime(Instant reservingTime) {
+        this.reservingTime = reservingTime;
     }
 
 }
