@@ -1,8 +1,11 @@
 package org.a3.mandarin.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,10 +25,16 @@ public class User {
     private String email;
 
     @Column(columnDefinition = "VARCHAR(40)", nullable = false)
+    @JsonIgnore
     private String passwordHash;
 
     @Column(nullable = false)
     private Instant signupTime;
+
+    @OneToMany(mappedBy = "reader")
+    @OrderBy("reserveTime DESC")
+    @JsonIgnore
+    private List<ReservationHistory> reservationHistories;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
@@ -52,6 +61,14 @@ public class User {
                 ", email='" + email + '\'' +
                 ", signupTime=" + signupTime +
                 '}';
+    }
+
+    public List<ReservationHistory> getReservationHistories() {
+        return reservationHistories;
+    }
+
+    public void setReservationHistories(List<ReservationHistory> reservationHistories) {
+        this.reservationHistories = reservationHistories;
     }
 
     public Set<Role> getRoles() {

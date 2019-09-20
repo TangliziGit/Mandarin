@@ -1,6 +1,6 @@
 package org.a3.mandarin.common.util;
 
-import org.a3.mandarin.common.aop.dao.repository.RoleRepository;
+import org.a3.mandarin.common.dao.repository.RoleRepository;
 import org.a3.mandarin.common.entity.Role;
 import org.a3.mandarin.common.enums.PermissionType;
 import org.a3.mandarin.common.enums.RoleType;

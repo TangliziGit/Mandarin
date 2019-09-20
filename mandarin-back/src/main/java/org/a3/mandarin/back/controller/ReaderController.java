@@ -4,11 +4,11 @@ import org.a3.mandarin.back.exception.ApiNotFoundException;
 import org.a3.mandarin.back.exception.ApiUnauthorizedException;
 import org.a3.mandarin.back.model.RESTfulResponse;
 import org.a3.mandarin.common.annotation.Permission;
-import org.a3.mandarin.common.aop.dao.repository.UserRepository;
+import org.a3.mandarin.common.dao.repository.UserRepository;
+import org.a3.mandarin.common.entity.ReservationHistory;
 import org.a3.mandarin.common.entity.Role;
 import org.a3.mandarin.common.entity.User;
 import org.a3.mandarin.common.enums.PermissionType;
-import org.a3.mandarin.common.enums.RoleType;
 import org.a3.mandarin.common.exception.PayException;
 import org.a3.mandarin.common.util.PayUtil;
 import org.a3.mandarin.common.util.RoleUtil;
@@ -26,6 +26,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -79,22 +80,7 @@ public class ReaderController {
         User operatorUser=userRepository.findById(operatorUserId).orElse(null);
         User targetUser=userRepository.findById(targetUserId).orElse(null);
 
-        if (null == targetUser)
-            throw new ApiNotFoundException("no such user");
-
-        Set<Role> roles=operatorUser.getRoles();
-        logger.debug("OPERATOR ID: "+operatorUserId.toString());
-        logger.debug("TARGET ID: "+targetUserId.toString());
-
-        // librarian can update reader's information
-        // reader can update themselves
-        // admin can not use this function
-
-        // so, only librarian and reader(self) can use it
-        if (!roles.contains(RoleUtil.librarianRole) &&
-                !(roles.contains(RoleUtil.readerRole) && operatorUserId.equals(targetUserId)))
-            throw new ApiUnauthorizedException("role validation not passed");
-
+        validateOperatorPermission(targetUser, operatorUser);
         validateUserInformation(password, phoneNumber, email, name, targetUser.getUserId());
 
         if (null!=email) targetUser.setEmail(email);
@@ -104,6 +90,36 @@ public class ReaderController {
 
         userRepository.save(targetUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(RESTfulResponse.ok());
+    }
+
+    @GetMapping("/reader/{id}/history/reservation")
+    @ResponseBody
+    @Transactional
+    @Permission({PermissionType.READER, PermissionType.LIBRARIAN})
+    public ResponseEntity<RESTfulResponse<List<ReservationHistory>>>  getReaderReservationHistories(@PathVariable("id") Integer targetUserId,
+                                                                                                    HttpSession session){
+        Integer operatorUserId=(Integer) session.getAttribute("userId");
+        User operatorUser=userRepository.findById(operatorUserId).orElse(null);
+        User targetUser=userRepository.findById(targetUserId).orElse(null);
+
+        validateOperatorPermission(targetUser, operatorUser);
+
+        RESTfulResponse<List<ReservationHistory>> response=RESTfulResponse.ok();
+        response.setData(targetUser.getReservationHistories());
+
+        return ResponseEntity.ok(response);
+    }
+
+    private void validateOperatorPermission(User targetUser, User operatorUser){
+        // only librarian and reader(self) can pass validation
+        if (null == targetUser)
+            throw new ApiNotFoundException("no such user");
+
+        Set<Role> roles=operatorUser.getRoles();
+
+        if (!roles.contains(RoleUtil.librarianRole) &&
+                !(roles.contains(RoleUtil.readerRole) && operatorUser.getUserId().equals(targetUser.getUserId())))
+            throw new ApiUnauthorizedException("role validation not passed");
     }
 
     private void validateUserInformation(String password, String phoneNumber, String email, String name, Integer userId) throws ApiNotFoundException{

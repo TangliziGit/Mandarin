@@ -2,7 +2,7 @@ package org.a3.mandarin.back.controller;
 
 import org.a3.mandarin.back.exception.ApiNotFoundException;
 import org.a3.mandarin.back.model.RESTfulResponse;
-import org.a3.mandarin.common.aop.dao.repository.UserRepository;
+import org.a3.mandarin.common.dao.repository.UserRepository;
 import org.a3.mandarin.common.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

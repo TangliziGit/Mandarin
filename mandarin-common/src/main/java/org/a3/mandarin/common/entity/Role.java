@@ -1,5 +1,7 @@
 package org.a3.mandarin.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -16,6 +18,7 @@ public class Role {
     private String roleName;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<User> users=new HashSet<>();
 
     public Role() {}

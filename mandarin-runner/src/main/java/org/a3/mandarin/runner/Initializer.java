@@ -1,28 +1,36 @@
 package org.a3.mandarin.runner;
 
-import org.a3.mandarin.common.aop.dao.repository.RoleRepository;
-import org.a3.mandarin.common.aop.dao.repository.UserRepository;
-import org.a3.mandarin.common.entity.Role;
-import org.a3.mandarin.common.entity.User;
+import org.a3.mandarin.common.dao.repository.*;
+import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.RoleType;
 import org.a3.mandarin.common.util.RoleUtil;
 import org.springframework.context.ApplicationContext;
 
 import java.time.Instant;
-import java.util.*;
 
-public class Initializer {
+// can not be public
+class Initializer {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
+    private BookRepository bookRepository;
+    private CategoryRepository categoryRepository;
+    private BookDescriptionRepository bookDescriptionRepository;
+    private ReservationHistoryRepository reservationHistoryRepository;
 
-    public Initializer(ApplicationContext applicationContext){
+    Initializer(ApplicationContext applicationContext){
         this.roleRepository=applicationContext.getBean(RoleRepository.class);
         this.userRepository=applicationContext.getBean(UserRepository.class);
+        this.bookRepository=applicationContext.getBean(BookRepository.class);
+        this.categoryRepository=applicationContext.getBean(CategoryRepository.class);
+        this.bookDescriptionRepository=applicationContext.getBean(BookDescriptionRepository.class);
+        this.reservationHistoryRepository=applicationContext.getBean(ReservationHistoryRepository.class);
     }
 
-    public void init(){
+    private void init(){
         generateInitialData();
-        generateMockData();
+        generateMockUsers();
+        generateMockBooks();
+        generateMockUserBookRelation();
     }
 
     private void generateInitialData(){
@@ -32,7 +40,7 @@ public class Initializer {
         RoleUtil.initRoles();
     }
 
-    private void generateMockData(){
+    private void generateMockUsers(){
         User librarian=new User("librarian", "1234", "1234@1234.com", Instant.now(), "passwd");
         librarian.getRoles().add(RoleUtil.librarianRole);
         userRepository.save(librarian);
@@ -48,5 +56,41 @@ public class Initializer {
         User reader2=new User("reader2", "4234", "4234@2234.com", Instant.now(), "passwd");
         reader2.getRoles().add(RoleUtil.readerRole);
         userRepository.save(reader2);
+    }
+
+    private void generateMockBooks(){
+        Category category1=new Category("category1");
+        Category category2=new Category("category2");
+
+        Book book11=new Book("123456");
+        Book book12=new Book("123456");
+        Book book2=new Book("223456");
+
+        BookDescription bookDescription1=new BookDescription("123456", "Book1", "Author1", 100, "F4-393-1510");
+        BookDescription bookDescription2=new BookDescription("223456", "Book2", "Author2", 120, "F4-393-1511");
+
+        bookDescription1.getBooks().add(book11);
+        bookDescription1.getBooks().add(book12);
+        bookDescription2.getBooks().add(book2);
+
+        bookDescription1.setCategory(category1);
+        bookDescription2.setCategory(category2);
+
+        categoryRepository.saveAndFlush(category1);
+        categoryRepository.saveAndFlush(category2);
+        bookRepository.saveAndFlush(book11);
+        bookRepository.saveAndFlush(book12);
+        bookRepository.saveAndFlush(book2);
+        bookDescriptionRepository.saveAndFlush(bookDescription1);
+        bookDescriptionRepository.saveAndFlush(bookDescription2);
+    }
+
+    private void generateMockUserBookRelation(){
+        Book book=bookRepository.findById(1).orElse(null);
+        User reader=userRepository.findByName("reader1");
+
+        ReservationHistory reservationHistory=new ReservationHistory(book, reader, Instant.now(), false);
+
+        reservationHistoryRepository.save(reservationHistory);
     }
 }
