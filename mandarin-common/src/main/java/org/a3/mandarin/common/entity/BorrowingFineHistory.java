@@ -1,5 +1,7 @@
 package org.a3.mandarin.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.Instant;
 
@@ -9,9 +11,6 @@ public class BorrowingFineHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer fineId;
-
-    @Column(nullable = false)
-    private Integer amount;
 
     @Column(nullable = false)
     private Boolean paid;
@@ -24,12 +23,12 @@ public class BorrowingFineHistory {
 
     @OneToOne
     @JoinColumn(name = "borrowing_history_id", referencedColumnName = "id")
+    @JsonIgnore
     private BorrowingHistory borrowingHistory;
 
     public BorrowingFineHistory() {}
 
-    public BorrowingFineHistory(Integer amount, Instant findStartTime) {
-        this.amount = amount;
+    public BorrowingFineHistory(Instant findStartTime) {
         this.findStartTime = findStartTime;
         this.findEndTime = null;
         this.paid = false;
@@ -37,14 +36,6 @@ public class BorrowingFineHistory {
 
     public Integer getFineId() {
         return fineId;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
     }
 
     public Boolean getPaid() {

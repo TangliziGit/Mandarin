@@ -1,6 +1,8 @@
 package org.a3.mandarin.common.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.Instant;
 
@@ -29,6 +31,7 @@ public class ReservingHistory {
 
     @ManyToOne
     @JoinColumn(name = "reader_id", referencedColumnName = "userId")
+    @JsonIgnore
     private User reader;
 
     @Column(nullable = false)

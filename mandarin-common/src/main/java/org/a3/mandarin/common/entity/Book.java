@@ -28,6 +28,10 @@ public class Book {
     @JsonIgnore
     private DeletingHistory deletingHistory;
 
+    @OneToMany(mappedBy = "book")
+    @JsonIgnore
+    private List<BorrowingHistory> borrowingHistories;
+
     public Book() {}
 
     public Book(String ISBN) {

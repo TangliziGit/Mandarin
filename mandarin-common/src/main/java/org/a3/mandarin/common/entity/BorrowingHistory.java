@@ -1,5 +1,6 @@
 package org.a3.mandarin.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.ibatis.annotations.One;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class BorrowingHistory {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    @JsonIgnore
     private User reader;
 
     @ManyToOne

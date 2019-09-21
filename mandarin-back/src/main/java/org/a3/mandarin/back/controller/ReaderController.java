@@ -5,9 +5,7 @@ import org.a3.mandarin.back.exception.ApiUnauthorizedException;
 import org.a3.mandarin.back.model.RESTfulResponse;
 import org.a3.mandarin.common.annotation.Permission;
 import org.a3.mandarin.common.dao.repository.UserRepository;
-import org.a3.mandarin.common.entity.ReservingHistory;
-import org.a3.mandarin.common.entity.Role;
-import org.a3.mandarin.common.entity.User;
+import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.PermissionType;
 import org.a3.mandarin.common.exception.PayException;
 import org.a3.mandarin.common.util.PayUtil;
@@ -92,12 +90,12 @@ public class ReaderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(RESTfulResponse.ok());
     }
 
-    @GetMapping("/reader/{id}/history/reservation")
+    @GetMapping("/reader/{id}/history/reserving")
     @ResponseBody
     @Transactional
     @Permission({PermissionType.READER, PermissionType.LIBRARIAN})
-    public ResponseEntity<RESTfulResponse<List<ReservingHistory>>>  getReaderReservationHistories(@PathVariable("id") Integer targetUserId,
-                                                                                                  HttpSession session){
+    public ResponseEntity<RESTfulResponse<List<ReservingHistory>>>  getReaderReservingHistories(@PathVariable("id") Integer targetUserId,
+                                                                                                HttpSession session){
         Integer operatorUserId=(Integer) session.getAttribute("userId");
         User operatorUser=userRepository.findById(operatorUserId).orElse(null);
         User targetUser=userRepository.findById(targetUserId).orElse(null);
@@ -105,7 +103,25 @@ public class ReaderController {
         validateOperatorPermission(targetUser, operatorUser);
 
         RESTfulResponse<List<ReservingHistory>> response=RESTfulResponse.ok();
-        response.setData(targetUser.getReservationHistories());
+        response.setData(targetUser.getReservingHistories());
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/reader/{id}/history/borrowing")
+    @ResponseBody
+    @Transactional
+    @Permission({PermissionType.READER, PermissionType.LIBRARIAN})
+    public ResponseEntity<RESTfulResponse<List<BorrowingHistory>>> getReaderBorrowingHistories(@PathVariable("id") Integer targetUserId,
+                                                                                               HttpSession session){
+        Integer operatorUserId=(Integer) session.getAttribute("userId");
+        User operatorUser=userRepository.findById(operatorUserId).orElse(null);
+        User targetUser=userRepository.findById(targetUserId).orElse(null);
+
+        validateOperatorPermission(targetUser, operatorUser);
+
+        RESTfulResponse<List<BorrowingHistory>> response=RESTfulResponse.ok();
+        response.setData(targetUser.getBorrowingHistories());
 
         return ResponseEntity.ok(response);
     }

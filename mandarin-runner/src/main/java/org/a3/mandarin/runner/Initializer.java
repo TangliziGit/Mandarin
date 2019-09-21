@@ -96,9 +96,10 @@ class Initializer {
         ReservingHistory reservingHistory=new ReservingHistory(book, reader, Instant.now());
         DeletingHistory deletingHistory=new DeletingHistory(book, librarian, Instant.now());
         BorrowingHistory borrowingHistory=new BorrowingHistory(book, reader, Instant.now());
-        BorrowingFineHistory borrowingFineHistory=new BorrowingFineHistory(100, Instant.now());
+        BorrowingFineHistory borrowingFineHistory=new BorrowingFineHistory(Instant.now());
 
         borrowingHistory.setBorrowingFineHistory(borrowingFineHistory);
+        borrowingFineHistory.setBorrowingHistory(borrowingHistory);
 
         reservationHistoryRepository.save(reservingHistory);
         deletingHistoryRepository.save(deletingHistory);

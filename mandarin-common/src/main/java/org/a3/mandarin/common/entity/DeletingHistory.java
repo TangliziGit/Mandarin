@@ -1,5 +1,7 @@
 package org.a3.mandarin.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.Instant;
 
@@ -12,6 +14,7 @@ public class DeletingHistory {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    @JsonIgnore
     private User librarian;
 
     @OneToOne

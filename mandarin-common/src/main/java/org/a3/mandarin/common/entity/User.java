@@ -1,6 +1,7 @@
 package org.a3.mandarin.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -32,14 +33,19 @@ public class User {
     private Instant signupTime;
 
     @OneToMany(mappedBy = "reader")
-    @OrderBy("reservingTime DESC")
+    @OrderBy("reservingStartTime DESC")
     @JsonIgnore
-    private List<ReservingHistory> reservationHistories;
+    private List<ReservingHistory> reservingHistories;
 
     @OneToMany(mappedBy = "librarian")
     @OrderBy("deletingTime DESC")
     @JsonIgnore
     private List<DeletingHistory> deletingHistories;
+
+    @OneToMany(mappedBy = "reader")
+    @OrderBy("borrowingStartTime DESC")
+    @JsonIgnore
+    private List<BorrowingHistory> borrowingHistories;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
@@ -68,12 +74,28 @@ public class User {
                 '}';
     }
 
-    public List<ReservingHistory> getReservationHistories() {
-        return reservationHistories;
+    public List<DeletingHistory> getDeletingHistories() {
+        return deletingHistories;
     }
 
-    public void setReservationHistories(List<ReservingHistory> reservationHistories) {
-        this.reservationHistories = reservationHistories;
+    public void setDeletingHistories(List<DeletingHistory> deletingHistories) {
+        this.deletingHistories = deletingHistories;
+    }
+
+    public List<BorrowingHistory> getBorrowingHistories() {
+        return borrowingHistories;
+    }
+
+    public void setBorrowingHistories(List<BorrowingHistory> borrowingHistories) {
+        this.borrowingHistories = borrowingHistories;
+    }
+
+    public List<ReservingHistory> getReservingHistories() {
+        return reservingHistories;
+    }
+
+    public void setReservingHistories(List<ReservingHistory> reservingHistories) {
+        this.reservingHistories = reservingHistories;
     }
 
     public Set<Role> getRoles() {

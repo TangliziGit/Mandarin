@@ -1,9 +1,6 @@
 package org.a3.mandarin.runner;
 
 import org.junit.Test;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockRequestDispatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -59,7 +56,7 @@ public class ReaderControllerTest extends MandarinRunnerApplicationTests{
     }
 
     @Test
-    public void testUpate() throws Exception{
+    public void testUpdate() throws Exception{
         // reader self
         mockMvc.perform(MockMvcRequestBuilders
                 .put("/api/reader/3")
@@ -101,28 +98,28 @@ public class ReaderControllerTest extends MandarinRunnerApplicationTests{
     public void testReservationHistory() throws Exception{
         // admin
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/reader/{id}/history/reservation", "3")
+                .get("/api/reader/{id}/history/reserving", "3")
                 .session(adminSessoin))
                 .andDo(print())
                 .andExpect(jsonPath("$.success").value(false));
 
         // librarian
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/reader/{id}/history/reservation", "3")
+                .get("/api/reader/{id}/history/reserving", "3")
                 .session(librarianSession))
                 .andDo(print())
                 .andExpect(jsonPath("$.success").value(true));
 
         // reader (owner)
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/reader/{id}/history/reservation", "3")
+                .get("/api/reader/{id}/history/reserving", "3")
                 .session(reader1Session))
                 .andDo(print())
                 .andExpect(jsonPath("$.success").value(true));
 
         // reader (other)
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/reader/{id}/history/reservation", "3")
+                .get("/api/reader/{id}/history/reserving", "3")
                 .session(reader2Session))
                 .andDo(print())
                 .andExpect(jsonPath("$.success").value(false));

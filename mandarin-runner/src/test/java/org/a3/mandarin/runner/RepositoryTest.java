@@ -1,7 +1,10 @@
 package org.a3.mandarin.runner;
 
+import org.a3.mandarin.common.entity.BorrowingFineHistory;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.List;
 
 public class RepositoryTest extends MandarinRunnerApplicationTests{
     @Test
@@ -20,5 +23,12 @@ public class RepositoryTest extends MandarinRunnerApplicationTests{
         Assert.assertFalse(book2deleted);
         Assert.assertFalse(book2onReserving);
         Assert.assertFalse(book2onBorrowing);
+    }
+
+    @Test
+    public void testBorrowingFine(){
+        List<BorrowingFineHistory> borrowingFineHistories=borrowingFineHistoryRepository.findByUserId(3);
+
+        System.out.println(borrowingFineHistories);
     }
 }
