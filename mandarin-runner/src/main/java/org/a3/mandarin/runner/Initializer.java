@@ -16,6 +16,7 @@ class Initializer {
     private BookDescriptionRepository bookDescriptionRepository;
     private ReservationHistoryRepository reservationHistoryRepository;
     private DeletingHistoryRepository deletingHistoryRepository;
+    private BorrowingHistoryRepository borrowingHistoryRepository;
 
     Initializer(ApplicationContext applicationContext){
         this.roleRepository=applicationContext.getBean(RoleRepository.class);
@@ -25,6 +26,7 @@ class Initializer {
         this.bookDescriptionRepository=applicationContext.getBean(BookDescriptionRepository.class);
         this.reservationHistoryRepository=applicationContext.getBean(ReservationHistoryRepository.class);
         this.deletingHistoryRepository=applicationContext.getBean(DeletingHistoryRepository.class);
+        this.borrowingHistoryRepository=applicationContext.getBean(BorrowingHistoryRepository.class);
     }
 
     void init(){
@@ -91,10 +93,15 @@ class Initializer {
         User reader=userRepository.findByName("reader1");
         User librarian=userRepository.findByName("librarian");
 
-        ReservingHistory reservingHistory=new ReservingHistory(book, reader, Instant.now(), false);
+        ReservingHistory reservingHistory=new ReservingHistory(book, reader, Instant.now());
         DeletingHistory deletingHistory=new DeletingHistory(book, librarian, Instant.now());
+        BorrowingHistory borrowingHistory=new BorrowingHistory(book, reader, Instant.now());
+        BorrowingFineHistory borrowingFineHistory=new BorrowingFineHistory(100, Instant.now());
+
+        borrowingHistory.setBorrowingFineHistory(borrowingFineHistory);
 
         reservationHistoryRepository.save(reservingHistory);
         deletingHistoryRepository.save(deletingHistory);
+        borrowingHistoryRepository.save(borrowingHistory);
     }
 }

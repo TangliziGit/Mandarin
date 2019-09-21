@@ -4,12 +4,24 @@ package org.a3.mandarin.common.entity;
 import javax.persistence.*;
 import java.time.Instant;
 
+// reserving state:
+// 1. on reserving
+//      now - startTime < 2 hour (endTime == null)
+//      fetched == false
+// 2. fail (over 2 hour)
+//      now - startTime >= 2 hour (endTime != null)
+//      fetched == false
+// 3. success (fetched book)
+//      startTime && endTime ?
+//      fetched == true
+// ! anyone can not cancel a reservation
+
 @Entity
 @Table
 public class ReservingHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer reservationId;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "book_id", referencedColumnName = "bookId")
@@ -20,21 +32,43 @@ public class ReservingHistory {
     private User reader;
 
     @Column(nullable = false)
-    private Instant reservingTime;
+    private Instant reservingStartTime;
+
+    @Column
+    private Instant reservingEndTime;
 
     @Column(nullable = false)
     private Boolean fetched;
 
     public ReservingHistory() {}
 
-    public ReservingHistory(Book book, User reader, Instant reservingTime, Boolean fetched) {
-        this.book=book;
+    public ReservingHistory(Book book, User reader, Instant reservingStartTime, Instant reservingEndTime, Boolean fetched) {
+        this.book = book;
         this.reader = reader;
-        this.reservingTime = reservingTime;
+        this.reservingStartTime = reservingStartTime;
+        this.reservingEndTime = reservingEndTime;
         this.fetched = fetched;
     }
 
+    public ReservingHistory(Book book, User reader, Instant reservingStartTime) {
+        this.book = book;
+        this.reader = reader;
+        this.reservingStartTime = reservingStartTime;
+        this.reservingEndTime = null;
+        this.fetched = false;
+    }
 
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public Instant getReservingEndTime() {
+        return reservingEndTime;
+    }
+
+    public void setReservingEndTime(Instant reservingEndTime) {
+        this.reservingEndTime = reservingEndTime;
+    }
 
     public Book getBook() {
         return book;
@@ -56,12 +90,12 @@ public class ReservingHistory {
         this.reader = reader;
     }
 
-    public Instant getReservingTime() {
-        return reservingTime;
+    public Instant getReservingStartTime() {
+        return reservingStartTime;
     }
 
-    public void setReservingTime(Instant reservingTime) {
-        this.reservingTime = reservingTime;
+    public void setReservingStartTime(Instant reservingStartTime) {
+        this.reservingStartTime = reservingStartTime;
     }
 
 }

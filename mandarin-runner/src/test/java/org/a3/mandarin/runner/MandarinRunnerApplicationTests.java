@@ -28,8 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         MandarinFrontApplication.class
 })
 public class MandarinRunnerApplicationTests {
-    protected MockMvc mockMvc;
-    protected MockHttpSession reader1Session, reader2Session, librarianSession, adminSessoin;
+    MockMvc mockMvc;
+    MockHttpSession reader1Session, reader2Session, librarianSession, adminSessoin;
 
     @Autowired
     private WebApplicationContext webApplicationContext;

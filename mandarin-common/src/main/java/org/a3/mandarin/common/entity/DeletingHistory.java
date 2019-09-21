@@ -8,7 +8,7 @@ import java.time.Instant;
 public class DeletingHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer deletingId;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
@@ -29,8 +29,8 @@ public class DeletingHistory {
         this.deletingTime = deletingTime;
     }
 
-    public Integer getDeletingId() {
-        return deletingId;
+    public Integer getId() {
+        return id;
     }
 
     public User getLibrarian() {
