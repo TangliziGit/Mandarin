@@ -5,6 +5,7 @@ import org.a3.mandarin.common.MandarinCommonApplication;
 import org.a3.mandarin.common.dao.repository.BookRepository;
 import org.a3.mandarin.common.dao.repository.BorrowingFineHistoryRepository;
 import org.a3.mandarin.common.dao.repository.BorrowingHistoryRepository;
+import org.a3.mandarin.common.dao.repository.UserRepository;
 import org.a3.mandarin.front.MandarinFrontApplication;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -35,6 +36,9 @@ public class MandarinRunnerApplicationTests {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
+
+    @Resource
+    protected UserRepository userRepository;
 
     @Resource
     protected BookRepository bookRepository;

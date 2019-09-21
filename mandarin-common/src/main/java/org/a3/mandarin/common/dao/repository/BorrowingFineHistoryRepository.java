@@ -13,4 +13,8 @@ public interface BorrowingFineHistoryRepository extends JpaRepository<BorrowingF
             "inner join user u on bh.user_id = u.user_id " +
             "where u.user_id=?1", nativeQuery = true)
     List<BorrowingFineHistory> findBorrowingFineHistoriesByUserId(Integer userId);
+
+    // TODO: setting for fine per day
+    @Query(value = "select database()", nativeQuery = true)
+    Integer findTotalFineAmountByUserId(Integer userId);
 }

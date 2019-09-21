@@ -23,7 +23,7 @@ public class BookDescription {
     @Column
     private String location;
 
-    @OneToMany(mappedBy = "ISBN")
+    @OneToMany(mappedBy = "bookDescription", cascade = CascadeType.PERSIST)
     private Set<Book> books=new HashSet<>();
 
     @ManyToOne

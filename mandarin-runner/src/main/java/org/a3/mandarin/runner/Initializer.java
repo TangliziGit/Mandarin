@@ -65,9 +65,9 @@ class Initializer {
         Category category1=new Category("category1");
         Category category2=new Category("category2");
 
-        Book book11=new Book("123456");
-        Book book12=new Book("123456");
-        Book book2=new Book("223456");
+        Book book11=new Book();
+        Book book12=new Book();
+        Book book2=new Book();
 
         BookDescription bookDescription1=new BookDescription("123456", "Book1", "Author1", 100, "F4-393-1510");
         BookDescription bookDescription2=new BookDescription("223456", "Book2", "Author2", 120, "F4-393-1511");
@@ -76,16 +76,20 @@ class Initializer {
         bookDescription1.getBooks().add(book12);
         bookDescription2.getBooks().add(book2);
 
+        book11.setBookDescription(bookDescription1);
+        book12.setBookDescription(bookDescription1);
+        book2.setBookDescription(bookDescription2);
+
         bookDescription1.setCategory(category1);
         bookDescription2.setCategory(category2);
 
         categoryRepository.saveAndFlush(category1);
         categoryRepository.saveAndFlush(category2);
+        // bookDescriptionRepository.saveAndFlush(bookDescription1);
+        // bookDescriptionRepository.saveAndFlush(bookDescription2);
         bookRepository.saveAndFlush(book11);
         bookRepository.saveAndFlush(book12);
         bookRepository.saveAndFlush(book2);
-        bookDescriptionRepository.saveAndFlush(bookDescription1);
-        bookDescriptionRepository.saveAndFlush(bookDescription2);
     }
 
     private void generateMockUserBookRelation(){

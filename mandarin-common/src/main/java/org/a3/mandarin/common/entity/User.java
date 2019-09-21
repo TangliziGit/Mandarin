@@ -1,10 +1,10 @@
 package org.a3.mandarin.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,22 +30,22 @@ public class User {
     private String passwordHash;
 
     @Column(nullable = false)
-    private Instant signupTime;
+    private Instant signUpTime;
 
     @OneToMany(mappedBy = "reader")
     @OrderBy("reservingStartTime DESC")
     @JsonIgnore
-    private List<ReservingHistory> reservingHistories;
+    private List<ReservingHistory> reservingHistories=new ArrayList<>();
 
     @OneToMany(mappedBy = "librarian")
     @OrderBy("deletingTime DESC")
     @JsonIgnore
-    private List<DeletingHistory> deletingHistories;
+    private List<DeletingHistory> deletingHistories=new ArrayList<>();
 
     @OneToMany(mappedBy = "reader")
     @OrderBy("borrowingStartTime DESC")
     @JsonIgnore
-    private List<BorrowingHistory> borrowingHistories;
+    private List<BorrowingHistory> borrowingHistories=new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
@@ -55,11 +55,11 @@ public class User {
 
     public User() {}
 
-    public User(String name, String phoneNumber, String email, Instant signupTime, String password) {
+    public User(String name, String phoneNumber, String email, Instant signUpTime, String password) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.signupTime = signupTime;
+        this.signUpTime = signUpTime;
         this.changePassword(password);
     }
 
@@ -70,7 +70,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
-                ", signupTime=" + signupTime +
+                ", signUpTime=" + signUpTime +
                 '}';
     }
 
@@ -146,7 +146,7 @@ public class User {
         return passwordHash;
     }
 
-    public Instant getSignupTime() {
-        return signupTime;
+    public Instant getSignUpTime() {
+        return signUpTime;
     }
 }

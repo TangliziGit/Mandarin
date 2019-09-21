@@ -4,6 +4,7 @@ import org.a3.mandarin.back.exception.ApiNotFoundException;
 import org.a3.mandarin.back.exception.ApiUnauthorizedException;
 import org.a3.mandarin.back.model.RESTfulResponse;
 import org.a3.mandarin.common.annotation.Permission;
+import org.a3.mandarin.common.dao.repository.BookRepository;
 import org.a3.mandarin.common.dao.repository.BorrowingFineHistoryRepository;
 import org.a3.mandarin.common.dao.repository.UserRepository;
 import org.a3.mandarin.common.entity.*;
@@ -35,6 +36,9 @@ public class ReaderController {
 
     @Resource
     private UserRepository userRepository;
+
+    @Resource
+    private BookRepository bookRepository;
 
     @Resource
     private BorrowingFineHistoryRepository borrowingFineHistoryRepository;
@@ -144,6 +148,81 @@ public class ReaderController {
 
         RESTfulResponse<List<BorrowingFineHistory>> response=RESTfulResponse.ok();
         response.setData(borrowingFineHistoryRepository.findBorrowingFineHistoriesByUserId(targetUserId));
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/reader/{id}/fine")
+    @ResponseBody
+    @Transactional
+    @Permission({PermissionType.READER, PermissionType.LIBRARIAN})
+    public ResponseEntity<RESTfulResponse<Integer>> getTotalFineAmount(@PathVariable("id") Integer targetUserId,
+                                                                       HttpSession session){
+        Integer operatorUserId=(Integer) session.getAttribute("userId");
+        User operatorUser=userRepository.findById(operatorUserId).orElse(null);
+        User targetUser=userRepository.findById(targetUserId).orElse(null);
+
+        validateOperatorPermission(targetUser, operatorUser);
+
+        RESTfulResponse<Integer> response=RESTfulResponse.ok();
+        // TODO
+        // response.setData(borrowingFineHistoryRepository.findTotalFineAmountByUserId(targetUserId));
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/reader/{id}")
+    @ResponseBody
+    @Transactional
+    @Permission({PermissionType.LIBRARIAN})
+    public ResponseEntity<RESTfulResponse> deleteReader(@PathVariable("id") Integer targetUserId,
+                                                        HttpSession session){
+        User targetUser=userRepository.findById(targetUserId).orElse(null);
+
+        if (borrowingFineHistoryRepository.findTotalFineAmountByUserId(targetUserId)>0)
+            throw new ApiNotFoundException("this reader did not pay his fine");
+
+        if (null != bookRepository.findBorrowingBooksByUserId(targetUserId))
+            throw new ApiNotFoundException("this reader did not return his books");
+
+        RESTfulResponse<List<BorrowingFineHistory>> response=RESTfulResponse.ok();
+        response.setData(borrowingFineHistoryRepository.findBorrowingFineHistoriesByUserId(targetUserId));
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/reader/{id}/book/reserving")
+    @ResponseBody
+    @Transactional
+    @Permission({PermissionType.READER, PermissionType.LIBRARIAN})
+    public ResponseEntity<RESTfulResponse<List<Book>>> getReservingBooks(@PathVariable("id") Integer targetUserId,
+                                                                         HttpSession session){
+        Integer operatorUserId=(Integer) session.getAttribute("userId");
+        User operatorUser=userRepository.findById(operatorUserId).orElse(null);
+        User targetUser=userRepository.findById(targetUserId).orElse(null);
+
+        validateOperatorPermission(targetUser, operatorUser);
+
+        RESTfulResponse<List<Book>> response=RESTfulResponse.ok();
+        response.setData(bookRepository.findReservingBooksByUserId(targetUserId));
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/reader/{id}/book/borrowing")
+    @ResponseBody
+    @Transactional
+    @Permission({PermissionType.READER, PermissionType.LIBRARIAN})
+    public ResponseEntity<RESTfulResponse<List<Book>>> getBorrowingBooks(@PathVariable("id") Integer targetUserId,
+                                                                         HttpSession session){
+        Integer operatorUserId=(Integer) session.getAttribute("userId");
+        User operatorUser=userRepository.findById(operatorUserId).orElse(null);
+        User targetUser=userRepository.findById(targetUserId).orElse(null);
+
+        validateOperatorPermission(targetUser, operatorUser);
+
+        RESTfulResponse<List<Book>> response=RESTfulResponse.ok();
+        response.setData(bookRepository.findBorrowingBooksByUserId(targetUserId));
 
         return ResponseEntity.ok(response);
     }
