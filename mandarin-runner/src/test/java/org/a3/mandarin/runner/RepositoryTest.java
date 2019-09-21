@@ -27,7 +27,7 @@ public class RepositoryTest extends MandarinRunnerApplicationTests{
 
     @Test
     public void testBorrowingFine(){
-        List<BorrowingFineHistory> borrowingFineHistories=borrowingFineHistoryRepository.findByUserId(3);
+        List<BorrowingFineHistory> borrowingFineHistories=borrowingFineHistoryRepository.findBorrowingFineHistoriesByUserId(3);
 
         System.out.println(borrowingFineHistories);
     }

@@ -4,6 +4,7 @@ import org.a3.mandarin.back.exception.ApiNotFoundException;
 import org.a3.mandarin.back.exception.ApiUnauthorizedException;
 import org.a3.mandarin.back.model.RESTfulResponse;
 import org.a3.mandarin.common.annotation.Permission;
+import org.a3.mandarin.common.dao.repository.BorrowingFineHistoryRepository;
 import org.a3.mandarin.common.dao.repository.UserRepository;
 import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.PermissionType;
@@ -34,6 +35,9 @@ public class ReaderController {
 
     @Resource
     private UserRepository userRepository;
+
+    @Resource
+    private BorrowingFineHistoryRepository borrowingFineHistoryRepository;
 
     @PostMapping("/reader")
     @ResponseBody
@@ -122,6 +126,24 @@ public class ReaderController {
 
         RESTfulResponse<List<BorrowingHistory>> response=RESTfulResponse.ok();
         response.setData(targetUser.getBorrowingHistories());
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/reader/{id}/history/fine")
+    @ResponseBody
+    @Transactional
+    @Permission({PermissionType.READER, PermissionType.LIBRARIAN})
+    public ResponseEntity<RESTfulResponse<List<BorrowingFineHistory>>> getReaderBorrowingFineHistories(@PathVariable("id") Integer targetUserId,
+                                                                                                       HttpSession session){
+        Integer operatorUserId=(Integer) session.getAttribute("userId");
+        User operatorUser=userRepository.findById(operatorUserId).orElse(null);
+        User targetUser=userRepository.findById(targetUserId).orElse(null);
+
+        validateOperatorPermission(targetUser, operatorUser);
+
+        RESTfulResponse<List<BorrowingFineHistory>> response=RESTfulResponse.ok();
+        response.setData(borrowingFineHistoryRepository.findBorrowingFineHistoriesByUserId(targetUserId));
 
         return ResponseEntity.ok(response);
     }
