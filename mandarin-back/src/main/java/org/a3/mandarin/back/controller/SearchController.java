@@ -1,12 +1,17 @@
 package org.a3.mandarin.back.controller;
 
-import org.a3.mandarin.back.exception.ApiNotFoundException;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import org.a3.mandarin.back.exception.ApiForbiddenException;
 import org.a3.mandarin.back.model.RESTfulResponse;
 import org.a3.mandarin.common.annotation.Permission;
-import org.a3.mandarin.common.dao.query.UserQuery;
+import org.a3.mandarin.common.dao.repository.UserQueryRepository;
 import org.a3.mandarin.common.dao.repository.UserRepository;
+import org.a3.mandarin.common.entity.QUser;
 import org.a3.mandarin.common.entity.User;
 import org.a3.mandarin.common.enums.PermissionType;
+import org.a3.mandarin.common.util.RoleUtil;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.time.Instant;
 import java.util.List;
 
 @Controller
@@ -26,7 +30,7 @@ import java.util.List;
 public class SearchController {
 
     @Resource
-    private UserRepository userRepository;
+    private UserQueryRepository userQueryRepository;
 
     @PostMapping("/search/reader")
     @ResponseBody
@@ -38,32 +42,23 @@ public class SearchController {
             @RequestParam(value = "userId", required = false) Integer userId,
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
-            @RequestParam(value = "email", required = false) String email,
-            @RequestParam(value = "signUpTimeAfter", required = false) Instant signUpTimeAfter,
-            @RequestParam(value = "signUpTimeBefore", required = false) Instant signUpTimeBefore){
-        // TODO: TEST NOT PASSED!!!!
-        List<User> users;
+            @RequestParam(value = "email", required = false) String email){
+        if (null == userId && null == name && null == phoneNumber && null == email)
+            throw new ApiForbiddenException("please enter any parameters");
 
-        UserQuery userQuery=new UserQuery(){{
-            setCombineLogicType(LogicType.AND);
-            setUserIdEqual(userId);
-            setNameLike(name);
-            setPhoneNumberLike(phoneNumber);
-            setEmailLike(email);
-            setSignUpTimeAfter(signUpTimeAfter);
-            setSignUpTimeBefore(signUpTimeBefore);
-        }};
+        QUser qUser=QUser.user;
+        PageRequest pageRequest=PageRequest.of(page, limit, Sort.by("signUpTime"));
+        BooleanExpression expression=qUser.roles.contains(RoleUtil.readerRole);
 
-        users=userRepository.findReadersWithSpec(
-                userQuery.toSpec(),
-                PageRequest.of(page, limit, Sort.by("sign_up_time"))
-        );
+        if (null != name) expression=expression.and(qUser.name.contains(name));
+        if (null != email) expression=expression.and(qUser.email.eq(email));
+        if (null != userId) expression=expression.and(qUser.userId.eq(userId));
+        if (null != phoneNumber) expression=expression.and(qUser.phoneNumber.eq(phoneNumber));
 
-        if (null == users)
-            throw new ApiNotFoundException("no such user");
+        Page<User> userPage=userQueryRepository.findAll(expression, pageRequest);
 
         RESTfulResponse<List<User>> response=RESTfulResponse.ok();
-        response.setData(users);
+        response.setData(userPage.getContent());
         return ResponseEntity.ok(response);
     }
 }

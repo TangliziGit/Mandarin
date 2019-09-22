@@ -124,4 +124,23 @@ public class ReaderControllerTest extends MandarinRunnerApplicationTests{
                 .andDo(print())
                 .andExpect(jsonPath("$.success").value(false));
     }
+
+    @Test
+    public void testSearch() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/api/search/reader")
+                .param("name", "reader")
+                .param("userId", "3")
+                .session(librarianSession))
+                .andDo(print())
+                .andExpect(jsonPath("$.data.length()").value(1));
+
+        // search a user, which is not a reader
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/api/search/reader")
+                .param("userId", "1")
+                .session(librarianSession))
+                .andDo(print())
+                .andExpect(jsonPath("$.data.length()").value(0));
+    }
 }

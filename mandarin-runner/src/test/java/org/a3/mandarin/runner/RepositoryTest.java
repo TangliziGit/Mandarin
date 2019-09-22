@@ -1,12 +1,17 @@
 package org.a3.mandarin.runner;
 
-import org.a3.mandarin.common.dao.query.UserQuery;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import org.a3.mandarin.common.entity.Book;
 import org.a3.mandarin.common.entity.BorrowingFineHistory;
+import org.a3.mandarin.common.entity.QUser;
 import org.a3.mandarin.common.entity.User;
+import org.a3.mandarin.common.util.RoleUtil;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -41,7 +46,7 @@ public class RepositoryTest extends MandarinRunnerApplicationTests{
         List<Book> books = bookRepository.findReservingBooksByUserId(3);
 
         Assert.assertTrue(books.size() != 0);
-        Assert.assertEquals((int)books.get(0).getBookId(), 1);
+        Assert.assertEquals(1, (int)books.get(0).getBookId());
     }
 
     @Test
@@ -49,23 +54,29 @@ public class RepositoryTest extends MandarinRunnerApplicationTests{
         List<Book> books = bookRepository.findBorrowingBooksByUserId(3);
 
         Assert.assertTrue(books.size() != 0);
-        Assert.assertEquals((int)books.get(0).getBookId(), 1);
+        Assert.assertEquals(1, (int)books.get(0).getBookId());
     }
 
     @Test
     public void testFindReaders(){
         List<User> readers=userRepository.findReadersWithSpec(null, null);
 
-        Assert.assertEquals((int)readers.size(), 2);
+        Assert.assertEquals(2, readers.size());
     }
 
     @Test
     public void testFindReadersWithSpec(){
-        UserQuery userQuery=new UserQuery(){{
-            setUserIdEqual(3);
-        }};
-        List<User> readers=userRepository.findReadersWithSpec(userQuery.toSpec(), PageRequest.of(0, 20));
+        QUser qUser=QUser.user;
+        // Predicate predicate=qUser.roles.contains(RoleUtil.readerRole)
+        //         .and(qUser.userId.eq(3));
 
-        Assert.assertEquals((int)readers.size(), 2);
+        PageRequest pageRequest=PageRequest.of(0, 20, Sort.by("signUpTime"));
+        BooleanExpression expression=qUser.roles.contains(RoleUtil.readerRole);
+        expression=expression.and(qUser.userId.eq(3));
+
+        Page<User> page=userQueryRepository.findAll(expression, pageRequest);
+        System.out.println(RoleUtil.readerRole);
+
+        Assert.assertEquals(1, page.getContent().size());
     }
 }
