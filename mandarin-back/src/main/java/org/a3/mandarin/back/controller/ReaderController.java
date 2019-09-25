@@ -179,16 +179,21 @@ public class ReaderController {
                                                         HttpSession session){
         User targetUser=userRepository.findById(targetUserId).orElse(null);
 
+        if (null == targetUser)
+            throw new ApiNotFoundException("no such user");
+
+        if (!targetUser.getRoles().contains(RoleUtil.readerRole))
+            throw new ApiNotFoundException("this user is not a reader");
+
         if (borrowingFineHistoryRepository.findTotalFineAmountByUserId(targetUserId)>0)
             throw new ApiNotFoundException("this reader did not pay his fine");
 
         if (null != bookRepository.findBorrowingBooksByUserId(targetUserId))
             throw new ApiNotFoundException("this reader did not return his books");
 
-        RESTfulResponse<List<BorrowingFineHistory>> response=RESTfulResponse.ok();
-        response.setData(borrowingFineHistoryRepository.findBorrowingFineHistoriesByUserId(targetUserId));
+        userRepository.deleteById(targetUserId);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(RESTfulResponse.ok());
     }
 
     @GetMapping("/reader/{id}/book/reserving")
