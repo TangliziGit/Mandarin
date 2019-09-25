@@ -17,4 +17,5 @@ public interface BorrowingFineHistoryRepository extends JpaRepository<BorrowingF
     // TODO: setting for fine per day
     @Query(value = "select database()", nativeQuery = true)
     Integer findTotalFineAmountByUserId(Integer userId);
+    
 }

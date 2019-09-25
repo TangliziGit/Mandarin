@@ -20,4 +20,9 @@ public class ValidateUtil {
         // TODO
         return true;
     }
+    
+    public static Boolean validateNumber(Integer number){
+        // TODO
+        return true;
+    }
 }
