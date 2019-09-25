@@ -1,5 +1,7 @@
 package org.a3.mandarin.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +26,7 @@ public class BookDescription {
     private String location;
 
     @OneToMany(mappedBy = "bookDescription", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private Set<Book> books=new HashSet<>();
 
     @ManyToOne

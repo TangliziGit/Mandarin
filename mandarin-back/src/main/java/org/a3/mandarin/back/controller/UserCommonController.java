@@ -23,10 +23,9 @@ public class UserCommonController {
     @PostMapping("/user/token")
     @ResponseBody
     @Transactional
-    public ResponseEntity<RESTfulResponse> login(@RequestParam String name,
+    public ResponseEntity<RESTfulResponse<User>> login(@RequestParam String name,
                                                  @RequestParam String password,
-                                                 HttpSession session,
-                                                 HttpServletResponse response) throws ApiNotFoundException {
+                                                 HttpSession session) throws ApiNotFoundException {
         User user=userRepository.findByName(name);
 
         if (null == user)
@@ -35,8 +34,11 @@ public class UserCommonController {
         if (!user.verifyPassword(password))
             throw new ApiNotFoundException("password incorrect");
 
+        RESTfulResponse<User> response=RESTfulResponse.ok();
+        response.setData(user);
+
         session.setAttribute("userId", user.getUserId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(RESTfulResponse.ok());
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @DeleteMapping("/user/token")
