@@ -4,6 +4,7 @@ import org.a3.mandarin.back.exception.ApiNotFoundException;
 import org.a3.mandarin.back.exception.ApiUnauthorizedException;
 import org.a3.mandarin.back.model.RESTfulResponse;
 import org.a3.mandarin.common.annotation.Permission;
+import org.a3.mandarin.common.dao.repository.DeletingHistoryRepository;
 import org.a3.mandarin.common.dao.repository.UserRepository;
 import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.PermissionType;
@@ -22,6 +23,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -31,6 +33,9 @@ public class LibrarianController {
 
     @Resource
     private UserRepository userRepository;
+
+    @Resource
+    private DeletingHistoryRepository deletingHistoryRepository;
     
     @PostMapping("/librarian")
     @ResponseBody
@@ -98,6 +103,18 @@ public class LibrarianController {
         
         userRepository.deleteById(targetUserId);
         return ResponseEntity.ok(RESTfulResponse.ok());
+    }
+
+    @GetMapping("/librarian/{id}/history/deleting")
+    @ResponseBody
+    @Transactional
+    @Permission({PermissionType.ADMIN, PermissionType.LIBRARIAN})
+    public ResponseEntity<RESTfulResponse<List<DeletingHistory>>> getDeletingHistoriesByLibrarianId(@PathVariable("id") Integer userId){
+        List<DeletingHistory> deletingHistories=deletingHistoryRepository.findByLibrarian_UserId(userId);
+
+        RESTfulResponse<List<DeletingHistory>> response=RESTfulResponse.ok();
+        response.setData(deletingHistories);
+        return ResponseEntity.ok(response);
     }
 
     private void validateOperatorPermission(User targetUser, User operatorUser){
