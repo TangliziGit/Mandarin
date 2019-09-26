@@ -14,7 +14,6 @@ public class DeletingHistory {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
-    @JsonIgnore
     private User librarian;
 
     @OneToOne
