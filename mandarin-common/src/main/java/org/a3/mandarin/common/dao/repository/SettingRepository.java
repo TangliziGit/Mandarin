@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface SettingRepository extends JpaRepository<Setting, Integer>, JpaSpecificationExecutor<Setting> {
 	Setting findByName(String name);
-	Setting findbySettingId(Integer settingId);
+	Setting findBySettingId(Integer settingId);
 }
