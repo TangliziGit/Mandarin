@@ -2,12 +2,12 @@ package org.a3.mandarin.back.controller;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.a3.mandarin.back.exception.ApiForbiddenException;
+import org.a3.mandarin.back.model.BookModel;
 import org.a3.mandarin.back.model.RESTfulResponse;
 import org.a3.mandarin.common.annotation.Permission;
+import org.a3.mandarin.common.dao.repository.BookQueryRepository;
 import org.a3.mandarin.common.dao.repository.UserQueryRepository;
-import org.a3.mandarin.common.entity.QUser;
-import org.a3.mandarin.common.entity.Role;
-import org.a3.mandarin.common.entity.User;
+import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.PermissionType;
 import org.a3.mandarin.common.util.RoleUtil;
 import org.springframework.data.domain.Page;
@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,6 +31,9 @@ public class SearchController {
 
     @Resource
     private UserQueryRepository userQueryRepository;
+
+    @Resource
+    private BookQueryRepository bookQueryRepository;
 
     @PostMapping("/search/reader")
     @ResponseBody
@@ -72,6 +76,40 @@ public class SearchController {
         List<User> librarians=findUserByInformationWithPageRequest(RoleUtil.librarianRole, userId, name, phoneNumber, email, pageRequest);
         RESTfulResponse<List<User>> response=RESTfulResponse.ok();
         response.setData(librarians);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/search/book")
+    @ResponseBody
+    @Transactional
+    @Permission({PermissionType.LIBRARIAN, PermissionType.READER})
+    public ResponseEntity<RESTfulResponse<List<BookModel>>> searchBook(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "limit", defaultValue = "20") Integer limit,
+            @RequestParam(value = "isbn", required = false) String isbn,
+            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "bookId", required = false) Integer bookId,
+            @RequestParam(value = "author", required = false) String author,
+            @RequestParam(value = "category", required = false) String categoryName){
+        QBook qBook= QBook.book;
+        PageRequest pageRequest=PageRequest.of(page, limit, Sort.by("bookId"));
+        BooleanExpression expression=qBook.bookId.isNotNull();
+
+        if (null != bookId) expression=expression.and(qBook.bookId.eq(bookId));
+        if (null != isbn) expression=expression.and(qBook.bookDescription.ISBN.eq(isbn));
+        if (null != title) expression=expression.and(qBook.bookDescription.title.eq(title));
+        if (null != author) expression=expression.and(qBook.bookDescription.author.eq(author));
+        if (null != categoryName) expression=expression.and(qBook.bookDescription.category.categoryName.eq(categoryName));
+
+        Page<Book> bookPage=bookQueryRepository.findAll(expression, pageRequest);
+        List<BookModel> bookModels=new ArrayList<>();
+
+        for (Book book: bookPage.getContent())
+            bookModels.add(new BookModel(book));
+
+        RESTfulResponse<List<BookModel>> response=RESTfulResponse.ok();
+        response.setData(bookModels);
+
         return ResponseEntity.ok(response);
     }
 

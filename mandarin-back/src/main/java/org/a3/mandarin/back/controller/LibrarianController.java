@@ -7,8 +7,6 @@ import org.a3.mandarin.common.annotation.Permission;
 import org.a3.mandarin.common.dao.repository.UserRepository;
 import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.PermissionType;
-import org.a3.mandarin.common.exception.PayException;
-import org.a3.mandarin.common.util.PayUtil;
 import org.a3.mandarin.common.util.RoleUtil;
 import org.a3.mandarin.common.util.ValidateUtil;
 import org.slf4j.Logger;
@@ -24,13 +22,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.Instant;
-import java.util.List;
 import java.util.Set;
 
 @Controller
 @RequestMapping("/api")
 public class LibrarianController {
-    private Logger logger= LoggerFactory.getLogger(LibrarianController.class);
+    private Logger logger= LoggerFactory.getLogger(BookController.class);
 
     @Resource
     private UserRepository userRepository;
