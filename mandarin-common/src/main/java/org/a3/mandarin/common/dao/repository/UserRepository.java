@@ -1,6 +1,5 @@
 package org.a3.mandarin.common.dao.repository;
 
-import org.a3.mandarin.common.entity.BorrowingFineHistory;
 import org.a3.mandarin.common.entity.User;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;

@@ -17,7 +17,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.annotation.Resource;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @RunWith(SpringRunner.class)
@@ -29,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 })
 public class MandarinRunnerApplicationTests {
     MockMvc mockMvc;
-    MockHttpSession reader1Session, reader2Session, librarianSession, adminSessoin;
+    MockHttpSession reader1Session, reader2Session, librarianSession, adminSession;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -58,7 +57,7 @@ public class MandarinRunnerApplicationTests {
         reader1Session =new MockHttpSession();
         reader2Session =new MockHttpSession();
         librarianSession=new MockHttpSession();
-        adminSessoin=new MockHttpSession();
+        adminSession =new MockHttpSession();
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/api/user/token")
@@ -85,7 +84,7 @@ public class MandarinRunnerApplicationTests {
                 .post("/api/user/token")
                 .param("name", "admin")
                 .param("password", "passwd")
-                .session(adminSessoin)
+                .session(adminSession)
         ).andExpect(jsonPath("$.success").value(true));
 
     }

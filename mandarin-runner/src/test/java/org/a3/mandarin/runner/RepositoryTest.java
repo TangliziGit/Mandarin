@@ -1,6 +1,5 @@
 package org.a3.mandarin.runner;
 
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.a3.mandarin.common.entity.Book;
 import org.a3.mandarin.common.entity.BorrowingFineHistory;

@@ -17,7 +17,7 @@ import java.util.Arrays;
 @Aspect
 @Component
 public class LogAspect {
-    private Logger logger= LoggerFactory.getLogger(LogAspect.class);
+    private final Logger logger= LoggerFactory.getLogger(LogAspect.class);
 
     @Pointcut("execution(public * org.a3.mandarin.back.controller..*.*(..))")
     public void backLog(){}

@@ -1,12 +1,8 @@
 package org.a3.mandarin.back.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.a3.mandarin.back.util.ModelUtil;
-import org.a3.mandarin.common.dao.repository.BookRepository;
 import org.a3.mandarin.common.entity.Book;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 @Component
 public class BookModel {

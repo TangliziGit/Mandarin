@@ -15,7 +15,7 @@ import java.lang.reflect.UndeclaredThrowableException;
 
 @ControllerAdvice
 public class ApiExceptionHandleController {
-    private Logger logger= LoggerFactory.getLogger(ApiExceptionHandleController.class);
+    private final Logger logger= LoggerFactory.getLogger(ApiExceptionHandleController.class);
 
     @ExceptionHandler({ApiNotFoundException.class,
             ApiUnauthorizedException.class, ApiForbiddenException.class})

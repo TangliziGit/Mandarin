@@ -1,7 +1,6 @@
 package org.a3.mandarin.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.ibatis.annotations.One;
 
 import javax.persistence.*;
 import java.time.Instant;

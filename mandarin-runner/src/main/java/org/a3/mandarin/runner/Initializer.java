@@ -1,6 +1,5 @@
 package org.a3.mandarin.runner;
 
-import org.a3.mandarin.back.model.BookDescriptionModel;
 import org.a3.mandarin.common.dao.repository.*;
 import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.RoleType;
@@ -11,15 +10,15 @@ import org.springframework.context.ApplicationContext;
 import java.time.Instant;
 
 class Initializer {
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private BookRepository bookRepository;
-    private CategoryRepository categoryRepository;
-    private BookDescriptionRepository bookDescriptionRepository;
-    private ReservationHistoryRepository reservationHistoryRepository;
-    private DeletingHistoryRepository deletingHistoryRepository;
-    private BorrowingHistoryRepository borrowingHistoryRepository;
-    private SettingRepository settingRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final BookRepository bookRepository;
+    private final CategoryRepository categoryRepository;
+    private final BookDescriptionRepository bookDescriptionRepository;
+    private final ReservationHistoryRepository reservationHistoryRepository;
+    private final DeletingHistoryRepository deletingHistoryRepository;
+    private final BorrowingHistoryRepository borrowingHistoryRepository;
+    private final SettingRepository settingRepository;
 
     Initializer(ApplicationContext applicationContext){
         this.roleRepository=applicationContext.getBean(RoleRepository.class);
@@ -80,7 +79,7 @@ class Initializer {
         BookDescription bookDescription1=new BookDescription("123456", "Book1", "Author1", 100,
                 "Floor 2 - Shelf 1", 2000, "Publisher", "summary", category1);
         BookDescription bookDescription2=new BookDescription("223456", "Book2", "Author2", 120,
-                "Florr 2 - Shelf 1", 2000, "Publisher", "summary", category2);
+                "Floor 2 - Shelf 1", 2000, "Publisher", "summary", category2);
 
         bookDescription1.getBooks().add(book11);
         bookDescription1.getBooks().add(book12);

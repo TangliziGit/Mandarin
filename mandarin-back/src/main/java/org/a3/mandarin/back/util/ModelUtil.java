@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public class ModelUtil {
     private static BookRepository bookRepository;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     public void setBookRepository(BookRepository bookRepository){
         ModelUtil.bookRepository=bookRepository;

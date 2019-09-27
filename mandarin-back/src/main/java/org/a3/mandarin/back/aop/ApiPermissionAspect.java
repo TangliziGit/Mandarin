@@ -3,7 +3,7 @@ package org.a3.mandarin.back.aop;
 import org.a3.mandarin.back.exception.ApiNotFoundException;
 import org.a3.mandarin.back.exception.ApiUnauthorizedException;
 import org.a3.mandarin.common.annotation.Permission;
-import org.a3.mandarin.common.aop.AbstractPermissonAspect;
+import org.a3.mandarin.common.aop.AbstractPermissionAspect;
 import org.a3.mandarin.common.dao.repository.UserRepository;
 import org.a3.mandarin.common.entity.User;
 import org.a3.mandarin.common.enums.PermissionType;
@@ -25,8 +25,8 @@ import java.util.List;
 
 @Aspect
 @Component
-public class ApiPermissionAspect extends AbstractPermissonAspect {
-    private Logger logger= LoggerFactory.getLogger(ApiPermissionAspect.class);
+public class ApiPermissionAspect extends AbstractPermissionAspect {
+    private final Logger logger= LoggerFactory.getLogger(ApiPermissionAspect.class);
 
     @Resource
     private UserRepository userRepository;
@@ -34,7 +34,7 @@ public class ApiPermissionAspect extends AbstractPermissonAspect {
     @Pointcut("execution(public * org.a3.mandarin.back.controller..*.*(..))")
     public void apiPointcut(){}
 
-    @Around(value = "authorize(permission) && apiPointcut()")
+    @Around(value = "authorize(permission) && apiPointcut()", argNames = "joinPoint,permission")
     public Object doAround(ProceedingJoinPoint joinPoint, Permission permission) throws Throwable{
         ServletRequestAttributes attributes=(ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (null == attributes)

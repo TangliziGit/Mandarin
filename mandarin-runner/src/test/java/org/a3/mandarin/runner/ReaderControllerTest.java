@@ -27,7 +27,7 @@ public class ReaderControllerTest extends MandarinRunnerApplicationTests{
                 .param("phoneNumber", "1123456789")
                 .param("email", "1234@1234.com")
                 .param("password", "passwd")
-                .session(adminSessoin))
+                .session(adminSession))
                 .andDo(print())
                 .andExpect(jsonPath("$.success").value(false));
 
@@ -90,7 +90,7 @@ public class ReaderControllerTest extends MandarinRunnerApplicationTests{
                 .param("name", "reader_")
                 .param("email", "123123@12323131.com")
                 .param("phoneNumber", "11234567819")
-                .session(adminSessoin))
+                .session(adminSession))
                 .andExpect(jsonPath("$.success").value(false));
     }
 
@@ -99,7 +99,7 @@ public class ReaderControllerTest extends MandarinRunnerApplicationTests{
         // admin
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/api/reader/{id}/history/reserving", "3")
-                .session(adminSessoin))
+                .session(adminSession))
                 .andDo(print())
                 .andExpect(jsonPath("$.success").value(false));
 
