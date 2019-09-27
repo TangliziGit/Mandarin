@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:fragment="head">
+        <title>Mandarin - Administrator</title>>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="robots" content="all,follow">
+        <!-- Bootstrap CSS-->
+        <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+        <!-- Font Awesome CSS-->
+        <link rel="stylesheet" th:href="@{/vendor/font-awesome/css/font-awesome.min.css}">
+        <!-- Fontastic Custom icon font-->
+        <link rel="stylesheet" th:href="@{/css/fontastic.css}">
+        <!-- Google fonts - Poppins -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+        <!-- theme stylesheet-->
+        <link rel="stylesheet" th:href="@{/css/style.default.css}" id="theme-stylesheet">
+        <!-- Custom stylesheet - for your changes-->
+        <link rel="stylesheet" th:href="@{/css/custom.css}">
+        <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+    </th:block>
+</head>
+<body>
+<div class="page">
+    <!-- Main Navbar-->
+    <header th:fragment="navbar" class="header">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <div class="navbar-holder d-flex align-items-center justify-content-between">
+                    <!-- Navbar Header-->
+                    <div class="navbar-header">
+                        <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
+                        <div class="brand-text d-none d-lg-inline-block"><span>Mandarin </span><strong>Administrator</strong></div>
+                        <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>Mandarin</strong></div></a>
+                        <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
+                    </div>
+                    <!-- Navbar Menu -->
+                    <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center" >
+                        <!-- Logout    -->
+                        <li class="nav-item"><strong id="username" class="d-none d-sm-inline" style="text-decoration: underline" th:text="${session.userName}"></strong></li>
+                        <li class="nav-item"><a href="login.html" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <footer th:fragment="footer" class="main-footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p></p>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <p>Copyright © 2019  A3.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+<!-- JavaScript files-->
+<th:block th:fragment="scripts">
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/popper.js/umd/popper.min.js}"> </script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/vendor/jquery.cookie/jquery.cookie.js}"> </script>
+    <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+    <script th:src="@{/vendor/jquery-validation/jquery.validate.min.js}"></script>
+    <script th:src="@{/js/charts-home.js}"></script>
+    <script th:src="@{/js/front.js}"></script>
+</th:block>
+
+
+<script th:fragment="username">
+    // let user;
+    // $.ajax({
+    //     url: "/api/user/current",
+    //     type: "GET",
+    //     dataType: "json",
+    //     success: function (resp) {
+    //         console.log(resp);
+    //         user=resp.data;
+    //         $("#username").html(resp.data.name);
+    //     },
+    //     error: function (resp) {
+    //         alert(resp.message);
+    //         window.location.href="/admin/login";
+    //     }
+    // })
+</script>
+
+</body>
+</html>

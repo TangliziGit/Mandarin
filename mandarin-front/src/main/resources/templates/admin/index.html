@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="admin/common :: head"></div>
+  </head>
+  <body>
+    <div class="page">
+      <!-- Main Navbar-->
+      <div th:replace="admin/common :: navbar"></div>
+
+      <div class="page-content d-flex align-items-stretch">
+        <!-- Side Navbar -->
+        <nav class="side-navbar">
+          <!-- Sidebar Navidation Menus--><!-- span class="heading">Main</span -->
+          <ul class="list-unstyled">
+            <li class="active"><a href="/admin/index"> <i class="icon-home"></i>Welcome </a></li>
+            <li><a href="#librarian-dropdown" aria-expanded="false" data-toggle="collapse">
+              <i class="icon-interface-windows"></i>Librarian Management </a>
+              <ul id="librarian-dropdown" class="collapse list-unstyled ">
+                <li><a href="/admin/search">Search and manage</a></li>
+                <li><a href="/admin/register">Register</a></li>
+              </ul>
+            </li>
+            <li><a href="/admin/setting"> <i class="icon-grid"></i>Settings Management </a></li>
+            <li><a href="/admin/login"> <i class="icon-interface-windows"></i>Login page </a></li>
+          </ul><span class="heading">Extras</span>
+          <ul class="list-unstyled">
+            <li> <a href="/admin/about"> <i class="icon-flask"></i>About us </a></li>
+          </ul>
+        </nav>
+
+        <div class="content-inner">
+          <!-- Page Header-->
+          <header class="page-header">
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">Welcome</h2>
+            </div>
+          </header>
+
+          <div style="text-align: center; color: #808080;margin-top: 100px;">
+            <h1>Welcome mandarin administrator system</h1>
+            <p>Select the sidebar options to manage</p>
+          </div>
+
+          <!-- Page Footer-->
+          <div th:replace="admin/common :: footer"></div>
+        </div>
+      </div>
+    </div>
+
+    <div th:replace="admin/common :: scripts"></div>
+
+  </body>
+</html>

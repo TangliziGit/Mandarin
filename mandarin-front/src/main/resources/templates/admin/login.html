@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="admin/common :: head"></div>
+  </head>
+  <body>
+    <div class="page login-page">
+      <div class="container d-flex align-items-center">
+        <div class="form-holder has-shadow">
+          <div class="row">
+            <!-- Logo & Information Panel-->
+            <div class="col-lg-6">
+              <div class="info d-flex align-items-center">
+                <div class="content">
+                  <div class="logo">
+                    <h1>Mandarin - Admin</h1>
+                  </div>
+                  <p>Mandarin administrators' management page</p>
+                </div>
+              </div>
+            </div>
+            <!-- Form Panel    -->
+            <div class="col-lg-6 bg-white">
+              <div class="form d-flex align-items-center">
+                <div class="content">
+                  <div method="post" class="form-validate">
+                    <div class="form-group">
+                      <input id="login-username" type="text" name="loginUsername" required data-msg="Please enter your username" class="input-material">
+                      <label for="login-username" class="label-material">User Name / Phone Number</label>
+                    </div>
+                    <div class="form-group">
+                      <input id="login-password" type="password" name="loginPassword" required data-msg="Please enter your password" class="input-material">
+                      <label for="login-password" class="label-material">Password</label>
+                    </div><button id="login" class="btn btn-primary">Login</button>
+                    <!-- This should be submit button but I replaced it with <a> for demo purposes-->
+                  </div><span class="forgot-pass" style="color: gray">Forgot Password?</span><br><small>Please contact the database administrator to reset your password</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="copyrights text-center">
+        <p>Design by <a href="#" class="external"></a>
+        </p>
+      </div>
+    </div>
+
+    <div th:replace="admin/common :: scripts"></div>
+
+    <script>
+      $("#login").bind("click", function () {
+        let formData = new FormData();
+        formData.append("name", $("#login-username").val());
+        formData.append("password", $("#login-password").val());
+
+        $.ajax({
+          url: "/api/user/token",
+          type: "POST",
+          dataType: "json",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function (resp) {
+            window.location.href="/admin/index";
+          },
+          error: function (resp) {
+            alert(resp.message);
+          }
+        })
+      })
+    </script>
+  </body>
+</html>

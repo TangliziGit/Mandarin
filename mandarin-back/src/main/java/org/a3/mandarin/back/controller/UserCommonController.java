@@ -40,6 +40,7 @@ public class UserCommonController {
         response.setData(user);
 
         session.setAttribute("userId", user.getUserId());
+        session.setAttribute("userName", user.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -47,6 +48,7 @@ public class UserCommonController {
     @ResponseBody
     public ResponseEntity<RESTfulResponse> logout(HttpSession session){
         session.removeAttribute("userId");
+        session.removeAttribute("userName");
 
         return ResponseEntity.ok(RESTfulResponse.ok());
     }
