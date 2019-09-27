@@ -65,6 +65,8 @@
             window.location.href="/admin/index";
           },
           error: function (resp) {
+            resp=resp.responseJSON
+            console.log(resp);
             alert(resp.message);
           }
         })

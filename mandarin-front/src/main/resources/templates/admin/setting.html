@@ -102,7 +102,7 @@
                 type: "GET",
                 dataType: "json",
                 success: function (resp) {
-                    $("#"+id).attr("placeholder", resp.data.value);
+                    $("#"+id).attr("value", resp.data.value);
                 },
                 error: function (resp) {
                     alert(resp.message);
