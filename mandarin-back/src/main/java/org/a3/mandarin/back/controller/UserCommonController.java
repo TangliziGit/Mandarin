@@ -24,9 +24,12 @@ public class UserCommonController {
     @ResponseBody
     @Transactional
     public ResponseEntity<RESTfulResponse<User>> login(@RequestParam String name,
-                                                 @RequestParam String password,
-                                                 HttpSession session) throws ApiNotFoundException {
+                                                       @RequestParam String password,
+                                                       HttpSession session) throws ApiNotFoundException {
         User user=userRepository.findByName(name);
+
+        if (null == user)
+            user=userRepository.findByPhoneNumber(name);
 
         if (null == user)
             throw new ApiNotFoundException("no such user");
@@ -54,6 +57,10 @@ public class UserCommonController {
     @Transactional
     public ResponseEntity<RESTfulResponse<User>> getCurrentUser(HttpSession session){
         Integer userId=(Integer) session.getAttribute("userId");
+
+        if (null == userId)
+            throw new ApiNotFoundException("please login");
+
         User user=userRepository.findById(userId).orElse(null);
 
         RESTfulResponse<User> response=RESTfulResponse.ok();
