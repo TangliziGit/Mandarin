@@ -1,5 +1,6 @@
 package org.a3.mandarin.runner;
 
+import org.a3.mandarin.back.model.BookDescriptionModel;
 import org.a3.mandarin.common.dao.repository.*;
 import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.RoleType;
@@ -76,8 +77,10 @@ class Initializer {
         Book book12=new Book();
         Book book2=new Book();
 
-        BookDescription bookDescription1=new BookDescription("123456", "Book1", "Author1", 100, "F4-393-1510");
-        BookDescription bookDescription2=new BookDescription("223456", "Book2", "Author2", 120, "F4-393-1511");
+        BookDescription bookDescription1=new BookDescription("123456", "Book1", "Author1", 100,
+                "Floor 2 - Shelf 1", 2000, "Publisher", "summary", category1);
+        BookDescription bookDescription2=new BookDescription("223456", "Book2", "Author2", 120,
+                "Florr 2 - Shelf 1", 2000, "Publisher", "summary", category2);
 
         bookDescription1.getBooks().add(book11);
         bookDescription1.getBooks().add(book12);
@@ -87,8 +90,8 @@ class Initializer {
         book12.setBookDescription(bookDescription1);
         book2.setBookDescription(bookDescription2);
 
-        bookDescription1.setCategory(category1);
-        bookDescription2.setCategory(category2);
+        // bookDescription1.setCategory(category1);
+        // bookDescription2.setCategory(category2);
 
         categoryRepository.saveAndFlush(category1);
         categoryRepository.saveAndFlush(category2);

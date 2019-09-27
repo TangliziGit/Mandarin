@@ -33,8 +33,8 @@ public class Book {
 
     public Book() {}
 
-    public Book(BookDescription bookDescription) {
-        this.bookDescription = bookDescription;
+    public Book(BookDescription bookDescription){
+        this.bookDescription=bookDescription;
     }
 
     public BookDescription getBookDescription() {

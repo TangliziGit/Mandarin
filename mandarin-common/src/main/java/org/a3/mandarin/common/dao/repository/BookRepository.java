@@ -36,4 +36,5 @@ public interface BookRepository extends JpaRepository<Book, Integer>, JpaSpecifi
             "where u.user_id=?1 " +
             "  and bh.borrowing_end_time is null", nativeQuery = true)
     List<Book> findBorrowingBooksByUserId(Integer userId);
+    List<Book> findByBookDescription_ISBN(String isbn);
 }

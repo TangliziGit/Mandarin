@@ -25,6 +25,15 @@ public class BookDescription {
     @Column
     private String location;
 
+    @Column
+    private Integer publishYear;
+
+    @Column
+    private String publisher;
+
+    @Column
+    private String summary;
+
     @OneToMany(mappedBy = "bookDescription", cascade = CascadeType.PERSIST)
     @JsonIgnore
     private Set<Book> books=new HashSet<>();
@@ -35,12 +44,42 @@ public class BookDescription {
 
     public BookDescription() {}
 
-    public BookDescription(String ISBN, String title, String author, Integer price, String location) {
+    public BookDescription(String ISBN, String title, String author, Integer price,
+                           String location, Integer publishYear, String publisher, String summary,
+                           Category category) {
         this.ISBN = ISBN;
         this.title = title;
         this.author = author;
         this.price = price;
         this.location = location;
+        this.publishYear = publishYear;
+        this.publisher = publisher;
+        this.summary = summary;
+        this.category = category;
+    }
+
+    public Integer getPublishYear() {
+        return publishYear;
+    }
+
+    public void setPublishYear(Integer publishYear) {
+        this.publishYear = publishYear;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public Category getCategory() {

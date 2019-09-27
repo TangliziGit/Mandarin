@@ -2,6 +2,7 @@ package org.a3.mandarin.back.controller;
 
 import com.sun.org.apache.regexp.internal.RE;
 import org.a3.mandarin.back.exception.ApiNotFoundException;
+import org.a3.mandarin.back.model.BookDescriptionModel;
 import org.a3.mandarin.back.model.RESTfulResponse;
 import org.a3.mandarin.common.annotation.Permission;
 import org.a3.mandarin.common.dao.repository.*;
@@ -31,6 +32,8 @@ public class BookController {
     private BookDescriptionRepository bookDescriptionRepository;
     @Resource
     private DeletingHistoryRepository deletingHistoryRepository;
+    @Resource
+    private CategoryRepository categoryRepository;
 
     @PostMapping("/book")
     @ResponseBody
@@ -41,9 +44,17 @@ public class BookController {
                                                                   @RequestParam String author,
                                                                   @RequestParam Integer price,
                                                                   @RequestParam String location,
+                                                                  @RequestParam String categoryName,
+                                                                  @RequestParam Integer publishYear,
+                                                                  @RequestParam String publisher,
+                                                                  @RequestParam String summary,
                                                                   @RequestParam Integer copyNumber){
         // TODO: check string isEmpty
         BookDescription tmpBookDescription = bookDescriptionRepository.findById(ISBN).orElse(null);
+        Category category=categoryRepository.findByCategoryNameEquals(categoryName);
+
+        if (null == category)
+            throw new ApiNotFoundException("no such category");
 
         if (null != tmpBookDescription)
             throw new ApiNotFoundException("such book exists");
@@ -51,7 +62,8 @@ public class BookController {
         if (copyNumber <= 0)
             throw new ApiNotFoundException("please enter a correct copy number");
 
-        BookDescription bookDescription = new BookDescription(ISBN, title,  author, price,  location);
+        BookDescription bookDescription = new BookDescription(ISBN, title,  author, price,
+                location, publishYear, publisher, summary, category);
         List<Integer> bookIdList=new ArrayList<>();
 
         for (int count=0; count<copyNumber; count++) {
@@ -77,9 +89,17 @@ public class BookController {
                                                       @RequestParam String title,
                                                       @RequestParam String author,
                                                       @RequestParam Integer price,
-                                                      @RequestParam String location){
+                                                      @RequestParam String location,
+                                                      @RequestParam String categoryName,
+                                                      @RequestParam Integer publishYear,
+                                                      @RequestParam String publisher,
+                                                      @RequestParam String summary){
         // TODO: check string isEmpty
         Book book=bookRepository.findById(bookId).orElse(null);
+        Category category=categoryRepository.findByCategoryNameEquals(categoryName);
+
+        if (null == category)
+            throw new ApiNotFoundException("no such category");
 
         if (null == book)
             throw new ApiNotFoundException("no such book");
@@ -90,6 +110,10 @@ public class BookController {
         bookDescription.setAuthor(author);
         bookDescription.setPrice(price);
         bookDescription.setLocation(location);
+        bookDescription.setCategory(category);
+        bookDescription.setPublisher(publisher);
+        bookDescription.setPublishYear(publishYear);
+        bookDescription.setSummary(summary);
 
         bookDescriptionRepository.save(bookDescription);
         return ResponseEntity.ok(RESTfulResponse.ok());
