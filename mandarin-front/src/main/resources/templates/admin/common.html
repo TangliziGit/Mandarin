@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:fragment="head">
-        <title>Mandarin - Administrator</title>>
+    <th:block th:fragment="heads">
+        <title>Mandarin - Administrator</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="">
@@ -43,7 +43,7 @@
                     <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center" >
                         <!-- Logout    -->
                         <li class="nav-item"><strong id="username" class="d-none d-sm-inline" style="text-decoration: underline" th:text="${session.userName}"></strong></li>
-                        <li class="nav-item"><a href="login.html" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out"></i></a></li>
+                        <li class="nav-item"><a href="/admin/login" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -75,24 +75,109 @@
     <script th:src="@{/js/front.js}"></script>
 </th:block>
 
+<th:block th:fragment="search_scripts">
+    <script src="https://cdn.bootcss.com/handlebars.js/4.2.0/handlebars.min.js"></script>
+    <script src="http://identicon.net/js/vendor/identicon.js"></script>
+    <script src="http://identicon.net/js/vendor/pnglib.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+    <script src="http://identicon.net/js/vendor/sha.js"></script>
+</th:block>
 
-<script th:fragment="username">
-    // let user;
-    // $.ajax({
-    //     url: "/api/user/current",
-    //     type: "GET",
-    //     dataType: "json",
-    //     success: function (resp) {
-    //         console.log(resp);
-    //         user=resp.data;
-    //         $("#username").html(resp.data.name);
-    //     },
-    //     error: function (resp) {
-    //         alert(resp.message);
-    //         window.location.href="/admin/login";
-    //     }
-    // })
-</script>
+<th:block th:fragment="search_result_template">
+    <script id="librarian-result-template" type="text/x-handlebars-template">
+        <div class="col-3" id="librarian-{{userId}}">
+            <div class="client card">
+                <div class="card-close">
+                    <div class="dropdown">
+                        <button type="button" id="closeCard2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                            <div aria-labelledby="closeCard2" class="dropdown-menu dropdown-menu-right has-shadow">
+                                <a id="delete-librarian-{{userId}}" onclick="deleteLibrarian({{userId}})" class="dropdown-item remove"> <i class="fa fa-times"></i>Delete</a>
+                                <a data-target="#edit-librarian-{{userId}}" data-toggle="modal" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a>
+                            </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="client-avatar"><img src="{{avatar}}" alt="..." class="rounded-circle" style="border: 0px solid gray"></div>
+                    <div class="client-title text-center">
+                        <h3>{{name}}</h3>
+                    </div>
+                    <div class="client-info">
+                        <div class="row">
+                            <div class="col-12">
+                                <p><small>Email:</small> <strong>{{email}}</strong></p>
+                                <p><small>Phone Number:</small> <strong>{{phoneNumber}}</strong></p>
+                                <p><small>Sign Up Time:</small> <strong>{{signUpTime}}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal-->
+            <div id="edit-librarian-{{userId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+                <div role="document" class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 id="exampleModalLabel" class="modal-title">Edit Modal</h4>
+                            <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input id="edit-librarian-name-{{userId}}" type="text" value="{{name}}" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input id="edit-librarian-email-{{userId}}" type="email" value="{{email}}" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input id="edit-librarian-phoneNumber-{{userId}}" type="text" value="{{phoneNumber}}" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input id="edit-librarian-password--{{userId}}" type="password" value="Password" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                            <button type="button" data-dismiss="modal" onclick="editLibrarian({{userId}})" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+</th:block>
+
+<th:block th:fragment="search_searching_words_template">
+    <script id="searching-words" type="text/x-handlebars-template">
+        <div style="color: #808080;" class="col-sm-12 text-center">
+            <h1>Now searching ...</h1>
+            <p>Please wait a moment</p>
+        </div>
+    </script>
+</th:block>
+
+<th:block th:fragment="search_empty_words_template">
+    <script id="empty-words" type="text/x-handlebars-template">
+        <div style="color: #808080;" class="col-sm-12 text-center">
+            <h1>The search result is empty</h1>
+            <p>Please enter another keyword</p>
+        </div>
+    </script>
+</th:block>
+
+
+<th:block th:fragment="search_error_words_template">
+    <script id="error-words" type="text/x-handlebars-template">
+        <div style="color: #808080;" class="col-sm-12 text-center">
+            <h1>Something error</h1>
+            <p>{{message}}</p>
+        </div>
+    </script>
+</th:block>
 
 </body>
 </html>
