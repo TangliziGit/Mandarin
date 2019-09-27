@@ -48,4 +48,16 @@ public class UserCommonController {
 
         return ResponseEntity.ok(RESTfulResponse.ok());
     }
+
+    @GetMapping("/user/current")
+    @ResponseBody
+    @Transactional
+    public ResponseEntity<RESTfulResponse<User>> getCurrentUser(HttpSession session){
+        Integer userId=(Integer) session.getAttribute("userId");
+        User user=userRepository.findById(userId).orElse(null);
+
+        RESTfulResponse<User> response=RESTfulResponse.ok();
+        response.setData(user);
+        return ResponseEntity.ok(response);
+    }
 }
