@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="admin/common :: heads"></th:block>
+</head>
+<body>
+<div class="page">
+    <div th:replace="admin/common :: navbar"></div>
+
+    <div class="page-content d-flex align-items-stretch">
+        <!-- Side Navbar -->
+        <nav class="side-navbar">
+            <ul class="list-unstyled">
+                <li><a href="/admin/index"> <i class="icon-home"></i>Welcome </a></li>
+                <li><a href="#librarian-dropdown" aria-expanded="false" data-toggle="collapse">
+                    <i class="icon-interface-windows"></i>Librarian Management </a>
+                    <ul id="librarian-dropdown" class="collapse list-unstyled ">
+                        <li><a href="/admin/search">Search and manage</a></li>
+                        <li><a href="/admin/register">Register</a></li>
+                    </ul>
+                </li>
+                <li class="active"><a href="/admin/setting"> <i class="icon-grid"></i>Settings Management </a></li>
+                <li><a href="/admin/login"> <i class="icon-interface-windows"></i>Login page </a></li>
+            </ul><span class="heading">Extras</span>
+            <ul class="list-unstyled">
+                <li> <a href="/admin/about"> <i class="icon-flask"></i>About us </a></li>
+            </ul>
+        </nav>
+
+        <div class="content-inner">
+            <!-- Page Header-->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">Setting Management</h2>
+                </div>
+            </header>
+
+            <!-- Form Elements -->
+            <section class="forms">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-close">
+                            <div class="dropdown">
+                                <!-- button type="button" id="closeCard5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button-->
+                                <!-- div aria-labelledby="closeCard5" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div -->
+                            </div>
+                        </div>
+                        <div class="card-header d-flex align-items-center">
+                            <h3 class="h4">Setting form</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-horizontal">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 form-control-label">Fine</label>
+                                    <div class="col-sm-9">
+                                        <input id="fine" type="number" class="form-control">
+                                        <small class="help-block-none">Modify book fine value. (default: 1 yuan/ day)</small>
+                                    </div>
+                                </div>
+                                <div class="line"></div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 form-control-label">Period</label>
+                                    <div class="col-sm-9">
+                                        <input id="period" type="number" class="form-control">
+                                        <small class="help-block-none">Modify book return period. (default: 30 days)</small>
+                                    </div>
+                                </div>
+                                <div class="line"></div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 form-control-label">deposit</label>
+                                    <div class="col-sm-9">
+                                        <input id="deposit" type="number" class="form-control">
+                                        <small class="help-block-none">Modify reader security deposit. (default: 300 yuan)</small>
+                                    </div>
+                                </div>
+
+                                <div class="line"></div>
+                                <div class="form-group row">
+                                    <div class="col-sm-4 offset-sm-3">
+                                        <button class="btn btn-secondary">Cancel</button>
+                                        <button id="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Page Footer-->
+            <div th:replace="admin/common :: footer"></div>
+            </div>
+        </div>
+    </div>
+    <!-- JavaScript files-->
+    <div th:replace="admin/common :: scripts"></div>
+
+    <script>
+        function bindValue(id) {
+            $.ajax({
+                url: "/api/setting/"+id,
+                type: "GET",
+                dataType: "json",
+                success: function (resp) {
+                    $("#"+id).attr("placeholder", resp.data.value);
+                },
+                error: function (resp) {
+                    alert(resp.message);
+                }
+            })
+        }
+
+        bindValue("fine");
+        bindValue("deposit");
+        bindValue("period");
+
+        $("#submit").bind("click", function () {
+            let formData = new FormData();
+            formData.append("fine", $("#fine").val());
+            formData.append("deposit", $("#deposit").val());
+            formData.append("period", $("#period").val());
+
+            $.ajax({
+                url: "/api/setting/",
+                type: "PUT",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (resp) {
+                    alert("success");
+                },
+                error: function (resp) {
+                    alert(resp.message);
+                }
+            });
+        })
+    </script>
+</body>
+</html>

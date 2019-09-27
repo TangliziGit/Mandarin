@@ -66,8 +66,6 @@ public class ReaderController {
         user.getRoles().add(RoleUtil.readerRole);
         userRepository.save(user);
 
-        session.setAttribute("userId", user.getUserId());
-        response.addCookie(new Cookie("userId", user.getUserId().toString()));
         return ResponseEntity.status(HttpStatus.CREATED).body(RESTfulResponse.ok());
     }
 

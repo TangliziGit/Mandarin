@@ -56,8 +56,6 @@ public class LibrarianController {
         user.getRoles().add(RoleUtil.librarianRole);
         userRepository.save(user);
 
-        session.setAttribute("userId", user.getUserId());
-        response.addCookie(new Cookie("userId", user.getUserId().toString()));
         return ResponseEntity.status(HttpStatus.CREATED).body(RESTfulResponse.ok());
     }
 
