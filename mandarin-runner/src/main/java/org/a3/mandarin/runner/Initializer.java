@@ -4,6 +4,7 @@ import org.a3.mandarin.common.dao.repository.*;
 import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.RoleType;
 import org.a3.mandarin.common.util.RoleUtil;
+import org.a3.mandarin.common.util.SettingUtil;
 import org.springframework.context.ApplicationContext;
 
 import java.time.Instant;
@@ -17,6 +18,7 @@ class Initializer {
     private ReservationHistoryRepository reservationHistoryRepository;
     private DeletingHistoryRepository deletingHistoryRepository;
     private BorrowingHistoryRepository borrowingHistoryRepository;
+    private SettingRepository settingRepository;
 
     Initializer(ApplicationContext applicationContext){
         this.roleRepository=applicationContext.getBean(RoleRepository.class);
@@ -27,6 +29,7 @@ class Initializer {
         this.reservationHistoryRepository=applicationContext.getBean(ReservationHistoryRepository.class);
         this.deletingHistoryRepository=applicationContext.getBean(DeletingHistoryRepository.class);
         this.borrowingHistoryRepository=applicationContext.getBean(BorrowingHistoryRepository.class);
+        this.settingRepository=applicationContext.getBean(SettingRepository.class);
     }
 
     void init(){
@@ -41,6 +44,10 @@ class Initializer {
         roleRepository.save(new Role(RoleType.LIBRARIAN.toString()));
         roleRepository.save(new Role(RoleType.ADMIN.toString()));
         RoleUtil.initRoles();
+
+        settingRepository.save(new Setting(SettingUtil.FINE, 1.0));
+        settingRepository.save(new Setting(SettingUtil.PERIOD, 30.0));
+        settingRepository.save(new Setting(SettingUtil.DEPOSIT, 300.0));
     }
 
     private void generateMockUsers(){

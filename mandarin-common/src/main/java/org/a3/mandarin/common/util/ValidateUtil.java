@@ -21,7 +21,7 @@ public class ValidateUtil {
         return true;
     }
     
-    public static Boolean validateNumber(Integer number){
+    public static Boolean validateNumber(Double number){
         // TODO
         return true;
     }

@@ -1,10 +1,6 @@
 package org.a3.mandarin.common.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "setting")
@@ -17,23 +13,18 @@ public class Setting {
     private String name;
 
     @Column(nullable = false)
-    private Integer number;
+    private Double value;
 	
     public Setting() {}
     
-    public Setting(Integer settingId, String name, Integer number) {
-    	this.settingId = settingId;
+    public Setting(String name, Double value) {
     	this.name = name;
-    	this.number = number;
+    	this.value = value;
     }
     
     public Integer getSettingId() {
     	return this.settingId;
     }
-    
-    public void setSettingId(Integer settingId) {
-    	this.settingId = settingId;
-    } 
     
     public String getName() {
     	return this.name;
@@ -43,12 +34,12 @@ public class Setting {
     	this.name = name;
     }
     
-    public Integer getNumber() {
-    	return this.number;
+    public Double getValue() {
+    	return this.value;
     }
     
-    public void setNumber(Integer number) {
-    	this.number = number;
+    public void setValue(Double value) {
+    	this.value = value;
     }
 	
 }
