@@ -40,7 +40,7 @@ public class BookController {
     public ResponseEntity<RESTfulResponse<List<Integer>>> addBook(@RequestParam String ISBN,
                                                                   @RequestParam String title,
                                                                   @RequestParam String author,
-                                                                  @RequestParam Integer price,
+                                                                  @RequestParam Double price,
                                                                   @RequestParam String location,
                                                                   @RequestParam String categoryName,
                                                                   @RequestParam Integer publishYear,
@@ -75,8 +75,9 @@ public class BookController {
 
         RESTfulResponse<List<Integer>> response=RESTfulResponse.ok();
         response.setData(bookIdList);
+        System.out.println(bookIdList);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(RESTfulResponse.ok());
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/book/{id}")
@@ -86,7 +87,7 @@ public class BookController {
     public ResponseEntity<RESTfulResponse> updateBook(@PathVariable("id") Integer bookId,
                                                       @RequestParam String title,
                                                       @RequestParam String author,
-                                                      @RequestParam Integer price,
+                                                      @RequestParam Double price,
                                                       @RequestParam String location,
                                                       @RequestParam String categoryName,
                                                       @RequestParam Integer publishYear,

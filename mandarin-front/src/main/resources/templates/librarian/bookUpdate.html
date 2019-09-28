@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Purple Admin</title>
+  <th:block th:replace="librarian/common :: head"></th:block>
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <div th:replace="librarian/common :: navbar"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <div class="row row-offcanvas row-offcanvas-right">
+        <!-- partial:../../partials/_sidebar.html -->
+       <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">
+                <span class="menu-title">Home</span>
+             
+                <i class="mdi mdi-home menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-title">Reader Manage</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+              </a>
+              <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="register.html">Register</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="deleteReader.html">Reader Delete</a></li>
+                       <li class="nav-item"> <a class="nav-link" href="updateReader.html">ReaderUpdate</a></li>
+                </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="category.html">
+                <span class="menu-title">Category Manage</span>
+                <i class="mdi mdi-contacts menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bookManage.html">
+                <span class="menu-title">Book Manage</span>
+                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="history.html">
+                <span class="menu-title">Delete History</span>
+                <i class="mdi mdi-chart-bar menu-icon"></i>
+              </a>
+            </li>
+            </ul>
+
+
+
+
+        </nav>
+        <!-- partial -->
+        <div class="content-wrapper">
+          <div class="row">
+         <!--    <div class="col-md-6 d-flex align-items-stretch grid-margin">
+              <div class="row flex-grow"> -->
+                <div class="col-12 grid-margin">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">Book Update</h4>
+                      <p class="card-description">
+                        Please update the book information at the form. 
+                      </p>
+                        <div class="form-group row">
+                            <label for="exampleInputtext2" class="col-sm-3 col-form-label">id</label>
+                            <div class="col-sm-9"><input type="text" class="form-control" id="id" placeholder="Enter the id"></div>
+
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputPassword2" class="col-sm-3 col-form-label">title</label>
+                            <div class="col-sm-9">
+
+                                <input type="text" class="form-control" id="title" placeholder="Enter the title">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputtext2" class="col-sm-3 col-form-label">author</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="author" placeholder="Enter the author">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputPassword2" class="col-sm-3 col-form-label">price</label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="price" placeholder="Enter the price">
+                                <small style="color: grey">must be a number</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputtext2" class="col-sm-3 col-form-label">location</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="location" placeholder="Enter the location">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="exampleInputtext2" class="col-sm-3 col-form-label">categoryName</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="categoryName" placeholder="Enter the categoryName">
+                                <small style="color: grey">category must exist</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputtext2" class="col-sm-3 col-form-label">publishYear</label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="publishYear" placeholder="Enter the publishYear">
+                                <small style="color: grey">must be a number</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputtext2" class="col-sm-3 col-form-label">publisher</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="publisher" placeholder="Enter the publisher">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputtext2" class="col-sm-3 col-form-label">summary</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="summary" placeholder="Enter the summary">
+                            </div>
+                        </div>
+                        <button  class="btn btn-success mr-2" onclick="insert()">Submit</button>
+                       
+
+                    </div>
+                  </div>
+                </div>
+               
+           
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+    <div th:replace="librarian/common :: footer"></div>
+        <!-- partial -->
+      </div>
+      <!-- row-offcanvas ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <div th:replace="librarian/common :: scripts"></div>
+  <!-- End custom js for this page-->
+  <script>
+      function insert(){
+        var id = $("#id").val();
+
+          var title = $("#title").val();
+          var author = $("#author").val();
+          var price = $("#price").val();
+          var location = $("#location").val();
+          var categoryName = $("#categoryName").val();
+          var publishYear = $("#publishYear").val();
+          var publisher = $("#publisher").val();
+          var summary = $("#summary").val();
+          var data = {
+              "id":id,
+              "title":title,
+              "author":author,
+              "price":price,
+              "location":location,
+              "categoryName":categoryName,
+              "publishYear":publishYear,
+              "publisher":publisher,
+              "summary":summary,
+          };
+        $.ajax({
+          url:"/api/book/"+id,
+          type:"put",
+          datatype:"json",
+          data: getFormData(data),
+          processData: false,
+          contentType: false,
+          success:function(data){
+                console.log(data);
+                alert("success");
+            },
+           error:function (data) {      
+               alert(data.message);
+            }
+        });
+      }
+    </script>
+</body>
+
+</html>

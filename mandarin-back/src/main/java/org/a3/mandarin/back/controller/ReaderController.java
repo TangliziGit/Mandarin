@@ -183,10 +183,11 @@ public class ReaderController {
         if (!targetUser.getRoles().contains(RoleUtil.readerRole))
             throw new ApiNotFoundException("this user is not a reader");
 
-        if (borrowingFineHistoryRepository.findTotalFineAmountByUserId(targetUserId)>0)
-            throw new ApiNotFoundException("this reader did not pay his fine");
+        // TODO: TEST
+        // if (borrowingFineHistoryRepository.findTotalFineAmountByUserId(targetUserId)>0)
+        //    throw new ApiNotFoundException("this reader did not pay his fine");
 
-        if (null != bookRepository.findBorrowingBooksByUserId(targetUserId))
+        if (bookRepository.findBorrowingBooksByUserId(targetUserId).size()!=0)
             throw new ApiNotFoundException("this reader did not return his books");
 
         userRepository.deleteById(targetUserId);

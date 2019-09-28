@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Purple Admin</title>
+    <th:block th:replace="librarian/common :: head"></th:block>
+</head>
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+      <div th:replace="librarian/common :: navbar"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <div class="row row-offcanvas row-offcanvas-right">
+        <!-- partial:../../partials/_sidebar.html -->
+       <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">
+                <span class="menu-title">Home</span>
+             
+                <i class="mdi mdi-home menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-title">Reader Manage</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+              </a>
+              <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="register.html">Register</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="deleteReader.html">Reader Delete</a></li>
+                       <li class="nav-item"> <a class="nav-link" href="updateReader.html">ReaderUpdate</a></li>
+                </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="category.html">
+                <span class="menu-title">Category Manage</span>
+                <i class="mdi mdi-contacts menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bookManage.html">
+                <span class="menu-title">Book Manage</span>
+                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="history.html">
+                <span class="menu-title">Delete History</span>
+                <i class="mdi mdi-chart-bar menu-icon"></i>
+              </a>
+            </li>
+            </ul>
+
+
+
+
+        </nav>
+        <!-- partial -->
+        <div class="content-wrapper">
+
+ <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">Register</h2>
+                </div>
+            </header>
+
+            <!-- Form Elements -->
+            <section class="forms">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-close">
+                    </div>
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">Register form</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-horizontal">
+                            <div class="form-group row">
+                                <label class="col-sm-3 form-control-label">Name</label>
+                                <div class="col-sm-9">
+                                    <input id="name" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="line"></div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 form-control-label">Email</label>
+                                <div class="col-sm-9">
+                                    <input id="email" type="email" class="form-control"><!-- small class="help-block-none">A block of help text that breaks onto a new line and may extend beyond one line.</small -->
+                                </div>
+                            </div>
+                            <div class="line"></div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 form-control-label">Phone Number</label>
+                                <div class="col-sm-9">
+                                    <input id="phoneNumber" type="text" class="form-control"><!-- small class="help-block-none"></small -->
+                                </div>
+                            </div>
+                            <div class="line"></div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 form-control-label">Password</label>
+                                <div class="col-sm-9">
+                                    <input id="password" type="password" name="password" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="line"></div>
+                            <div class="form-group row">
+                                <div class="col-sm-4 offset-sm-3">
+                                    <button class="btn btn-secondary">Cancel</button>
+                                    <button id="submit" class="btn btn-primary">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </section>
+        
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+          <div th:replace="librarian/common :: footer"></div>
+        <!-- partial -->
+      </div>
+      <!-- row-offcanvas ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+  <div th:replace="librarian/common :: scripts"></div>
+
+    <script>
+        $("#submit").bind("click", function () {
+            let formData=new FormData();
+            formData.append("name", $("#name").val());
+            formData.append("phoneNumber", $("#phoneNumber").val());
+            formData.append("email", $("#email").val());
+            formData.append("password", $("#password").val());
+
+            $.ajax({
+                url: "/api/reader",
+                type: "POST",
+                dataType: "json",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (resp){
+                    alert("success");
+                    $("#name").val("");
+                    $("#phoneNumber").val("");
+                    $("#email").val("");
+                    $("#password").val("");
+                },
+                error: function (resp) {
+                    alert(resp.message);
+                }
+            });
+        })
+    </script>
+
+</body>
+
+</html>

@@ -51,35 +51,35 @@ class Initializer {
     }
 
     private void generateMockUsers(){
-        User librarian=new User("librarian", "1234", "1234@1234.com", Instant.now(), "passwd");
+        User librarian=new User("librarian", "18681941718", "librarian@mandarin.com", Instant.now(), "passwd");
         librarian.getRoles().add(RoleUtil.librarianRole);
         userRepository.save(librarian);
 
-        User admin=new User("admin", "2234", "2234@2234.com", Instant.now(), "passwd");
+        User admin=new User("admin", "18681941717", "admin@mandarin.com", Instant.now(), "passwd");
         admin.getRoles().add(RoleUtil.adminRole);
         userRepository.save(admin);
 
-        User reader1=new User("reader1", "3234", "3234@2234.com", Instant.now(), "passwd");
+        User reader1=new User("reader1", "18681941716", "reader1@mandarin.com", Instant.now(), "passwd");
         reader1.getRoles().add(RoleUtil.readerRole);
         userRepository.save(reader1);
 
-        User reader2=new User("reader2", "4234", "4234@2234.com", Instant.now(), "passwd");
+        User reader2=new User("reader2", "18681941715", "reader2@mandarin.com", Instant.now(), "passwd");
         reader2.getRoles().add(RoleUtil.readerRole);
         userRepository.save(reader2);
     }
 
     private void generateMockBooks(){
-        Category category1=new Category("category1");
-        Category category2=new Category("category2");
+        Category category1=new Category("science");
+        Category category2=new Category("technology");
 
         Book book11=new Book();
         Book book12=new Book();
         Book book2=new Book();
 
-        BookDescription bookDescription1=new BookDescription("123456", "Book1", "Author1", 100,
-                "Floor 2 - Shelf 1", 2000, "Publisher", "summary", category1);
-        BookDescription bookDescription2=new BookDescription("223456", "Book2", "Author2", 120,
-                "Floor 2 - Shelf 1", 2000, "Publisher", "summary", category2);
+        BookDescription bookDescription1=new BookDescription("9780393351378", "The Science of Interstellar", "Kip Thorne", 24.95,
+                "Floor 2 - Shelf 1", 2014, "W. W. Norton & Company", "A journey through the otherworldly science behind Christopher Nolan’s highly anticipated film, Interstellar, from executive producer and theoretical physicist Kip Thorne.", category1);
+        BookDescription bookDescription2=new BookDescription("9780132856201", "Computer Networking", "James F. Kurose / Keith W. Ross", 171.60,
+                "Floor 2 - Shelf 1", 2012, "Pearson", "Computer Networking continues with an early emphasis on application-layer paradigms and application programming interfaces (the top layer), encouraging a hands-on experience with protocols and networking concepts, before working down the protocol stack to more abstract layers.", category2);
 
         bookDescription1.getBooks().add(book11);
         bookDescription1.getBooks().add(book12);

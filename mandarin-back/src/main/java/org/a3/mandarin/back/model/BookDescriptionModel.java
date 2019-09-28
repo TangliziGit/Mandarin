@@ -9,7 +9,7 @@ public class BookDescriptionModel {
     private String ISBN;
     private String title;
     private String author;
-    private Integer price;
+    private Double price;
     private String location;
     private Integer publishYear;
     private String publisher;
@@ -56,11 +56,11 @@ public class BookDescriptionModel {
         this.author = author;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

@@ -20,7 +20,7 @@ public class BookDescription {
     private String author;
 
     @Column
-    private Integer price;
+    private Double price;
 
     @Column
     private String location;
@@ -31,7 +31,7 @@ public class BookDescription {
     @Column
     private String publisher;
 
-    @Column
+    @Column(columnDefinition = "VARCHAR(1000)")
     private String summary;
 
     @OneToMany(mappedBy = "bookDescription", cascade = CascadeType.PERSIST)
@@ -44,7 +44,7 @@ public class BookDescription {
 
     public BookDescription() {}
 
-    public BookDescription(String ISBN, String title, String author, Integer price,
+    public BookDescription(String ISBN, String title, String author, Double price,
                            String location, Integer publishYear, String publisher, String summary,
                            Category category) {
         this.ISBN = ISBN;
@@ -110,11 +110,11 @@ public class BookDescription {
         this.author = author;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

@@ -64,4 +64,39 @@ public class FrontPermissionAspect extends AbstractPermissionAspect {
         return joinPoint.proceed();
     }
 
+    @Pointcut("execution(public * org.a3.mandarin.front.controller.LibrarianManagementController.*(..))")
+    public void frontLibrarianPointcut(){}
+
+    @Around(value = "authorize(permission) && frontLibrarianPointcut()", argNames = "joinPoint,permission")
+    public Object librarianDoAround(ProceedingJoinPoint joinPoint, Permission permission) throws Throwable{
+        ServletRequestAttributes attributes=(ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String type="librarian";
+        if (null == attributes)
+            return type+"/404";
+
+        HttpServletRequest request=attributes.getRequest();
+        List<PermissionType> permissionTypes= Arrays.asList(permission.value());
+
+        if (null == request)
+            return type+"/404";
+
+        logger.info("CHECK PERMISSION: "+request.getRequestURL().toString());
+        HttpSession session=request.getSession();
+        if (null == session.getAttribute("userId"))
+            return type+"/403";
+
+        Integer userId=(Integer)session.getAttribute("userId");
+        User user=userRepository.findById(userId).orElse(null);
+
+        if (null == user)
+            return type+"/404";
+
+        logger.info("ROLE TYPE: "+ user.getRoles().toString());
+
+        if (!checkPermission(permissionTypes, user))
+            return type+"/403";
+
+        logger.info("PERMISSION PASSED: "+request.getRequestURL().toString());
+        return joinPoint.proceed();
+    }
 }

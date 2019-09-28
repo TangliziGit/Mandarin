@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Purple Admin</title>
+  <th:block th:replace="librarian/common :: head"></th:block>
+</head>
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">
+      <div class="row">
+        <div class="content-wrapper full-page-wrapper d-flex align-items-center auth-pages">
+          <div class="card col-lg-4 mx-auto">
+            <div class="card-body px-5 py-5">
+              <h2>Mandarin - Librarian</h2>
+              <h3 class="card-title text-left mb-3">Login</h3>
+
+
+
+              <div>
+                <div class="form-group">
+                  <label>Username or PhoneNumber *</label>
+                  <input id="login-username" type="text" name="loginUsername" required data-msg="Please enter your username" class="form-control p_input">
+                </div>
+                <div class="form-group">
+                  <label>Password *</label>
+                  <input id="login-password" type="password" name="loginPassword" required data-msg="Please enter your password" class="form-control p_input">
+                </div>
+<!--                 <div class="form-group d-flex align-items-center justify-content-between">
+                  <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input">
+                        Remember me
+                      </label>
+                  </div>
+                  <a href="#" class="forgot-pass">Forgot password</a>
+                </div> -->
+                <div class="text-center">
+                  <button id="login" class="btn btn-primary btn-block enter-btn">Login</button>
+                </div>
+                <span class="forgot-pass" style="color: gray">Forgot Password?</span><br><small>Please contact the database administrator to reset your password</small>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- row ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <div th:replace="librarian/common :: scripts"></div>
+  <script>
+      $("#login").bind("click", function () {
+        let formData = new FormData();
+        formData.append("name", $("#login-username").val());
+        formData.append("password", $("#login-password").val());
+
+        $.ajax({
+          url: "/api/user/token",
+          type: "POST",
+          dataType: "json",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function (resp) {
+            window.location.href="index.html";
+          },
+          error: function (resp) {
+            alert(resp.message);
+          }
+        })
+      })
+    </script>
+  <!-- endinject -->
+</body>
+
+</html>

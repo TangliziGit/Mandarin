@@ -73,6 +73,9 @@
             $.ajax({
                 url: "/api/user/token",
                 type: "DELETE",
+                success: function (resp) {
+                    console.log(resp);
+                }
             });
             window.location.href="/admin/login";
         });
