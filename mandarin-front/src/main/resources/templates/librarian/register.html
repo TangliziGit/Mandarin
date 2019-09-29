@@ -157,7 +157,7 @@
                     $("#password").val("");
                 },
                 error: function (resp) {
-                    alert(resp.message);
+                    alert(resp.responseJSON.message);
                 }
             });
         })

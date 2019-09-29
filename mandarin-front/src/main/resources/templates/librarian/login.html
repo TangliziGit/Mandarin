@@ -69,10 +69,10 @@
           processData: false,
           contentType: false,
           success: function (resp) {
-            window.location.href="index.html";
+            window.location.href="/librarian/index";
           },
           error: function (resp) {
-            alert(resp.message);
+            alert(resp.responseJSON.message);
           }
         })
       })
