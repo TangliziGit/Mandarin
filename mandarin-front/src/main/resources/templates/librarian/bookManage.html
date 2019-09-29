@@ -97,6 +97,7 @@
                               <th>price</th>
                               <th>location</th>
                               <th>copyNumber</th>
+                              <th>bookId</th>
                               <th>action</th>
                             </tr>
                           </thead>
@@ -123,10 +124,18 @@
   <!-- container-scroller -->
   <!-- plugins:js -->
   <div th:replace="librarian/common :: scripts"></div>
+
+
       <script>
     // $("#select1").bind("click", function(){
+    function join(list){
+      var str="";
+      for (elem of list)
+        str+=list+" ";
+      return str;
+    }
         $.ajax({
-            url: "/api/search/book",
+            url: "/api/search/book/description",
             type: "POST",
             dataType:'json',
             async: false, 
@@ -136,11 +145,12 @@
                 function(i,values){
                     $('#list').append(
                          // "<tr><td>"+values.bookId+"</td></tr>"
-                    "<tr><td>"+values.bookDescriptionModel.isbn+"</td>"+
-                    "<td>"+values.bookDescriptionModel.title+"</td>"+"<td>"+values.bookDescriptionModel.author+"</td>"
-                    +"<td>"+values.bookDescriptionModel.price+"</td>"
-                    +"<td>"+values.bookDescriptionModel.location+"</td>"
-                    +"<td>"+values.bookDescriptionModel.copyNumber+"</td>"
+                    "<tr><td>"+values.isbn+"</td>"+
+                    "<td>"+values.title+"</td>"+"<td>"+values.author+"</td>"
+                    +"<td>"+values.price+"</td>"
+                    +"<td>"+values.location+"</td>"
+                    +"<td>"+values.copyNumber+"</td>"
+                            +"<td>"+values.bookIdList+"</td>"
                     +"<td>"+"<button onclick=\"window.location.href="+"'/librarian/bookUpdate'"+"\">update</button>"+"</td></tr>"
                     );
                 }

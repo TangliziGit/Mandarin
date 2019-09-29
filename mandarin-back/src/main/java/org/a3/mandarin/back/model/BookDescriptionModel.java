@@ -1,8 +1,12 @@
 package org.a3.mandarin.back.model;
 
+import org.a3.mandarin.common.entity.Book;
 import org.a3.mandarin.common.entity.BookDescription;
 import org.a3.mandarin.common.entity.Category;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class BookDescriptionModel {
@@ -16,6 +20,7 @@ public class BookDescriptionModel {
     private String summary;
     private Category category;
     private Integer copyNumber;
+    private List<Integer> bookIdList;
 
     public BookDescriptionModel() {}
 
@@ -30,6 +35,18 @@ public class BookDescriptionModel {
         this.summary = bookDescription.getSummary();
         this.category = bookDescription.getCategory();
         this.copyNumber=copyNumber;
+
+        this.bookIdList=new ArrayList<>();
+        for (Book book: bookDescription.getBooks())
+            this.bookIdList.add(book.getBookId());
+    }
+
+    public List<Integer> getBookIdList() {
+        return bookIdList;
+    }
+
+    public void setBookIdList(List<Integer> bookIdList) {
+        this.bookIdList = bookIdList;
     }
 
     public String getISBN() {
