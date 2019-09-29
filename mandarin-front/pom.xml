@@ -19,6 +19,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.a3</groupId>
+            <artifactId>mandarin-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jdbc</artifactId>
         </dependency>
@@ -53,12 +59,12 @@
     </dependencies>
 
     <build>
-        <plugins>
+        <!-- plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-        </plugins>
+        </plugins -->
     </build>
 
 </project>
