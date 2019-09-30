@@ -31,7 +31,7 @@ public class BookDescription {
     @Column
     private String publisher;
 
-    @Column(columnDefinition = "VARCHAR(1000)")
+    @Column(columnDefinition = "LONGTEXT")
     private String summary;
 
     @OneToMany(mappedBy = "bookDescription", cascade = CascadeType.PERSIST)
