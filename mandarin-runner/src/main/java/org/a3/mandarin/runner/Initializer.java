@@ -7,6 +7,7 @@ import org.a3.mandarin.common.util.RoleUtil;
 import org.a3.mandarin.common.util.SettingUtil;
 import org.springframework.context.ApplicationContext;
 
+import java.time.Duration;
 import java.time.Instant;
 
 class Initializer {
@@ -102,20 +103,27 @@ class Initializer {
     }
 
     private void generateMockUserBookRelation(){
-        Book book=bookRepository.findById(1).orElse(null);
+        Book book1=bookRepository.findById(1).orElse(null);
+        Book book2=bookRepository.findById(2).orElse(null);
         User reader=userRepository.findByName("reader1");
         User librarian=userRepository.findByName("librarian");
 
-        ReservingHistory reservingHistory=new ReservingHistory(book, reader, Instant.now());
-        DeletingHistory deletingHistory=new DeletingHistory(book, librarian, Instant.now());
-        BorrowingHistory borrowingHistory=new BorrowingHistory(book, reader, Instant.now());
-        BorrowingFineHistory borrowingFineHistory=new BorrowingFineHistory(Instant.now());
+        Instant tenDayBefore=Instant.now().minus(Duration.ofDays(10));
+        ReservingHistory reservingHistory=new ReservingHistory(book1, reader, tenDayBefore);
+        DeletingHistory deletingHistory=new DeletingHistory(book1, librarian, tenDayBefore);
+        BorrowingHistory borrowingHistory1=new BorrowingHistory(book1, reader, tenDayBefore);
+        BorrowingHistory borrowingHistory2=new BorrowingHistory(book2, reader, tenDayBefore);
+        BorrowingFineHistory borrowingFineHistory1=new BorrowingFineHistory(tenDayBefore);
+        BorrowingFineHistory borrowingFineHistory2=new BorrowingFineHistory(tenDayBefore);
 
-        borrowingHistory.setBorrowingFineHistory(borrowingFineHistory);
-        borrowingFineHistory.setBorrowingHistory(borrowingHistory);
+        borrowingHistory1.setBorrowingFineHistory(borrowingFineHistory1);
+        borrowingFineHistory1.setBorrowingHistory(borrowingHistory1);
+        borrowingHistory2.setBorrowingFineHistory(borrowingFineHistory2);
+        borrowingFineHistory2.setBorrowingHistory(borrowingHistory2);
 
         reservationHistoryRepository.save(reservingHistory);
         deletingHistoryRepository.save(deletingHistory);
-        borrowingHistoryRepository.save(borrowingHistory);
+        borrowingHistoryRepository.save(borrowingHistory1);
+        borrowingHistoryRepository.save(borrowingHistory2);
     }
 }

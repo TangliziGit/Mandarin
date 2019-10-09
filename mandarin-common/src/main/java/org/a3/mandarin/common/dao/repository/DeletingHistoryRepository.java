@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.List;
 
 public interface DeletingHistoryRepository extends JpaRepository<DeletingHistory, Integer>, JpaSpecificationExecutor<DeletingHistory> {
+    List<DeletingHistory> findByBook_BookId(Integer bookId);
     List<DeletingHistory> findByLibrarian_UserId(Integer userId);
 }
