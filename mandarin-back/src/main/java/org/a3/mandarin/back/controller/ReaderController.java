@@ -163,8 +163,7 @@ public class ReaderController {
         validateOperatorPermission(targetUser, operatorUser);
 
         RESTfulResponse<Integer> response=RESTfulResponse.ok();
-        // TODO
-        // response.setData(borrowingFineHistoryRepository.findTotalFineAmountByUserId(targetUserId));
+        response.setData(borrowingFineHistoryRepository.findTotalFineAmountByUserId(targetUserId));
 
         return ResponseEntity.ok(response);
     }
@@ -183,9 +182,8 @@ public class ReaderController {
         if (!targetUser.getRoles().contains(RoleUtil.readerRole))
             throw new ApiNotFoundException("this user is not a reader");
 
-        // TODO: TEST
-        // if (borrowingFineHistoryRepository.findTotalFineAmountByUserId(targetUserId)>0)
-        //    throw new ApiNotFoundException("this reader did not pay his fine");
+        if (borrowingFineHistoryRepository.findTotalFineAmountByUserId(targetUserId)>0)
+           throw new ApiNotFoundException("this reader did not pay his fine");
 
         if (bookRepository.findBorrowingBooksByUserId(targetUserId).size()!=0)
             throw new ApiNotFoundException("this reader did not return his books");
