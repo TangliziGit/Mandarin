@@ -47,7 +47,6 @@ public class BookController {
                                                                   @RequestParam String publisher,
                                                                   @RequestParam String summary,
                                                                   @RequestParam Integer copyNumber){
-        // TODO: check string isEmpty
         BookDescription tmpBookDescription = bookDescriptionRepository.findById(ISBN).orElse(null);
         Category category=categoryRepository.findByCategoryNameEquals(categoryName);
 
@@ -70,7 +69,6 @@ public class BookController {
             bookRepository.saveAndFlush(book);
             bookIdList.add(book.getBookId());
         }
-        // TODO: test this
         bookDescriptionRepository.save(bookDescription);
 
         RESTfulResponse<List<Integer>> response=RESTfulResponse.ok();
@@ -93,7 +91,6 @@ public class BookController {
                                                       @RequestParam Integer publishYear,
                                                       @RequestParam String publisher,
                                                       @RequestParam String summary){
-        // TODO: check string isEmpty
         Book book=bookRepository.findById(bookId).orElse(null);
         Category category=categoryRepository.findByCategoryNameEquals(categoryName);
 

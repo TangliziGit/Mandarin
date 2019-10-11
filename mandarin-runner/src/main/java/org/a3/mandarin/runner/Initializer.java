@@ -2,6 +2,7 @@ package org.a3.mandarin.runner;
 
 import org.a3.mandarin.common.dao.repository.*;
 import org.a3.mandarin.common.entity.*;
+import org.a3.mandarin.common.enums.IncomeType;
 import org.a3.mandarin.common.enums.RoleType;
 import org.a3.mandarin.common.util.RoleUtil;
 import org.a3.mandarin.common.util.SettingUtil;
@@ -20,6 +21,7 @@ class Initializer {
     private final DeletingHistoryRepository deletingHistoryRepository;
     private final BorrowingHistoryRepository borrowingHistoryRepository;
     private final SettingRepository settingRepository;
+    private final IncomeRepository incomeRepository;
 
     Initializer(ApplicationContext applicationContext){
         this.roleRepository=applicationContext.getBean(RoleRepository.class);
@@ -31,6 +33,7 @@ class Initializer {
         this.deletingHistoryRepository=applicationContext.getBean(DeletingHistoryRepository.class);
         this.borrowingHistoryRepository=applicationContext.getBean(BorrowingHistoryRepository.class);
         this.settingRepository=applicationContext.getBean(SettingRepository.class);
+        this.incomeRepository=applicationContext.getBean(IncomeRepository.class);
     }
 
     void init(){
@@ -47,7 +50,7 @@ class Initializer {
         RoleUtil.initRoles();
 
         settingRepository.save(new Setting(SettingUtil.FINE, 1.0));
-        settingRepository.save(new Setting(SettingUtil.PERIOD, 30.0));
+        settingRepository.save(new Setting(SettingUtil.BOOK_RETURN_PERIOD, 30.0));
         settingRepository.save(new Setting(SettingUtil.DEPOSIT, 300.0));
     }
 
@@ -63,10 +66,12 @@ class Initializer {
         User reader1=new User("reader1", "18681941716", "reader1@mandarin.com", Instant.now(), "passwd");
         reader1.getRoles().add(RoleUtil.readerRole);
         userRepository.save(reader1);
+        incomeRepository.save(new Income(IncomeType.DEPOSIT.name(), settingRepository.findByName(SettingUtil.DEPOSIT).getValue(), reader1, Instant.now()));
 
         User reader2=new User("reader2", "18681941715", "reader2@mandarin.com", Instant.now(), "passwd");
         reader2.getRoles().add(RoleUtil.readerRole);
         userRepository.save(reader2);
+        incomeRepository.save(new Income(IncomeType.DEPOSIT.name(), settingRepository.findByName(SettingUtil.DEPOSIT).getValue(), reader2, Instant.now()));
     }
 
     private void generateMockBooks(){

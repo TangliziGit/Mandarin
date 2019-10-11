@@ -3,6 +3,7 @@ package org.a3.mandarin.runner;
 import org.a3.mandarin.back.MandarinBackApplication;
 import org.a3.mandarin.common.MandarinCommonApplication;
 import org.a3.mandarin.common.dao.repository.*;
+import org.a3.mandarin.common.mapper.IncomeSummaryMapper;
 import org.a3.mandarin.front.MandarinFrontApplication;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -47,6 +48,9 @@ public class MandarinRunnerApplicationTests {
 
     @Resource
     protected BorrowingFineHistoryRepository borrowingFineHistoryRepository;
+
+    @Resource
+    protected IncomeSummaryMapper incomeSummaryMapper;
 
     @Before
     public void setup() throws Exception{
