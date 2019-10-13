@@ -6,12 +6,14 @@ import org.a3.mandarin.back.model.RESTfulResponse;
 import org.a3.mandarin.common.annotation.Permission;
 import org.a3.mandarin.common.dao.repository.BookRepository;
 import org.a3.mandarin.common.dao.repository.BorrowingFineHistoryRepository;
+import org.a3.mandarin.common.dao.repository.SettingRepository;
 import org.a3.mandarin.common.dao.repository.UserRepository;
 import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.PermissionType;
 import org.a3.mandarin.common.exception.PayException;
 import org.a3.mandarin.common.util.PayUtil;
 import org.a3.mandarin.common.util.RoleUtil;
+import org.a3.mandarin.common.util.SettingUtil;
 import org.a3.mandarin.common.util.ValidateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,21 +45,22 @@ public class ReaderController {
     @Resource
     private BorrowingFineHistoryRepository borrowingFineHistoryRepository;
 
+    @Resource
+    private SettingRepository settingRepository;
+
     @PostMapping("/reader")
     @ResponseBody
     @Transactional
     @Permission({PermissionType.LIBRARIAN})
-    public ResponseEntity<RESTfulResponse> registerReader(@RequestParam String name,
+    public ResponseEntity<RESTfulResponse<User>> registerReader(@RequestParam String name,
                                                           @RequestParam String password,
                                                           @RequestParam String phoneNumber,
-                                                          @RequestParam String email,
-                                                          HttpSession session,
-                                                          HttpServletResponse response) throws ApiNotFoundException {
+                                                          @RequestParam String email) throws ApiNotFoundException {
         validateUserInformation(password, phoneNumber, email, name, null);
 
         try {
             // TODO: SettingUtil
-            PayUtil.pay(300, "TOKEN");
+            PayUtil.pay(settingRepository.findByName(SettingUtil.DEPOSIT).getValue(), "TOKEN");
         }catch (PayException e){
             throw new ApiNotFoundException("failed to pay deposit");
         }
@@ -66,7 +69,10 @@ public class ReaderController {
         user.getRoles().add(RoleUtil.readerRole);
         userRepository.save(user);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(RESTfulResponse.ok());
+        RESTfulResponse<User> response = RESTfulResponse.ok();
+        response.setData(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/reader/{id}")
