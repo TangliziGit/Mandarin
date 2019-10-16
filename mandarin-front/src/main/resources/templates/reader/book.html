@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <th:block th:replace="reader/common :: heads"></th:block>
+</head>
+<body>
+
+<th:block th:replace="reader/common :: navbar"></th:block>
+
+<main class="page blog-post-list">
+    <section class="clean-block clean-blog-list dark">
+        <div class="container">
+            <div class="block-heading"></div>
+            <div class="block-content">
+                <div class="container">
+                    <div class="row">
+                        <!-- TODO: remove token -->
+                        <div class="col-lg-3"><img class="rounded img-fluid" src="http://106.13.1.40:8081/img/s24966915.jpg?token=GroupA3"></div>
+                        <div class="col-lg-9">
+                            <h3><strong>Computer Networking</strong></h3>
+                            <br>
+                            <h5 class="text-muted">John Smith / Rose</h5>
+                            <h5 class="text-muted">Pearson 2012</h5>
+                            <br>
+                            <button class="btn btn-primary" data-_extension-text-contrast="">+ Reserve</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="box" style=" display: flex; justify-content: space-between; align-items: center;font-size: 23px;line-height: 70px;font-weight: 500;">
+                    <span class="text text-muted" style="margin-right: 20px;">Details</span>
+                    <span style="height:2px; flex-grow: 1; background-color: gray;"></span>
+                </div>
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td style="padding-right: 100px;"><strong>Title</strong></td>
+                        <td>Computer Networking : A Top-Down Approach</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ISBN</strong></td>
+                        <td>123123</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Author</strong></td>
+                        <td>JamesF.Kurose/KeithW.Ross</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Category</strong></td>
+                        <td>Tech.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Publisher</strong></td>
+                        <td>Pearson</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Publish year</strong></td>
+                        <td>2012</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Location</strong></td>
+                        <td>Floor 2 - Shelf 1</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Price</strong></td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Copy number</strong></td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Summary</strong></td>
+                        <td><span class="text-muted text" style="font-size: 40px;line-height: 30px;font-weight: 600;">“</span>Computer Networking continues with an early emphasis on application-layer paradigms and application programming interfaces (the top layer), encouraging a hands-on experience with protocols and networking concepts, before working down the protocol stack to more abstract layers.This book has become the dominant book for this course because of the authors’ reputations, the precis...Computer Networking continues with an early emphasis on application-layer paradigms and application programming interfaces (the top layer)<br><span class="text-muted text" style="font-size: 40px;font-weight: 600;">”</span></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</main>
+
+<th:block th:replace="reader/common :: footer"></th:block>
+<th:block th:replace="reader/common :: scripts"></th:block>
+
+</body>
+</html>
