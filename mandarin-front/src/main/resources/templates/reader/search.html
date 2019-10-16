@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <th:block th:replace="reader/common :: heads"></th:block>
+</head>
+<body>
+
+<th:block th:replace="reader/common :: navbar"></th:block>
+
+<main class="page blog-post-list">
+    <section class="clean-block clean-blog-list dark">
+        <div class="container">
+            <div class="block-heading" style="background-image:url(&quot;reader/img/search_bg.jpg&quot;);">
+                <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="background-color:rgba(255,255,255,0.65);">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+                                <div id="navcol-1" class="collapse navbar-collapse">
+                                    <form target="_self" class="form-inline mr-auto" style="">
+                                        <div class="form-group" style="margin: 35px; width: 743px;">
+                                            <label for="search-field"><i data-v-52de27ee="" class="fa fa-search" style="font-size: 36px; color: rgb(0, 123, 255);"></i></label>
+                                            <input id="search-box" type="search" class="form-control" style="width: 80%; height: 36px; margin: 9px;">
+                                            <button id="search-btn" type="button" data-_extension-text-contrast="" class="btn btn-primary">Search</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="block-content">
+                <div id="search-body">
+                    <div class="container">
+
+                        <div class="row">
+                            <!-- TODO: remove token -->
+                            <div class="col-lg-3"><img class="rounded img-fluid" src="http://106.13.1.40:8081/img/s24966915.jpg?token=GroupA3"></div>
+                            <div class="col-lg-9">
+                                <h3><strong>Computer Networking</strong></h3>
+                                <br>
+                                <h5 class="text-muted">John Smith / Rose</h5>
+                                <h5 class="text-muted">Pearson 2012</h5>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<th:block th:replace="reader/common :: footer"></th:block>
+<th:block th:replace="reader/common :: scripts"></th:block>
+
+</body>
+</html>
