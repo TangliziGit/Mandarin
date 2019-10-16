@@ -88,7 +88,7 @@ public class SearchController {
     @PostMapping("/search/book")
     @ResponseBody
     @Transactional
-    @Permission({PermissionType.LIBRARIAN, PermissionType.READER})
+    // @Permission({PermissionType.LIBRARIAN, PermissionType.READER})
     public ResponseEntity<RESTfulResponse<List<BookModel>>> searchBook(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "limit", defaultValue = "20") Integer limit,
@@ -122,7 +122,7 @@ public class SearchController {
     @PostMapping("/search/book/description")
     @ResponseBody
     @Transactional
-    @Permission({PermissionType.LIBRARIAN, PermissionType.READER})
+    // @Permission({PermissionType.LIBRARIAN, PermissionType.READER})
     public ResponseEntity<RESTfulResponse<List<BookDescriptionModel>>> searchBookDescription(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "limit", defaultValue = "20") Integer limit,

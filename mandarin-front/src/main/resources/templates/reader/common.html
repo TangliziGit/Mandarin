@@ -80,8 +80,65 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/reader/js/script.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
+    <script>
+        function get_identicon (text) {
+            let size = 100;
+            let outputType = "HEX";
+            let hashtype = "SHA-1";
+
+            let shaObj = new jsSHA(text, "TEXT");
+            let hash = shaObj.getHash(hashtype, outputType, 1);
+            let data = new Identicon(hash, size).toString();
+            return 'data:image/png;base64,' + data;
+        }
+    </script>
 </th:block>
 
+
+<th:block th:fragment="search-templates">
+    <script id="search-result-template" type="text/x-handlebars-template">
+        <tr>
+            <td class="col-lg-3"><img class="rounded img-fluid" src="{{coverUrl}}?token=GroupA3">
+            </td>
+
+            <td class="col-lg-9">
+
+                <a href="/book?isbn={{isbn}}"><h4 style="font-size:27px;">{{title}}</h4></a>
+                <span class="text-muted" style="font-size:18px;"></span>
+                <br>
+                <h5 class="text-muted">{{author}}</h5>
+                <h5 class="text-muted">{{publisher}} {{publishYear}}</h5>
+                <h3 class="text-danger">${{price}}</h3>
+
+                <span>{{location}}</span><br>
+
+                <span>ISBN: {{isbn}}</span>
+            </td>
+        </tr>
+    </script>
+
+    <script id="searching-words" type="text/x-handlebars-template">
+        <div style="color: #808080;" class="col-sm-12 text-center">
+            <h1>Now searching ...</h1>
+            <p>Please wait a moment</p>
+        </div>
+    </script>
+
+    <script id="empty-words" type="text/x-handlebars-template">
+        <div style="color: #808080;" class="col-sm-12 text-center">
+            <h1>The search result is empty</h1>
+            <p>Please enter another keyword</p>
+        </div>
+    </script>
+
+    <script id="error-words" type="text/x-handlebars-template">
+        <div style="color: #808080;" class="col-sm-12 text-center">
+            <h1>Something error</h1>
+            <p>{{message}}</p>
+        </div>
+    </script>
+</th:block>
 
 </body>
 </html>

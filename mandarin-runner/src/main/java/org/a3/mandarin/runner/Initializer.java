@@ -82,9 +82,9 @@ class Initializer {
         Book book12=new Book();
         Book book2=new Book();
 
-        BookDescription bookDescription1=new BookDescription("9780393351378", "The Science of Interstellar", "Kip Thorne", 24.95,
+        BookDescription bookDescription1=new BookDescription("9780393351378", "The Science of Interstellar", "Kip Thorne", 24.95, "http://106.13.1.40:8081/img/s27824536.jpg",
                 "Floor 2 - Shelf 1", 2014, "W. W. Norton & Company", "A journey through the otherworldly science behind Christopher Nolan’s highly anticipated film, Interstellar, from executive producer and theoretical physicist Kip Thorne.", category1);
-        BookDescription bookDescription2=new BookDescription("9780132856201", "Computer Networking", "James F. Kurose / Keith W. Ross", 171.60,
+        BookDescription bookDescription2=new BookDescription("9780132856201", "Computer Networking", "James F. Kurose / Keith W. Ross", 171.60, "http://106.13.1.40:8081/img/s24966915.jpg",
                 "Floor 2 - Shelf 1", 2012, "Pearson", "Computer Networking continues with an early emphasis on application-layer paradigms and application programming interfaces (the top layer), encouraging a hands-on experience with protocols and networking concepts, before working down the protocol stack to more abstract layers.", category2);
 
         bookDescription1.getBooks().add(book11);

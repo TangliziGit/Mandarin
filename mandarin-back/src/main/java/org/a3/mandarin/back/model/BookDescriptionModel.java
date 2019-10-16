@@ -14,6 +14,7 @@ public class BookDescriptionModel {
     private String title;
     private String author;
     private Double price;
+    private String coverUrl;
     private String location;
     private Integer publishYear;
     private String publisher;
@@ -29,6 +30,7 @@ public class BookDescriptionModel {
         this.title = bookDescription.getTitle();
         this.author = bookDescription.getAuthor();
         this.price = bookDescription.getPrice();
+        this.coverUrl = bookDescription.getCoverUrl();
         this.location = bookDescription.getLocation();
         this.publishYear = bookDescription.getPublishYear();
         this.publisher = bookDescription.getPublisher();
@@ -39,6 +41,14 @@ public class BookDescriptionModel {
         this.bookIdList=new ArrayList<>();
         for (Book book: bookDescription.getBooks())
             this.bookIdList.add(book.getBookId());
+    }
+
+    public String getCoverUrl() {
+        return coverUrl;
+    }
+
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
     }
 
     public List<Integer> getBookIdList() {
