@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <th:block th:replace="reader/common :: heads"></th:block>
+</head>
+<body>
+
+<th:block th:replace="reader/common :: navbar"></th:block>
+
+<main class="page product-page">
+    <section class="clean-block clean-product dark">
+        <div class="container">
+            <div class="block-heading"></div>
+            <div class="block-content">
+                <div class="product-info">
+                    <div class="row" style="height:210px;">
+                        <div style="width:371px;" class="col-3"><img src="assets/img/avatar_2x.png"></div>
+                        <div style="width:517px;" class="col-7 d-flex">
+                            <div class="info">
+                                <h3 style="font-style: normal;font-weight: 600;">Tanglizi</h3>
+                                <br>
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <td style="padding-right: 20px;">
+                                            <h5 class="text-muted">Email:</h5></td>
+                                        <td><h5 class="text-muted">tanglizimail@foxmail.com</h5>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><h5 class="text-muted">Phone: </h5></td>
+                                        <td><h5 class="text-muted">18681941719</h5></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <br>
+                                <h5 class="text-danger">Fine: $100</h5></div>
+                        </div>
+                        <div style="width:371px;" class="col-2">
+                            <button class="btn btn-primary" data-_extension-text-contrast="">Logout</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div>
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#reviews"
+                                                    id="reviews-tab" aria-selected="false">My bookshelf</a></li>
+                            <li class="nav-item"><a class="nav-link active show" role="tab" data-toggle="tab"
+                                                    href="#tab-3" aria-selected="true">Modify information</a></li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent" style="width:803px;margin:76px;">
+                            <div class="tab-pane fade" role="tabpanel" id="reviews">
+                                <div class="reviews">
+                                    <div id="history-body">
+                                        <div class="review-item">
+                                            <h4 style="font-size:27px;">标题string</h4><span class="text-muted"
+                                                                                           style="font-size:18px;"><a
+                                                href="#">string</a>, ISBN:string</span>
+                                            <h4>string</h4>
+                                            <h3 class="text-danger">¥1.100000023841858.00</h3>
+                                            <p>string</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="reviews"></div>
+                            </div>
+                            <div class="tab-pane mx-auto active show" role="tabpanel" id="tab-3" style="">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-2"></div>
+                                        <div class="col-8">
+                                            <div class="form-horizontal">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 form-control-label">Username</label>
+                                                    <div class="col-sm-9">
+                                                        <input id="username" class="form-control" value="1" type="text">
+
+                                                    </div>
+                                                </div>
+                                                <div class="line"></div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 form-control-label">Email</label>
+                                                    <div class="col-sm-9">
+                                                        <input id="email" class="form-control" type="email">
+
+                                                    </div>
+                                                </div>
+                                                <div class="line"></div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 form-control-label">Phone</label>
+                                                    <div class="col-sm-9">
+                                                        <input id="phoneNumber" type="number" class="form-control"
+                                                               value="300">
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="line"></div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 form-control-label">New Password</label>
+                                                    <div class="col-sm-9">
+                                                        <input id="newPassword" class="form-control" value="300"
+                                                               type="password">
+                                                        <small class="help-block-none">If do not want to change
+                                                            password, please keep it empty.</small>
+
+                                                    </div>
+                                                </div>
+                                                <div class="line"></div>
+                                                <div class="line"></div>
+                                                <br>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 form-control-label">Original Password</label>
+                                                    <div class="col-sm-9">
+                                                        <input id="oriPassword" class="form-control" value="300"
+                                                               type="password">
+
+                                                    </div>
+                                                </div>
+                                                <div class="line"></div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-4 offset-sm-3">
+
+                                                        <button id="submit" class="btn btn-primary"
+                                                                data-_extension-text-contrast="">Save changes
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<th:block th:replace="reader/common :: footer"></th:block>
+<th:block th:replace="reader/common :: scripts"></th:block>
+
+</body>
+</html>
