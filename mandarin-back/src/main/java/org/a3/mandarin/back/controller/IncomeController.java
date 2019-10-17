@@ -21,36 +21,108 @@ public class IncomeController {
     @Resource
     private IncomeSummaryMapper incomeSummaryMapper;
 
-    @GetMapping("/income/week")
+    @GetMapping("/income/deposit/week")
     @Transactional
     @ResponseBody
     @Permission(PermissionType.LIBRARIAN)
-    public ResponseEntity<RESTfulResponse<List<IncomeSummary>>> getIncomePerWeek(){
-        List<IncomeSummary> incomeSummaries = incomeSummaryMapper.findByPerWeek();
+    public ResponseEntity<RESTfulResponse<List<IncomeSummary>>> getIncomeDepositPerWeek(){
+        List<IncomeSummary> incomeSummaries = incomeSummaryMapper.findDepositByPerWeek();
 
         RESTfulResponse<List<IncomeSummary>> response = RESTfulResponse.ok();
         response.setData(incomeSummaries);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/income/month")
+    @GetMapping("/income/deposit/month")
     @Transactional
     @ResponseBody
     @Permission(PermissionType.LIBRARIAN)
-    public ResponseEntity<RESTfulResponse<List<IncomeSummary>>> getIncomePerMonth(){
-        List<IncomeSummary> incomeSummaries = incomeSummaryMapper.findByPerMonth();
+    public ResponseEntity<RESTfulResponse<List<IncomeSummary>>> getIncomeDepositPerMonth(){
+        List<IncomeSummary> incomeSummaries = incomeSummaryMapper.findDepositByPerMonth();
 
         RESTfulResponse<List<IncomeSummary>> response = RESTfulResponse.ok();
         response.setData(incomeSummaries);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/income/day")
+    @GetMapping("/income/deposit/day")
     @Transactional
     @ResponseBody
     @Permission(PermissionType.LIBRARIAN)
-    public ResponseEntity<RESTfulResponse<List<IncomeSummary>>> getIncomePerDay(){
-        List<IncomeSummary> incomeSummaries = incomeSummaryMapper.findByPerDay();
+    public ResponseEntity<RESTfulResponse<List<IncomeSummary>>> getIncomeDepositPerDay(){
+        List<IncomeSummary> incomeSummaries = incomeSummaryMapper.findDepositByPerDay();
+
+        RESTfulResponse<List<IncomeSummary>> response = RESTfulResponse.ok();
+        response.setData(incomeSummaries);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/income/fine/week")
+    @Transactional
+    @ResponseBody
+    @Permission(PermissionType.LIBRARIAN)
+    public ResponseEntity<RESTfulResponse<List<IncomeSummary>>> getIncomeFinePerWeek(){
+        List<IncomeSummary> incomeSummaries = incomeSummaryMapper.findFineByPerWeek();
+
+        RESTfulResponse<List<IncomeSummary>> response = RESTfulResponse.ok();
+        response.setData(incomeSummaries);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/income/fine/month")
+    @Transactional
+    @ResponseBody
+    @Permission(PermissionType.LIBRARIAN)
+    public ResponseEntity<RESTfulResponse<List<IncomeSummary>>> getIncomeFinePerMonth(){
+        List<IncomeSummary> incomeSummaries = incomeSummaryMapper.findFineByPerMonth();
+
+        RESTfulResponse<List<IncomeSummary>> response = RESTfulResponse.ok();
+        response.setData(incomeSummaries);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/income/fine/day")
+    @Transactional
+    @ResponseBody
+    @Permission(PermissionType.LIBRARIAN)
+    public ResponseEntity<RESTfulResponse<List<IncomeSummary>>> getIncomeFinePerDay(){
+        List<IncomeSummary> incomeSummaries = incomeSummaryMapper.findFineByPerDay();
+
+        RESTfulResponse<List<IncomeSummary>> response = RESTfulResponse.ok();
+        response.setData(incomeSummaries);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/income/total/week")
+    @Transactional
+    @ResponseBody
+    @Permission(PermissionType.LIBRARIAN)
+    public ResponseEntity<RESTfulResponse<List<IncomeSummary>>> getIncomeTotalPerWeek(){
+        List<IncomeSummary> incomeSummaries = incomeSummaryMapper.findTotalByPerWeek();
+
+        RESTfulResponse<List<IncomeSummary>> response = RESTfulResponse.ok();
+        response.setData(incomeSummaries);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/income/total/month")
+    @Transactional
+    @ResponseBody
+    @Permission(PermissionType.LIBRARIAN)
+    public ResponseEntity<RESTfulResponse<List<IncomeSummary>>> getIncomeTotalPerMonth(){
+        List<IncomeSummary> incomeSummaries = incomeSummaryMapper.findTotalByPerMonth();
+
+        RESTfulResponse<List<IncomeSummary>> response = RESTfulResponse.ok();
+        response.setData(incomeSummaries);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/income/total/day")
+    @Transactional
+    @ResponseBody
+    @Permission(PermissionType.LIBRARIAN)
+    public ResponseEntity<RESTfulResponse<List<IncomeSummary>>> getIncomeTotalPerDay(){
+        List<IncomeSummary> incomeSummaries = incomeSummaryMapper.findTotalByPerDay();
 
         RESTfulResponse<List<IncomeSummary>> response = RESTfulResponse.ok();
         response.setData(incomeSummaries);

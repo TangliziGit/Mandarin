@@ -82,7 +82,7 @@ public class RepositoryTest extends MandarinRunnerApplicationTests{
 
     @Test
     public void testIncomeRepository(){
-        List<IncomeSummary> incomeSummaries = incomeSummaryMapper.findByPerMonth();
+        List<IncomeSummary> incomeSummaries = incomeSummaryMapper.findDepositByPerMonth();
 
         for (IncomeSummary incomeSummary: incomeSummaries)
             System.out.println(incomeSummary.getDate()+" "+incomeSummary.getAmount());
