@@ -19,11 +19,11 @@
             <div class="collapse navbar-collapse"
                  id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/index}">Homepage</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/search}">SEARCH</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/reader/index}">Homepage</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/reader/search}">SEARCH</a></li>
                     <li th:switch="${session.userName}" class="nav-item" role="presentation">
-                        <a th:case="null" class="nav-link" th:href="@{/login}">LOG IN</a>
-                        <a th:case="*" class="nav-link" th:href="@{/account}">MY ACCOUNT</a>
+                        <a th:case="null" class="nav-link" th:href="@{/reader/login}">LOG IN</a>
+                        <a th:case="*" class="nav-link" th:href="@{/reader/account}">MY ACCOUNT</a>
                     </li>
                 </ul>
             </div>
@@ -104,7 +104,7 @@
 
             <td class="col-lg-9">
 
-                <a href="/book?isbn={{isbn}}"><h4 style="font-size:27px;">{{title}}</h4></a>
+                <a href="/reader/book/{{isbn}}"><h4 style="font-size:27px;">{{title}}</h4></a>
                 <span class="text-muted" style="font-size:18px;"></span>
                 <br>
                 <h5 class="text-muted">{{author}}</h5>

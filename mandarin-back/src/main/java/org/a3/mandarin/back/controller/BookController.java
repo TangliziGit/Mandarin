@@ -34,6 +34,8 @@ public class BookController {
     private CategoryRepository categoryRepository;
     @Resource
     private BorrowingHistoryRepository borrowingHistoryRepository;
+    @Resource
+    private ReservationHistoryRepository reservationHistoryRepository;
 
     @PostMapping("/book")
     @ResponseBody
@@ -167,7 +169,7 @@ public class BookController {
         return ResponseEntity.ok(RESTfulResponse.ok());
     }
 
-    @DeleteMapping("/book/return/{id}")
+    @PostMapping("/book/return/{id}")
     @ResponseBody
     @Transactional
     @Permission({PermissionType.LIBRARIAN})
@@ -201,6 +203,31 @@ public class BookController {
         borrowingHistories.get(readerBorrowingHistories.size()-1).setBorrowingEndTime(endtime);
         userRepository.save(reader);
         */
+        return ResponseEntity.ok(RESTfulResponse.ok());
+    }
+
+
+    @PostMapping("/book/reserve/{id}")
+    @ResponseBody
+    @Transactional
+    @Permission({PermissionType.READER})
+    public ResponseEntity<RESTfulResponse> reserveBook(@PathVariable("id") Integer targetBookId,
+                                                       HttpSession session){
+        Book targetBook=bookRepository.findById(targetBookId).orElse(null);
+        if (null == targetBook )
+            throw new ApiNotFoundException("no such book");
+
+        Integer readerId = (Integer) session.getAttribute("userId");
+        User reader = userRepository.findById(readerId).orElse(null);
+        if (null == reader)
+            throw new ApiNotFoundException("no such reader");
+
+        if (bookRepository.isDeleted(targetBookId) || bookRepository.isOnBorrowing(targetBookId) || bookRepository.isOnReserving(targetBookId))
+            throw new ApiNotFoundException("this book can not be reserved");
+
+        ReservingHistory reservingHistory = new ReservingHistory(targetBook, reader, Instant.now());
+        reservationHistoryRepository.save(reservingHistory);
+
         return ResponseEntity.ok(RESTfulResponse.ok());
     }
 }
