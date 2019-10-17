@@ -294,7 +294,7 @@
                 $("#librarian-result").append(searchingWords(""));
 
                 $.ajax({
-                    url: "https://virtserver.swaggerhub.com/tanglizi/MandarinAPI/1.0/api/search/librarian/",
+                    url: "/api/search/librarian/",
                     type: "POST",
                     dataType: "json",
                     data: formData,
@@ -334,7 +334,7 @@
         <script>
             function deleteLibrarian(userId) {
                 $.ajax({
-                    url: "https://virtserver.swaggerhub.com/tanglizi/MandarinAPI/1.0/api/librarian/" + userId,
+                    url: "/api/librarian/" + userId,
                     type: "DELETE",
                     success: function (resp) {
                         $("#librarian-" + userId).remove();
@@ -358,7 +358,7 @@
                 formData.append("password", $("#edit-librarian-password-" + userId).val());
 
                 $.ajax({
-                    url: "https://virtserver.swaggerhub.com/tanglizi/MandarinAPI/1.0/api/librarian/" + userId,
+                    url: "/api/librarian/" + userId,
                     type: "PUT",
                     data: formData,
                     processData: false,
@@ -376,7 +376,7 @@
         <script>
             $("#logout").bind("click", function () {
                 $.ajax({
-                    url: "https://virtserver.swaggerhub.com/tanglizi/MandarinAPI/1.0/api/user/token",
+                    url: "/api/user/token",
                     type: "DELETE",
                     success: function (resp) {
                         console.log(resp);
@@ -396,7 +396,7 @@
                 formData.append("password", $("#password").val());
 
                 $.ajax({
-                    url: "https://virtserver.swaggerhub.com/tanglizi/MandarinAPI/1.0/api/librarian/",
+                    url: "/api/librarian/",
                     type: "POST",
                     dataType: "json",
                     data: formData,

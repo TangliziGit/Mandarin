@@ -1,63 +1,37 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <th:block th:replace="admin/common :: heads"></th:block>
 </head>
-<body>
-<div class="page">
-    <div th:replace="admin/common :: navbar"></div>
-    <div class="page-content d-flex align-items-stretch">
-            <!-- Side Navbar -->
-            <nav class="side-navbar">
-                <ul class="list-unstyled">
-                    <li><a href="/admin/index"> <i class="icon-home"></i>Welcome </a></li>
-                    <li><a href="#librarian-dropdown" aria-expanded="false" data-toggle="collapse">
-                        <i class="icon-interface-windows"></i>Librarian Management </a>
-                        <ul id="librarian-dropdown" class="collapse list-unstyled ">
-                            <li><a href="/admin/search">Search and manage</a></li>
-                            <li><a href="/admin/register">Register</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/admin/setting"> <i class="icon-grid"></i>Settings Management </a></li>
-                    <li><a href="/admin/login"> <i class="icon-interface-windows"></i>Login page </a></li>
-                </ul><span class="heading">Extras</span>
-                <ul class="list-unstyled">
-                    <li class="active"> <a href="/admin/about"> <i class="icon-flask"></i>About us </a></li>
-                </ul>
-            </nav>
+<body class="sidebar-fixed header-fixed">
+<div class="page-wrapper">
+    <th:block th:replace="admin/common :: navbar"></th:block>
 
+        <div class="main-container">
+            <th:block th:replace="admin/common :: sidebar"></th:block>
 
-        <div class="content-inner">
-            <!-- Page Header-->
-            <header class="page-header">
-                <div class="container-fluid">
-                    <h2 class="no-margin-bottom">About us</h2>
+            <div class="content">
+
+                <!-- Side Navbar -->
+                <div style="text-align: center; color: #808080;margin-top: 100px;">
+                    <h1>Group - A3</h1>
+                    <p></p>
+
                 </div>
-            </header>
-
-            <div style="text-align: center; color: #808080;margin-top: 100px;">
-                <h1>Group - A3</h1>
-                <p></p>
             </div>
 
-            <!-- Page Footer-->
-            <footer class="main-footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <p></p>
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            <p>Copyright © 2019  A3.</p>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </div>
-    </div>
-</div>
-<!-- JavaScript files-->
-<div th:replace="admin/common :: scripts"></div>
-
-</body>
+            <th:block th:replace="admin/common :: scripts"></th:block>
+            <script>
+                $("#logout").bind("click", function () {
+                    $.ajax({
+                        url: "/api/user/token",
+                        type: "DELETE",
+                        success: function (resp) {
+                            console.log(resp);
+                        }
+                    });
+                    window.location.href="login.html";
+                });
+            </script>
+    </body>
 </html>
