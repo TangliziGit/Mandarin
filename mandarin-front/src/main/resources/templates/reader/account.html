@@ -14,30 +14,33 @@
             <div class="block-content">
                 <div class="product-info">
                     <div class="row" style="height:210px;">
-                        <div style="width:371px;" class="col-3"><img src="assets/img/avatar_2x.png"></div>
+                        <div style="width:371px;" class="col-3"><img id="avatar" src="assets/img/avatar_2x.png"></div>
                         <div style="width:517px;" class="col-7 d-flex">
                             <div class="info">
-                                <h3 style="font-style: normal;font-weight: 600;">Tanglizi</h3>
+                                <h3 style="font-style: normal;font-weight: 600;" id="oriUsername" th:text="${reader.getName()}">
+                                    Tanglizi</h3>
                                 <br>
                                 <table>
                                     <tbody>
                                     <tr>
                                         <td style="padding-right: 20px;">
                                             <h5 class="text-muted">Email:</h5></td>
-                                        <td><h5 class="text-muted">tanglizimail@foxmail.com</h5>
+                                        <td><h5 class="text-muted" th:text="${reader.getEmail()}">
+                                            tanglizimail@foxmail.com</h5>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td><h5 class="text-muted">Phone: </h5></td>
-                                        <td><h5 class="text-muted">18681941719</h5></td>
+                                        <td><h5 class="text-muted" th:text="${reader.getPhoneNumber()}">18681941719</h5>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
                                 <br>
-                                <h5 class="text-danger">Fine: $100</h5></div>
+                                <h5 class="text-danger" th:if="${fine}>0.1">Fine: $ [[${fine}]]</h5></div>
                         </div>
                         <div style="width:371px;" class="col-2">
-                            <button class="btn btn-primary" data-_extension-text-contrast="">Logout</button>
+                            <button id="logout-btn" class="btn btn-primary">Logout</button>
                         </div>
                     </div>
                 </div>
@@ -46,8 +49,8 @@
                     <div>
                         <ul class="nav nav-tabs" id="myTab">
                             <li class="nav-item"><a class="nav-link active show" role="tab" data-toggle="tab"
-                                                    href="#reviews" id="reviews-tab" aria-selected="true">Borrowing
-                                history</a></li>
+                                                    href="#reviews" id="reviews-tab" aria-selected="true">Borrowing history</a></li>
+                            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" aria-selected="false" href="#tab-2">Reserving history</a></li>
                             <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3"
                                                     aria-selected="false">Modify information</a></li>
                         </ul>
@@ -55,43 +58,64 @@
                             <div class="tab-pane fade active show" role="tabpanel" id="reviews">
                                 <div class="reviews">
                                     <div id="history-body">
-                                        <div class="review-item" style="width: 100%">
-                                            <div class="row">
-                                                <div class="col-3"><img class="rounded img-fluid"
-                                                                        src="http://106.13.1.40:8081/img/s24966915.jpg?token=GroupA3">
-                                                </div>
-                                                <dic class="col-9">
-                                                    <h4 style="font-size:27px;">Computer Networking</h4><span
-                                                        class="text-muted" style="font-size:18px;"></span>
-                                                    <br>
-                                                    <h5 class="text-muted">John Smith / Rose</h5>
-                                                    <h5 class="text-muted">Pearson 2012</h5>
-                                                    <h3 class="text-danger">¥100</h3>
+                                        <table class="table table-hover">
+                                            <tbody>
+                                            <tr th:each="borrowingHist: ${borrowingHistories}">
+                                                <td>
+                                                    <div class="review-item" style="width: 100%;margin-bottom: 0px;">
+                                                        <div class="row">
+                                                            <div class="col-3"><img class="rounded img-fluid" th:src="${borrowingHist.getBook().getBookDescription().getCoverUrl()} + '?token=GroupA3'">
+                                                            </div>
+                                                            <div class="col-9">
+                                                                <h4 style="font-size:27px;" th:text="${borrowingHist.getBook().getBookDescription().getTitle()}">Computer Networking</h4>
+                                                                <span class="text-muted" style="font-size:18px;"></span>
+                                                                <span style="text-decoration: underline;" class="text text-warning" th:text="'BookId: ' + ${borrowingHist.getBook().getBookId()}"></span>
+                                                                <br>
+                                                                <h5 class="text-muted" th:text="${borrowingHist.getBook().getBookDescription().getAuthor()}">John Smith / Rose</h5>
+                                                                <h5 class="text-muted" th:text="${borrowingHist.getBook().getBookDescription().getPublisher()} + ' '+ ${borrowingHist.getBook().getBookDescription().getPublishYear()}">Pearson 2012</h5>
+                                                                <h3 class="text-danger" th:text="${borrowingHist.getBook().getBookDescription().getPrice()}">¥100</h3>
 
-                                                    <span>Floor 2 - Shelf 3</span><br>
+                                                                <span th:text="${borrowingHist.getBook().getBookDescription().getLocation()}">Floor 2 - Shelf 3</span><br>
 
-                                                    <span>ISBN: 9780132856201</span></dic>
-                                            </div>
-                                        </div>
+                                                                <span>ISBN: [[${borrowingHist.getBook().getBookDescription().getISBN()}]]</span></div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane mx-auto" role="tabpanel" id="tab-2" style="">
+                                <div class="reviews">
+                                    <div id="history2-body">
+                                        <table class="table table-hover">
+                                            <tbody>
+                                            <tr th:each="borrowingHist: ${reservingHistories}">
+                                                <td>
+                                                    <div class="review-item" style="width: 100%;margin-bottom: 0px;">
+                                                        <div class="row">
+                                                            <div class="col-3"><img class="rounded img-fluid" th:src="${borrowingHist.getBook().getBookDescription().getCoverUrl()} + '?token=GroupA3'">
+                                                            </div>
+                                                            <div class="col-9">
+                                                                <h4 style="font-size:27px;" th:text="${borrowingHist.getBook().getBookDescription().getTitle()}">Computer Networking</h4>
+                                                                <span class="text-muted" style="font-size:18px;"></span>
+                                                                <span style="text-decoration: underline;" class="text text-warning" th:text="'BookId: ' + ${borrowingHist.getBook().getBookId()}"></span>
+                                                                <br>
+                                                                <h5 class="text-muted" th:text="${borrowingHist.getBook().getBookDescription().getAuthor()}">John Smith / Rose</h5>
+                                                                <h5 class="text-muted" th:text="${borrowingHist.getBook().getBookDescription().getPublisher()} + ' '+ ${borrowingHist.getBook().getBookDescription().getPublishYear()}">Pearson 2012</h5>
+                                                                <h3 class="text-danger" th:text="${borrowingHist.getBook().getBookDescription().getPrice()}">¥100</h3>
 
-                                        <div class="review-item">
-                                            <div class="row">
-                                                <div class="col-3"><img class="rounded img-fluid"
-                                                                        src="http://106.13.1.40:8081/img/s24966915.jpg?token=GroupA3">
-                                                </div>
-                                                <dic class="col-9">
-                                                    <h4 style="font-size:27px;">Computer Networking</h4><span
-                                                        class="text-muted" style="font-size:18px;"></span>
-                                                    <br>
-                                                    <h5 class="text-muted">John Smith / Rose</h5>
-                                                    <h5 class="text-muted">Pearson 2012</h5>
-                                                    <h3 class="text-danger">¥100</h3>
+                                                                <span th:text="${borrowingHist.getBook().getBookDescription().getLocation()}">Floor 2 - Shelf 3</span><br>
 
-                                                    <span>Floor 2 - Shelf 3</span><br>
-
-                                                    <span>ISBN: 9780132856201</span></dic>
-                                            </div>
-                                        </div>
+                                                                <span>ISBN: [[${borrowingHist.getBook().getBookDescription().getISBN()}]]</span></div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +128,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-3 form-control-label">Username</label>
                                                     <div class="col-sm-9">
-                                                        <input id="username" class="form-control" value="1" type="text">
+                                                        <input id="username" class="form-control" th:value="${reader.getName()}" type="text">
 
                                                     </div>
                                                 </div>
@@ -112,7 +136,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-3 form-control-label">Email</label>
                                                     <div class="col-sm-9">
-                                                        <input id="email" class="form-control" type="email">
+                                                        <input id="email" class="form-control" type="email" th:value="${reader.getEmail()}" />
 
                                                     </div>
                                                 </div>
@@ -120,8 +144,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-3 form-control-label">Phone</label>
                                                     <div class="col-sm-9">
-                                                        <input id="phoneNumber" type="number" class="form-control"
-                                                               value="300">
+                                                        <input id="phoneNumber" type="number" class="form-control"  th:value="${reader.getPhoneNumber()}">
 
                                                     </div>
                                                 </div>
@@ -130,8 +153,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-3 form-control-label">New Password</label>
                                                     <div class="col-sm-9">
-                                                        <input id="newPassword" class="form-control" value="300"
-                                                               type="password">
+                                                        <input id="newPassword" class="form-control" type="password">
                                                         <small class="help-block-none">If do not want to change
                                                             password, please keep it empty.</small>
 
@@ -143,18 +165,13 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-3 form-control-label">Original Password</label>
                                                     <div class="col-sm-9">
-                                                        <input id="oriPassword" class="form-control" value="300"
-                                                               type="password">
-
+                                                        <input id="oriPassword" class="form-control" value="" type="password">
                                                     </div>
                                                 </div>
                                                 <div class="line"></div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-4 offset-sm-3">
-
-                                                        <button id="submit" class="btn btn-primary"
-                                                                data-_extension-text-contrast="">Save changes
-                                                        </button>
+                                                        <button id="submit" class="btn btn-primary" >Save changes</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -173,6 +190,20 @@
 
 <th:block th:replace="reader/common :: footer"></th:block>
 <th:block th:replace="reader/common :: scripts"></th:block>
+
+<script>
+    $("#avatar").attr("src", get_identicon($("#oriUsername").text(), 200));
+
+    $("#logout-btn").bind("click", function () {
+        $.ajax({
+            url: "/api/user/token",
+            method: "DELETE",
+            success: function (resp) {
+                window.location.href="/reader/index";
+            }
+        })
+    })
+</script>
 
 </body>
 </html>

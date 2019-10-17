@@ -1,10 +1,8 @@
 package org.a3.mandarin.front.controller;
 
 import org.a3.mandarin.common.annotation.Permission;
-import org.a3.mandarin.common.dao.repository.BookDescriptionRepository;
-import org.a3.mandarin.common.dao.repository.BookRepository;
-import org.a3.mandarin.common.entity.Book;
-import org.a3.mandarin.common.entity.BookDescription;
+import org.a3.mandarin.common.dao.repository.*;
+import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.PermissionType;
 import org.a3.mandarin.front.model.BookModel;
 import org.springframework.stereotype.Controller;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +23,10 @@ public class ReaderFrontController {
     private BookDescriptionRepository bookDescriptionRepository;
     @Resource
     private BookRepository bookRepository;
+    @Resource
+    private UserRepository userRepository;
+    @Resource
+    private BorrowingFineHistoryRepository borrowingFineHistoryRepository;
 
     @GetMapping("{path}")
     public String map(@PathVariable("path") String path){
@@ -32,7 +35,23 @@ public class ReaderFrontController {
 
     @GetMapping("/account")
     @Permission(PermissionType.READER)
-    public String account(){
+    public String account(Map<String, Object> map, HttpSession session){
+        Integer userId = (Integer) session.getAttribute("userId");
+        User reader = userRepository.findById(userId).orElse(null);
+        Integer fine = borrowingFineHistoryRepository.findTotalFineAmountByUserId(userId);
+
+        List<BorrowingHistory> borrowingHistories = reader.getBorrowingHistories();
+        List<ReservingHistory> reservingHistories = reader.getReservingHistories();
+
+        System.out.println(reader);
+        System.out.println(borrowingHistories);
+        System.out.println(reservingHistories);
+
+        map.put("reader", reader);
+        map.put("fine", fine);
+        map.put("borrowingHistories", borrowingHistories);
+        map.put("reservingHistories", reservingHistories);
+
         return "reader/account";
     }
 
@@ -62,4 +81,5 @@ public class ReaderFrontController {
 
         return "reader/book";
     }
+
 }

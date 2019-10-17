@@ -45,7 +45,7 @@
                     </tr>
                     <tr>
                         <td><strong>Category</strong></td>
-                        <td th:text="${book.getCategory()}">Tech.</td>
+                        <td th:text="${book.getCategory().getCategoryName()}">Tech.</td>
                     </tr>
                     <tr>
                         <td><strong>Publisher</strong></td>
@@ -118,6 +118,7 @@
             type: "POST",
             success: function (resp){
                 alert("success");
+                window.location.href=window.location.href;
             },
             error: function (resp) {
                 console.log(resp);

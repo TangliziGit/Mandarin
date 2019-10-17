@@ -81,9 +81,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/reader/js/script.min.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
+    <script src="http://identicon.net/js/vendor/identicon.js"></script>
+    <script src="http://identicon.net/js/vendor/pnglib.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+    <script src="http://identicon.net/js/vendor/sha.js"></script>
     <script>
-        function get_identicon (text) {
-            let size = 100;
+        function get_identicon (text, size) {
             let outputType = "HEX";
             let hashtype = "SHA-1";
 
@@ -137,6 +140,35 @@
             <h1>Something error</h1>
             <p>{{message}}</p>
         </div>
+    </script>
+</th:block>
+
+<th:block th:fragment="book-history">
+    <script id="book-borrow-template" type="text/x-handlebars-template">
+        <tr>
+            <td>
+                <div class="review-item" style="width: 100%;margin-bottom: 0px;">
+                    <div class="row">
+                        <div class="col-3"><img class="rounded img-fluid"
+                                                src="http://106.13.1.40:8081/img/s24966915.jpg?token=GroupA3">
+                        </div>
+                        <dic class="col-9">
+                            <h4 style="font-size:27px;">Computer Networking</h4>
+                            <span
+                                    class="text-muted"
+                                    style="font-size:18px;"></span>
+                            <br>
+                            <h5 class="text-muted">John Smith / Rose</h5>
+                            <h5 class="text-muted">Pearson 2012</h5>
+                            <h3 class="text-danger">¥100</h3>
+
+                            <span>Floor 2 - Shelf 3</span><br>
+
+                            <span>ISBN: 9780132856201</span></dic>
+                    </div>
+                </div>
+            </td>
+        </tr>
     </script>
 </th:block>
 
