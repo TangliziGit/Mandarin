@@ -408,9 +408,10 @@
                         $("#phoneNumber").val("");
                         $("#email").val("");
                         $("#password").val("");
+                        window.location.href=window.location.href;
                     },
                     error: function (resp) {
-                        alert(resp.message);
+                        alert(resp.responseJSON.message);
                     }
                 });
             })
