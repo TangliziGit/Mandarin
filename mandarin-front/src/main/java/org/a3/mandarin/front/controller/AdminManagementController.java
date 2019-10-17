@@ -16,31 +16,31 @@ public class AdminManagementController {
     }
 
     @GetMapping({"/index", "/welcome"})
-    // @Permission(PermissionType.ADMIN)
+    @Permission(PermissionType.ADMIN)
     public String index(){
         return "admin/welcome";
     }
 
     @GetMapping({"/search"})
-    // @Permission(PermissionType.ADMIN)
+    @Permission(PermissionType.ADMIN)
     public String search(){
         return "admin/search";
     }
 
     @GetMapping({"/register"})
-    // @Permission(PermissionType.ADMIN)
+    @Permission(PermissionType.ADMIN)
     public String registerLibrarian(){
         return "admin/register";
     }
 
     @GetMapping({"/setting"})
-    // @Permission(PermissionType.ADMIN)
+    @Permission(PermissionType.ADMIN)
     public String setting(){
         return "admin/setting";
     }
 
     @GetMapping({"/about"})
-    // @Permission(PermissionType.ADMIN)
+    @Permission(PermissionType.ADMIN)
     public String about(){
         return "admin/about";
     }
