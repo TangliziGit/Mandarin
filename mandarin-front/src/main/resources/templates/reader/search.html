@@ -10,7 +10,7 @@
 <main class="page blog-post-list">
     <section class="clean-block clean-blog-list dark">
         <div class="container">
-            <div class="block-heading" style="background-image:url(&quot;img/search_bg.jpg&quot;);">
+            <div class="block-heading" style="background-image:url(&quot;/reader/img/search_bg.jpg&quot;);">
                 <nav class="navbar navbar-light navbar-expand-md navigation-clean-search"
                      style="background-color:rgba(255,255,255,0.65);">
                     <div class="container">
@@ -21,8 +21,8 @@
                                     <form target="_self" class="form-inline mr-auto" style="">
                                         <div class="form-group" style="margin: 35px; width: 743px;">
                                             <label><i class="fa fa-search" style="font-size: 36px; color: rgb(0, 123, 255);"></i></label>
-                                            <input id="search-box" type="search" class="form-control" style="width: 80%; height: 36px; margin: 9px;">
-                                            <button id="search-btn" type="button" data-_extension-text-contrast="" class="btn btn-primary">Search</button>
+                                            <input id="search-box" type="search" th:value="${query}" class="form-control" style="width: 80%; height: 36px; margin: 9px;">
+                                            <button id="search-btn" type="button" class="btn btn-primary">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -100,9 +100,15 @@
             }
         });
     })
-
-
 </script>
+
+<script>
+    let query="[[${query}]]";
+
+    if (query != "")
+        $("#search-btn").click();
+</script>
+
 
 </body>
 </html>

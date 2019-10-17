@@ -25,8 +25,8 @@
                             <label for="search-field">
                                 <i class="fa fa-search" style="font-size: 36px; color: rgb(34, 34, 34);"></i>
                             </label>
-                            <input id="inlineFormInput" type="search" class="fForm-control" style="width: 80%; height: 40px; margin: 9px;">
-                            <button id="indexsearch-btn" type="button" class="btn btn-primary" data-_extension-text-contrast="">Search</button>
+                            <input id="search-box" type="search" class="fForm-control" style="width: 80%; height: 40px; margin: 9px;">
+                            <button id="search-btn" type="button" class="btn btn-primary" data-_extension-text-contrast="">Search</button>
                         </div>
                         <div class="col-2"></div>
                     </div>
@@ -57,7 +57,11 @@
 
 <th:block th:replace="reader/common :: scripts"></th:block>
 
-<script></script>
+<script>
+    $("#search-btn").bind("click", function () {
+        window.location.href="/reader/search/?q="+$("#search-box").val();
+    })
+</script>
 
 </body>
 </html>

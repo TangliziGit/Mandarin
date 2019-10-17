@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -28,9 +29,22 @@ public class ReaderFrontController {
     @Resource
     private BorrowingFineHistoryRepository borrowingFineHistoryRepository;
 
-    @GetMapping("{path}")
-    public String map(@PathVariable("path") String path){
-        return "reader/"+path;
+    @GetMapping({"", "/", "/index", "/home"})
+    public String index(){
+        return "reader/index";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "reader/login";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam(value = "q", defaultValue = "") String query,
+                         Map<String, Object> map){
+        map.put("query", query);
+
+        return "reader/search";
     }
 
     @GetMapping("/account")
