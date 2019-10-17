@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Purple Admin</title>
+    <th:block th:replace="librarian/common :: head"></th:block>
+</head>
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+
+      <div th:replace="librarian/common :: navbar"></div>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <div class="row row-offcanvas row-offcanvas-right">
+        <!-- partial:../../partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+         <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">
+                <span class="menu-title">Home</span>
+             
+                <i class="mdi mdi-home menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-title">Reader Manage</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+              </a>
+              <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="ifoModification.html">Information Modification</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="register.html">Register</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="lendbookreturn.html">Lend and Return</a></li>
+                </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="category.html">
+                <span class="menu-title">Category Manage</span>
+                <i class="mdi mdi-contacts menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bookManage.html">
+                <span class="menu-title">Book Manage</span>
+                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="history.html">
+                <span class="menu-title">Delete History</span>
+                <i class="mdi mdi-chart-bar menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#inc" aria-expanded="false" aria-controls="inc">
+                <span class="menu-title">System Income</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+              </a>
+              <div class="collapse" id="inc">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="totalIncome.html">Total</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="totalDeposit.html">Total Deposit</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="totalFine.html">Total Fine</a></li>
+                </ul>
+                </div>
+            </li>
+            </ul>
+
+
+
+
+        </nav>
+        <!-- partial -->
+        <div class="content-wrapper">
+          <div id="lendandreturn">
+                    <header class="page-header">
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">Lend Book And Return</h2>
+            </div>
+          </header>
+
+<!-- <ul class="nav">
+            <li class="nav-item">
+<ul class="navbar-expand">
+        <li><a onclick="borrowBook()" data-toggle=tab">Borrow Book</a></li>
+        <li><a onclick="returnBook()" data-toggle=tab">Return Book</a></li>
+
+      </ul>
+    </li>
+  </ul> -->
+
+
+       <!--    <button  id="borrow" onclick="borrowBook()" class="btn.active.focus">borrow book</button>
+          <button  id="return" onclick="returnBook()" class="btn btn-success mr-2">return book</button> -->
+          
+        </div>
+        <div id="tablelar" class="col-12 grid-margin">
+         <div class="card">
+          <div class="card-body">
+            <h4 class="card-tltle">Borrow book by BookId and ReaderId.</h4>
+            <div class="container-fluid">
+              <div class="form-group row">
+                <label for="exampleInputtext2" class="col-sm-3 col-form-label">BookId</label>
+                
+                <input type="text" class="form-control" id="bookid" placeholder="Enter the BookId">
+            
+             
+              <label for="exampleInputtext2" class="col-sm-3 col-form-label">ReaderId</label>
+              <input type="text" class="form-control" id="readerid" placeholder="Enter the ReaderId">
+               
+              <button onclick="submitBorrow()" class="btn btn-primary">submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+              <div id="tablelar" class="col-12 grid-margin">
+         <div class="card">
+          <div class="card-body">
+            <h4 class="card-tltle">Return book by BookId and ReaderId.</h4>
+            <div class="container-fluid">
+              <div class="form-group row">
+                <label for="exampleInputtext2" class="col-sm-3 col-form-label">BookId</label>
+                
+                <input type="text" class="form-control" id="bookid1" placeholder="Enter the BookId">
+            
+             
+              <label for="exampleInputtext2" class="col-sm-3 col-form-label">ReaderId</label>
+              <input type="text" class="form-control" id="readerid1" placeholder="Enter the ReaderId">
+               
+              <button onclick="submitReturn()" class="btn btn-primary">submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+
+
+        <div th:replace="librarian/common :: footer"></div>
+        <!-- partial -->
+      </div>
+      <!-- row-offcanvas ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+  <!-- plugins:js -->
+
+  <div th:replace="librarian/common :: scripts"></div>
+
+    <script>
+      // function borrowBook(){
+      //     $('#tablelar').empty();
+      //     $('#tablelar').append(
+      //        "<div class=\"card\"><div class=\"card-body\"><h4 class=\"card-tltle\">Borrow book by BookId and ReaderId.</h4><div class=\"container-fluid\"><div class=\"form-group row\"><label for=\"exampleInputtext2\" class=\"col-sm-3 col-form-label\">BookId</label>"+
+      //                                                "<input type=\"text\" class=\"form-control\" id=\"bookid\" placeholder=\"Enter the BookId\">"+"<label for=\"exampleInputtext2\" class=\"col-sm-3 col-form-label\">ReaderId</label>"+
+                          
+      //                       "<input type=\"text\" class=\"form-control\" id=\"readerid\" placeholder=\"Enter the ReaderId\">"+"<button onclick=\"submitBorrow()\" class=\"btn btn-primary\">submit</button></div></div></div></div>");
+      // }
+      // function returnBook(){
+      //     $('#tablelar').empty();
+      //     $('#tablelar').append(
+      //        "<div class=\"card\"><div class=\"card-body\"><h4 class=\"card-tltle\">Return book by BookId and ReaderId.</h4><div class=\"container-fluid\"><div class=\"form-group row\"><label for=\"exampleInputtext2\" class=\"col-sm-3 col-form-label\">BookId</label>"+
+                          
+      //                       "<input type=\"text\" class=\"form-control\" id=\"bookid\" placeholder=\"Enter the BookId\">"+"<label for=\"exampleInputtext2\" class=\"col-sm-3 col-form-label\">ReaderId</label>"+
+                          
+      //                       "<input type=\"text\" class=\"form-control\" id=\"readerid\" placeholder=\"Enter the ReaderId\">"+"<button onclick=\"submitReturn()\" class=\"btn btn-primary\">submit</button></div></div></div></div>");
+      // }
+
+      function submitBorrow(){
+              $.ajax({
+                url: "/api/book/borrow/"+$('#bookid').val()+"?targetReaderId="+$('#readerid').val(),
+                type: "POST",
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (resp){
+                    alert("success");
+                    $("#bookid").val("");
+                    $("#readerid").val("");
+                },
+                error: function (resp) {
+                    alert(resp.responseJSON.message);
+                }
+            });
+      }
+
+            function submitReturn(){
+              $.ajax({
+                url: "/api/book/return/"+$('#bookid1').val()+"?targetReaderId="+$('#readerid1').val(),
+                type: "POST",
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (resp){
+                    alert("success");
+                    $("#bookid1").val("");
+                    $("#readerid1").val("");
+                },
+                error: function (resp) {
+                    alert(resp.responseJSON.message);
+                }
+            });
+      }
+    </script>
+
+
+</body>
+
+</html>

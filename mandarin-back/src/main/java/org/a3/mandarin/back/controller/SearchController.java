@@ -5,6 +5,7 @@ import org.a3.mandarin.back.exception.ApiForbiddenException;
 import org.a3.mandarin.back.model.BookDescriptionModel;
 import org.a3.mandarin.back.model.BookModel;
 import org.a3.mandarin.back.model.RESTfulResponse;
+import org.a3.mandarin.back.model.ReaderDetailModel;
 import org.a3.mandarin.back.util.ModelUtil;
 import org.a3.mandarin.common.annotation.Permission;
 import org.a3.mandarin.common.dao.repository.BookDescriptionQueryRepository;
@@ -13,6 +14,7 @@ import org.a3.mandarin.common.dao.repository.UserQueryRepository;
 import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.PermissionType;
 import org.a3.mandarin.common.util.RoleUtil;
+import org.hibernate.dialect.RDMSOS2200Dialect;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -60,6 +62,32 @@ public class SearchController {
         List<User> readers=findUserByInformationWithPageRequest(RoleUtil.readerRole, userId, name, phoneNumber, email, pageRequest);
         RESTfulResponse<List<User>> response=RESTfulResponse.ok();
         response.setData(readers);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/search/reader/detail")
+    @ResponseBody
+    @Transactional
+    @Permission(PermissionType.LIBRARIAN)
+    public ResponseEntity<RESTfulResponse<List<ReaderDetailModel>>> searchReaderDetail(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "limit", defaultValue = "20") Integer limit,
+            @RequestParam(value = "name", defaultValue = "") String name){
+
+        PageRequest pageRequest=PageRequest.of(page, limit, Sort.by("signUpTime"));
+
+        QUser qUser=QUser.user;
+        BooleanExpression expression=qUser.roles.contains(RoleUtil.readerRole).and(qUser.name.contains(name));
+
+        Page<User> userPage=userQueryRepository.findAll(expression, pageRequest);
+
+        RESTfulResponse<List<ReaderDetailModel>> response=RESTfulResponse.ok();
+        List<ReaderDetailModel> readerDetailModels = new ArrayList<>();
+
+        for (User reader: userPage.getContent())
+            readerDetailModels.add(new ReaderDetailModel(reader));
+
+        response.setData(readerDetailModels);
         return ResponseEntity.ok(response);
     }
 

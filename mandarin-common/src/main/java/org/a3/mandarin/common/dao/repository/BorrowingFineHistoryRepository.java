@@ -20,4 +20,9 @@ public interface BorrowingFineHistoryRepository extends JpaRepository<BorrowingF
             "inner join borrowing_fine_history bfh on bh.id = bfh.borrowing_history_id " +
             "where u.user_id=?1 and bfh.paid=false;", nativeQuery = true)
     Integer findTotalFineAmountByUserId(Integer userId);
+
+    @Query(value = "select datediff(now(), find_start_time)*(select value from setting where name='FINE') " +
+            "from borrowing_fine_history bfh " +
+            "where bfh.fine_id=?1", nativeQuery = true)
+    Double findFineValuetByBorrowingFineHistoryId(Integer id);
 }
