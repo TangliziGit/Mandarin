@@ -1,66 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Purple Admin</title>
+    <title>Purple Admin</title>
     <th:block th:replace="librarian/common :: head"></th:block>
 </head>
 
 <body>
   <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
+
       <div th:replace="librarian/common :: navbar"></div>
+
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <div class="row row-offcanvas row-offcanvas-right">
         <!-- partial:../../partials/_sidebar.html -->
-       <nav class="sidebar sidebar-offcanvas" id="sidebar">
-          <ul class="nav">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">
-                <span class="menu-title">Home</span>
-             
-                <i class="mdi mdi-home menu-icon"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="menu-title">Reader Manage</span>
-                <i class="menu-arrow"></i>
-                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-              </a>
-              <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="register.html">Register</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="deleteReader.html">Reader Delete</a></li>
-                       <li class="nav-item"> <a class="nav-link" href="updateReader.html">ReaderUpdate</a></li>
-                </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="category.html">
-                <span class="menu-title">Category Manage</span>
-                <i class="mdi mdi-contacts menu-icon"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="bookManage.html">
-                <span class="menu-title">Book Manage</span>
-                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="history.html">
-                <span class="menu-title">Delete History</span>
-                <i class="mdi mdi-chart-bar menu-icon"></i>
-              </a>
-            </li>
-            </ul>
-
-
-
-
-        </nav>
-        <!-- partial -->
+          <th:block th:replace="librarian/common :: sidebar"></th:block>
         <div class="content-wrapper">
        
           <div class="row">
@@ -102,13 +57,27 @@
                         </div>
                          <div class="form-group row">
                           <label for="exampleInputtext2" class="col-sm-3 col-form-label">location</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control" id="location" placeholder="Enter the location">
+                                <div>
+                                  <select id="floor" class="form-control">
+                                      <option gid="1" value="1">1f</option>
+                                      <option gid="2" value="2">2f</option>
+                                      <option gid="3" value="3">3f</option>
+                                      <option gid="4" value="4">4f</option>
+                                      <option gid="5" value="5">5f</option>
+                                      <option gid="6" value="6">6f</option>
+                                  </select>
+                                  <small style="color: grey">Please select the floor</small>
+                                </div>
+                                 <div for="exampleInputtext2" class="col-sm-3 col-form-label" id="shelf">
+                                 </div>
+                          <div id = "selectlocation">
                           </div>
-                        </div>
+                          </div>
 
                        <div class="form-group row">
-                          <label for="exampleInputtext2" class="col-sm-3 col-form-label">categoryName</label>
+                           <input style="display: none" type="text" class="form-control" id="coverUrl" placeholder="Enter the categoryName">
+
+                           <label for="exampleInputtext2" class="col-sm-3 col-form-label">categoryName</label>
                           <div class="col-sm-9">
                             <input type="text" class="form-control" id="categoryName" placeholder="Enter the categoryName">
                               <small style="color: grey">category must exist</small>
@@ -151,9 +120,13 @@
                         <div class="container-fluid">
                           <div class="card-body" >
                           <h4 class="card-title">Result</h4>
+                          <div id="imgDiv">
+                          <div id="booklocation"></div>
                           <div id="barcode">
                             <!-- img id="imgcode"/ -->
                           </div>
+                          </div>
+                          <div id="download"></div>
                           <div id="list"></div>
                          </div>
 </div>
@@ -165,7 +138,9 @@
 
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
+
           <div th:replace="librarian/common :: footer"></div>
+
         <!-- partial -->
       </div>
       <!-- row-offcanvas ends -->
@@ -174,7 +149,50 @@
   </div>
   <!-- container-scroller -->
   <!-- End custom js for this page-->
+
   <div th:replace="librarian/common :: scripts"></div>
+
+    <script>
+        function getFormData(dic) {
+            formData=new FormData();
+            for (var key in dic)
+                formData.append(key, dic[key]);
+            return formData;
+        }
+    </script>
+
+   <script>
+      jQuery(document).ready(function() {
+      jQuery("#floor").change(function() {
+        $('#shelf').empty();
+        $('#shelf').append("<label>&nbsp&nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp&nbsp;Shelf Number</label>");
+      select_value = jQuery(this).val();
+      select1(select_value);
+  });
+
+      });
+    </script>
+    <script>
+      function select1(select_value){
+
+
+        $('#selectlocation').empty();
+        $('#selectlocation').append("<select id=\"floor1\" class=\"form-control\"></select>");
+      var select = document.getElementById("floor1");
+      for(var i=1+100*(select_value-1);i<=select_value*100;i++){
+      var opt = document.createElement("option");
+      opt.value=i;
+      opt.innerHTML=i;
+      select.appendChild(opt);
+      }
+      jQuery(document).ready(function() {
+      jQuery("#floor1").change(function() {
+      select_shalf = jQuery(this).val();
+      
+  });
+      });
+        } 
+    </script>
   <script>
       function getUrlParam(name) {
           var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
@@ -187,12 +205,13 @@
       var isbn=getUrlParam("isbn");
       if (isbn!=null){
           $.ajax({
-              url:"http://106.13.1.40:8081/isbn/"+isbn,
+              url:"http://106.13.1.40:8081/isbn/"+isbn+"?token=GroupA3",
               type:"get",
               dataType:"json",
               success:function(resp){
                   console.log(resp);
 
+                  $("#coverUrl").val(resp.img);
                   $("#isbn").val(isbn);
                   $("#title").val(resp.title);
                   $("#author").val(resp.author);
@@ -205,7 +224,8 @@
                   $("#copyNumber").val("");
               },
               error:function (resp) {
-                  alert(resp.responseJson.message);
+                  console.log(resp);
+                  alert(resp.responseJSON.message);
               }
           });
       }
@@ -213,11 +233,12 @@
       function insert(){
 
 //         $("#imgcode").JsBarcode($("#isbn").val());
-        var ISBN = $("#isbn").val();
+          var url=$("#coverUrl").val();
+          var ISBN = $("#isbn").val();
         var title = $("#title").val();
         var author = $("#author").val();
         var price = $("#price").val();
-        var location = $("#location").val();
+        var location = 'Floor '+$('#floor').val()+' - '+'Shelf '+$('#floor1').val();
         var categoryName = $("#categoryName").val();
         var publishYear = $("#publishYear").val();
         var publisher = $("#publisher").val();
@@ -228,6 +249,7 @@
            // "<p>price : "+price+"</p>"+ "<p>location : "+location+"</p>"+ "<p>categoryName : "+categoryName+"</p>"+ "<p>publishYear : "+publishYear+"</p>"+ "<p>publisher : "+publisher+"</p>"+ "<p>summary : "+summary+"</p>"+ "<p>copyNumber : "+copyNumber+"</p>"
           "");
         var data = {
+            "coverUrl": url,
             "ISBN":ISBN,
             "title":title,
             "author":author,
@@ -242,9 +264,19 @@
 
         function padNumber(num){
             num=""+num
-            for (var i=num.length; i<10; i++)
+            for (var i=num.length; i<20; i++)
                 num="0"+num;
             return num
+        }
+
+        function text(key, content){
+            JsBarcode("#"+key, padNumber(content));
+            var mycanvas = document.getElementById(key);
+            var ctx = mycanvas.getContext('2d');
+            ctx.fillStyle="white";
+            ctx.fillRect(-1*mycanvas.getAttribute('width'),0,mycanvas.getAttribute('width')+20,20);
+            ctx.fillStyle="black";
+            ctx.fillText("Floor "+$('#floor').val()+" - "+"Shelf "+$('#floor').val(), -1*mycanvas.getAttribute('width')/2, 18);
         }
 
         $.ajax({
@@ -257,14 +289,20 @@
           success:function(data){
                 console.log(data);
                 alert("success");
+                // $("#booklocation").append("<h4>"+"&nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp&nbsp;"+"Floor "+$('#floor').val()+" - "+"Shelf "+$('#floor').val()+"</h4>");
                 for (elem of data.data){
                     console.log(elem);
 
                     var key='barcode_img'+elem;
-                    $("<img />", {
-                        id: key
+                    $("<p />", {
+                        id: key+'p'
                     }).appendTo($("#barcode"));
-                    $("#"+key).JsBarcode(padNumber(elem));
+                    $("<canvas />", {
+                        id: key
+                    }).appendTo($("#"+key+'p'));
+                    text(key, elem);
+
+                     $('#download').append("<button onclick=\"clickDownload()\">下载条形码</button>");
                 }
             },
            error:function (data) {
@@ -273,8 +311,100 @@
             }
         });
       }
+
     </script>
+ 
+    <script>
+
+    // canvas生成图片
+       //  function clickDownload() {
+       //    console.log("111");
+       //      var getPixelRatio = function (context) { // 获取设备的PixelRatio
+       //          var backingStore = context.backingStorePixelRatio ||
+       //              context.webkitBackingStorePixelRatio ||
+       //              context.mozBackingStorePixelRatio ||
+       //              context.msBackingStorePixelRatio ||
+       //              context.oBackingStorePixelRatio ||
+       //              context.backingStorePixelRatio || 0.5;
+       //          return (window.devicePixelRatio || 0.5) / backingStore;
+       //      };
+       //      //生成的图片名称
+       //      var imgName = "bookifo.jpg";
+       //      var shareContent = document.getElementById("imgDiv");
+       //      var width = shareContent.offsetWidth;
+       //      var height = shareContent.offsetHeight;
+       //      var canvas = document.createElement("canvas");
+       //      var context = canvas.getContext('2d');
+       //      var scale = getPixelRatio(context); //将canvas的容器扩大PixelRatio倍，再将画布缩放，将图像放大PixelRatio倍。
+       //      canvas.width = width * scale;
+       //      canvas.height = height * scale;
+       //      canvas.style.width = width + 'px';
+       //      canvas.style.height = height + 'px';
+       //      context.scale(scale, scale);
+
+       //      var opts = {
+       //          scale: scale,
+       //          canvas: canvas,
+       //          width: width,
+       //          height: height,
+       //          dpi: window.devicePixelRatio
+       //      };
+       //      html2canvas(shareContent, opts).then(function (canvas) {
+       //          context.imageSmoothingEnabled = false;
+       //          context.webkitImageSmoothingEnabled = false;
+       //          context.msImageSmoothingEnabled = false;
+       //          context.imageSmoothingEnabled = false;
+       //          var dataUrl = canvas.toDataURL('image/jpeg', 1.0);
+       //          dataURIToBlob(imgName, dataUrl, callback);
+       //          console.log(dataUrl);
+       //      });
+       //  }
+
     
+
+       //  // edited from https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob#Polyfill
+       // var dataURIToBlob =  function (imgName, dataURI, callback) {
+       //      var binStr = atob(dataURI.split(',')[1]),
+       //          len = binStr.length,
+       //          arr = new Uint8Array(len);
+
+       //      for (var i = 0; i < len; i++) {
+       //          arr[i] = binStr.charCodeAt(i);
+       //      }
+
+       //      callback(imgName, new Blob([arr]));
+       //  }
+
+       //  var callback = function (imgName, blob) {
+       //      var triggerDownload = $("<a>").attr("href", URL.createObjectURL(blob)).attr("download", imgName).appendTo("body").on("click", function () {
+       //          if (navigator.msSaveBlob) {
+       //              return navigator.msSaveBlob(blob, imgName);
+       //          }
+       //      });
+       //      triggerDownload[0].click();
+       //      triggerDownload.remove();
+       //  };
+       function clickDownload() {
+html2canvas(document.querySelector("#imgDiv"), {
+  onrendered: function(canvas) {
+      imgURL = canvas.toDataURL("image/png");//图片地址
+      console.log(imgURL);
+      var a = document.createElement('a');
+            a.download = 'bookifo' + new Date().getTime() || 'bookifo.jpg';
+            a.href = imgURL;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            alert("download success!");
+
+  },
+  width: 230,
+  height: 230
+});
+            
+}
+</script>
+
 </body>
 
 </html>

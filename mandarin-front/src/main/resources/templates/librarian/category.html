@@ -13,55 +13,8 @@
     <div class="container-fluid page-body-wrapper">
       <div class="row row-offcanvas row-offcanvas-right">
         <!-- partial:../../partials/_sidebar.html -->
-        
-            <nav class="sidebar sidebar-offcanvas" id="sidebar">
-          <ul class="nav">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">
-                <span class="menu-title">Home</span>
-             
-                <i class="mdi mdi-home menu-icon"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="menu-title">Reader Manage</span>
-                <i class="menu-arrow"></i>
-                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-              </a>
-              <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="register.html">Register</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="deleteReader.html">Reader Delete</a></li>
-                       <li class="nav-item"> <a class="nav-link" href="updateReader.html">ReaderUpdate</a></li>
-                </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="category.html">
-                <span class="menu-title">Category Manage</span>
-                <i class="mdi mdi-contacts menu-icon"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="bookManage.html">
-                <span class="menu-title">Book Manage</span>
-                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="history.html">
-                <span class="menu-title">Delete History</span>
-                <i class="mdi mdi-chart-bar menu-icon"></i>
-              </a>
-            </li>
-            </ul>
 
-
-
-
-        </nav>
-        
+        <th:block th:replace="librarian/common :: sidebar"></th:block>
         <!-- partial -->
         <div class="content-wrapper">
           <div class="row">
