@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Purple Admin</title>
+  <th:block th:replace="librarian/common :: head"></th:block>
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <div th:replace="librarian/common :: navbar"></div>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <div class="row row-offcanvas row-offcanvas-right">
+        <!-- partial:../../partials/_sidebar.html -->
+          <th:block th:replace="librarian/common :: sidebar"></th:block>
+        <div class="content-wrapper">
+          <div class="row">
+         <!--    <div class="col-md-6 d-flex align-items-stretch grid-margin">
+              <div class="row flex-grow"> -->
+                <div class="col-12 grid-margin">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">Book Add</h4>
+                      <p class="card-description">
+                        Please add the book by ISBN or Assign internal ID. 
+                      </p>
+                       <div class="form-group">
+                          <label for="exampleInputtext2" class="col-sm-3 col-form-label">ISBN</label>
+                          <div class="col-sm-9"><input type="text" class="form-control" id="isbn" placeholder="Enter the ISBN"></div>
+                           
+                        </div>
+
+                        <button  class="btn btn-success mr-2" onclick="insert()">Submit</button>
+                       
+                        <button class="btn btn-success mr-2" onclick="window.location.href='/librarian/bookAddInternal'">Assign Internal ID Manual(HAVE NO ISBN)</button>
+                    </div>
+                  </div>
+                </div>
+
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <div th:replace="librarian/common :: footer"></div>
+        <!-- partial -->
+      </div>
+      <!-- row-offcanvas ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <div th:replace="librarian/common :: scripts"></div>
+  <!-- End custom js for this page-->
+  <script>
+      function insert(){
+        window.location.href='/librarian/bookAddInternal?isbn='+$("#isbn").val();
+      }
+    </script>
+</body>
+
+</html>

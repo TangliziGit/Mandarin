@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <th:block th:fragment="heads">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Mandarin - Administrator</title>
+        <link rel="stylesheet" href="./vendor/simple-line-icons/css/simple-line-icons.css">
+        <link rel="stylesheet" href="./vendor/font-awesome/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="./css/styles.css">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="robots" content="all,follow">
+    </th:block>
+</head>
+<body>
+
+<th:block th:fragment="navbar">
+    <div class="page-header">
+        <nav class="navbar page-header">
+            <a href="#" class="btn btn-link sidebar-mobile-toggle d-md-none mr-auto">
+                <i class="fa fa-bars"></i>
+            </a>
+
+            <a class="navbar-brand" href="#">
+                <div class="brand-text d-none d-lg-inline-block"><span>Mandarin </span><strong>Administrator</strong></div>
+            </a>
+
+            <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">
+                <i class="fa fa-bars"></i>
+            </a>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item d-md-down-none">
+
+                </li>
+
+                <li class="nav-item d-md-down-none">
+
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="./imgs/avatar-1.png" class="avatar avatar-sm" alt="logo">
+                        <span class="small ml-1 d-md-down-none">John Smith</span>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right">
+
+                        <a href="#" class="dropdown-item">
+                            <i class="fa fa-lock"></i> Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</th:block>
+
+
+<th:block th:fragment="sidebar">
+    <div class="sidebar">
+        <nav class="sidebar-nav">
+            <ul class="nav">
+                <li class="nav-title">Admin</li>
+
+                <li class="nav-item">
+                    <a th:href="@{/admin/welcome}" class="nav-link">
+                        <i class="icon icon-speedometer"></i> Welcome
+                    </a>
+                </li>
+                <li class="nav-item nav-dropdown">
+                    <a th:href="@{/admin/search}" class="nav-link">
+                        <i class="icon icon-target"></i> Librarian Management
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/admin/setting}" class="nav-link">
+                        <i class="icon icon-puzzle"></i> Setting Management
+                    </a>
+                </li>
+
+
+                <li class="nav-title">More</li>
+
+                <li class="nav-item">
+                    <a th:href="@{/admin/about}" class="nav-link">
+                        <i class="icon icon-umbrella"></i> About us
+                    </a>
+            </ul>
+        </nav>
+    </div>
+</th:block>
+
+<th:block th:fragment="scripts">
+    <script src="./vendor/jquery/jquery.min.js"></script>
+    <script src="./vendor/popper.js/popper.min.js"></script>
+    <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./vendor/chart.js/chart.min.js"></script>
+    <script src="./js/carbon.js"></script>
+    <script src="./js/demo.js"></script>
+    <script src="https://cdn.bootcss.com/handlebars.js/4.2.0/handlebars.min.js"></script>
+    <script src="http://identicon.net/js/vendor/identicon.js"></script>
+    <script src="http://identicon.net/js/vendor/pnglib.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+    <script src="http://identicon.net/js/vendor/sha.js"></script>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="/vendor/chart.js/chart.min.js"></script>
+    <script src="/vendor/jquery-validation/jquery.validate.min.js"></script>
+</th:block>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Purple Admin</title>
+  <th:block th:replace="librarian/common :: head"></th:block>
+</head>
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <div th:replace="librarian/common :: navbar"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <div class="row row-offcanvas row-offcanvas-right">
+        <!-- partial:../../partials/_sidebar.html -->
+        <th:block th:replace="librarian/common :: sidebar"></th:block>
+        <div class="content-wrapper">
+                    <header class="page-header">
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">Welcome</h2>
+            </div>
+          </header>
+
+          <div style="text-align: center; color: #808080;margin-top: 100px;">
+            <h1>Welcome mandarin librarian system</h1>
+            <p>Select the sidebar options to manage</p>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <div th:replace="librarian/common :: footer"></div>
+        <!-- partial -->
+      </div>
+      <!-- row-offcanvas ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+  <!-- plugins:js -->
+  <div th:replace="librarian/common :: scripts"></div>
+</body>
+
+</html>

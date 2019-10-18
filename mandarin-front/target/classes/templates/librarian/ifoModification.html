@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Purple Admin</title>
+    <th:block th:replace="librarian/common :: head"></th:block>
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+
+    <div th:replace="librarian/common :: navbar"></div>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <div class="row row-offcanvas row-offcanvas-right">
+            <!-- partial:../../partials/_sidebar.html -->
+            <th:block th:replace="librarian/common :: sidebar"></th:block>
+            <!-- partial -->
+            <div class="content-wrapper">
+                <section class="forms">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12" style="display: flex; flex-direction:column">
+                                <div class="card">
+
+                                    <div class="card-header d-flex align-items-center">
+                                        <h3 class="h4">Search Reader by Reader Name</h3>
+                                    </div>
+                                    <div style="align-self: center" class="card-body col-sm-8">
+                                        <div class="form-inline">
+                                            <div class="form-group col-sm-10">
+
+                                                <input type="text" placeholder="Jane Doe" id="inlineFormInput"
+                                                       class="form-control col-12" style="">
+                                            </div>
+                                            <div class="form-group col-sm-2">
+                                                <button type="" id="search-btn" data-_extension-text-contrast=""
+                                                        class="btn btn-primary" onclick="insert()">Search
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="client no-padding-top">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- Client Profile -->
+                            <div class="col-lg-12">
+                                <div class="card">
+
+                                    <div class="card-header d-flex align-items-center">
+                                        <h3 class="h4">Reader Information Modification</h3>
+                                    </div>
+
+                                    <div class="card-body">
+
+
+                                        <div id="modal-body">
+
+                                        </div>
+                                        <div class="table-responsive ps ps--theme_default">
+                                            <table class="table table-striped table-sm">
+                                                <thead>
+                                                <tr>
+                                                    <th>User ID</th>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
+                                                    <th>PhoneNumber</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="ifo">
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </section>
+
+
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:../../partials/_footer.html -->
+
+            <div th:replace="librarian/common :: footer"></div>
+
+            <!-- partial -->
+        </div>
+        <!-- row-offcanvas ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+
+<!-- plugins:js -->
+
+<div th:replace="librarian/common :: scripts"></div>
+<script>
+    function getFormData(dic) {
+        formData = new FormData();
+        for (var key in dic)
+            formData.append(key, dic[key]);
+        return formData;
+    }
+</script>
+
+<script id="reader-template" type="text/x-handlebars-template">
+    <tr id="reader-{{userId}}">
+        <td>{{userId}}</td>
+        <td onclick="$('#history-{{userId}}').slideToggle('fast')">{{name}}</td>
+        <td>{{email}}</td>
+        <td>{{phoneNumber}}</td>
+        <td>
+            <button id="btn1" class="btn btn-success mr-2" data-target="#edit-{{userId}}" data-toggle="modal">Update</button>
+            <button id="btn2" class="btn btn-success mr-2" onclick="deleteR({{userId}})">Delete</button>
+        </td>
+    </tr>
+    <tr id="history-{{userId}}" style="display: none">
+    </tr>
+</script>
+
+<script id="reader-detail-template" type="text/x-handlebars-template">
+    <td colspan="7">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <td>Book ID</td>
+                <td>Book title</td>
+                <td>Borrow date</td>
+                <!-- td>Return date</td -->
+                <td>Return status</td>
+                <td>Fine status</td>
+            </tr>
+            </thead>
+            <tbody id="content-{{userId}}">
+            </tbody>
+        </table>
+    </td>
+</script>
+
+<script id="reader-detail-content-template" type="text/x-handlebars-template">
+    <tr>
+        <td style="background-color: white;">{{book.bookId}}</td>
+        <td style="background-color: white;">{{book.bookDescription.title}}</td>
+        <td style="background-color: white;">{{borrowingStartTime}}</td>
+        <!-- td>{{borrowingEndTime}}</td -->
+        <td style="background-color: white;">{{returnStatus}}</td>
+        <td style="background-color: white;">{{fineStatus}}</td>
+    </tr>
+</script>
+
+<script id="modal-template" type="text/x-handlebars-template">
+    <div class="modal fade" id="edit-{{userId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">
+                        Edit Reader
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input id="name-{{userId}}" type="text" value="{{name}}" class="form-control"
+                                   data-_extension-text-contrast="bg">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input id="email-{{userId}}" type="email" value="{{email}}" class="form-control"
+                                   data-_extension-text-contrast="bg">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input id="phoneNumber-{{userId}}" type="text" value="{{phoneNumber}}"
+                                   class="form-control" data-_extension-text-contrast="bg">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-secondary"
+                            data-_extension-text-contrast="">Close
+                    </button>
+                    <button type="button" data-dismiss="modal" onclick="editReader({{userId}})" class="btn btn-primary"
+                            data-_extension-text-contrast="">Save changes
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- div id="xedit-{{userId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         class="modal fade text-left show" style="padding-right: 12px; display: block;">
+        <div role="document" class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="exampleModalLabel" class="modal-title">Edit Reader</h4>
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close"
+                            data-_extension-text-contrast=""><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input id="name-{{userId}}" type="text" value="{{name}}" class="form-control"
+                                   data-_extension-text-contrast="bg">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input id="email-{{userId}}" type="email" value="{{email}}" class="form-control"
+                                   data-_extension-text-contrast="bg">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input id="phoneNumber-{{userId}}" type="text" value="{{phoneNumber}}"
+                                   class="form-control" data-_extension-text-contrast="bg">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-secondary"
+                            data-_extension-text-contrast="">Close
+                    </button>
+                    <button type="button" data-dismiss="modal" onclick="editReader({{userId}})" class="btn btn-primary"
+                            data-_extension-text-contrast="">Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div -->
+</script>
+
+<script>
+    let source = $('#reader-template').html();
+    let template = Handlebars.compile(source);
+    let detailTemplate = Handlebars.compile($('#reader-detail-template').html());
+    let detailContentTemplate = Handlebars.compile($('#reader-detail-content-template').html());
+    let modalTemplate = Handlebars.compile($('#modal-template').html());
+
+    function insert() {
+        var formData = new FormData();
+        formData.append("name", $("#inlineFormInput").val());
+
+        $('#ifo').empty();
+        $.ajax({
+            url: "/api/search/reader/detail",
+            type: "POST",
+            dataType: 'json',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (resp) {
+                // readerId = resp.data.userId;
+                console.log(resp.data);
+                for (var data of resp.data) {
+                    $('#ifo').append(template(data));
+                    $('#modal-body').append(modalTemplate(data));
+
+                    if (data.borrowingHistoryModels.length != 0)
+                        $('#history-' + data.userId).append(detailTemplate(data));
+                    for (var detail of data.borrowingHistoryModels)
+                        $('#content-' + data.userId).append(detailContentTemplate(detail));
+                }
+            }
+        });
+    }
+</script>
+
+<script>
+    function editReader(id){
+        let formData = new FormData();
+        formData.append("name", $("#name-"+id).val());
+        formData.append("phoneNumber", $("#phoneNumber-"+id).val());
+        formData.append("email", $("#email-"+id).val());
+
+        $.ajax({
+            url: "/api/reader/"+id,
+            type: "PUT",
+            dataType: "json",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (resp) {
+                alert("success");
+            },
+            error: function (resp) {
+                alert(resp.responseJSON.message);
+            }
+        });
+    }
+
+    function update() {
+        window.open("updateReader.html");
+    }
+
+    function deleteR(id) {
+        var str = window.confirm("Delete this Reader?");
+        if (str == true) {
+            deleteReader(id);
+        }
+    }
+
+    function deleteReader(id) {
+        $.ajax({
+            url: "/api/reader/" + id,
+            type: "delete",
+            datatype: "json",
+            processData: false,
+            contentType: false,
+            success: function (resp) {
+                console.log(resp);
+                alert("success");
+                $("#reader-"+id).remove();
+                // if(resp.code == 200||resp.code == 201){
+                //     alert("success!");
+                //     console.log(resp);
+                //   }else{
+                //     alert(resp.message);
+                //   }
+
+            },
+            error: function (resp) {
+                alert(resp.responseJSON.message);
+                // alert(typeof(errorThrown));
+            }
+
+
+        });
+    }
+</script>
+</body>
+
+</html>
