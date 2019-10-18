@@ -1,6 +1,7 @@
 package org.a3.mandarin.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -53,6 +54,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "roleId"))
     private Set<Role> roles=new HashSet<>();
 
+    @OneToMany(mappedBy = "user")
+    @OrderBy("date DESC")
+    @JsonIgnore
+    private List<Income> incomes;
+
     public User() {}
 
     public User(String name, String phoneNumber, String email, Instant signUpTime, String password) {
@@ -72,6 +78,14 @@ public class User {
                 ", email='" + email + '\'' +
                 ", signUpTime=" + signUpTime +
                 '}';
+    }
+
+    public List<Income> getIncomes() {
+        return incomes;
+    }
+
+    public void setIncomes(List<Income> incomes) {
+        this.incomes = incomes;
     }
 
     public List<DeletingHistory> getDeletingHistories() {

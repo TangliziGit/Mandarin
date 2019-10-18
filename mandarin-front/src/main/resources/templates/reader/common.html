@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <th:block th:fragment="heads">
+        <meta charset="UTF-8">
+        <title>Mandarian Library</title>
+        <link rel="stylesheet" th:href="@{/reader/bootstrap/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/reader/css/styles.min.css}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
+    </th:block>
+</head>
+<body>
+
+<th:block th:fragment="navbar">
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+        <div class="container"><a class="navbar-brand logo">Mandarin-Library</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse"
+                 id="navcol-1">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/reader/index}">Homepage</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/reader/search}">SEARCH</a></li>
+                    <li th:switch="${session.userName}" class="nav-item" role="presentation">
+                        <a th:case="null" class="nav-link" th:href="@{/reader/login}">LOG IN</a>
+                        <a th:case="*" class="nav-link" th:href="@{/reader/account}">MY ACCOUNT</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</th:block>
+
+<th:block th:fragment="footer">
+    <footer class="page-footer dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <h5>START</h5>
+                    <ul>
+                        <li><a href="index.html">Homepage</a></li>
+                        <li><a href="login.html">Sign in</a></li>
+                        <li><a href="#">News</a>客户端</li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <h5>About us</h5>
+                    <ul>
+                        <li><a href="about-us.html">Team information</a></li>
+                        <li><a href="#">Contact us</a></li>
+                        <li><a href="contact-us.html">Join us</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <h5>SUPPORT</h5>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#">Forum</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <h5>SEARCH</h5>
+                    <ul>
+                        <li><a href="search.html">Book collection</a></li>
+                        <li><a href="#">Newspapers and magazines</a></li>
+                        <li><a href="#">Academic papers</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2019 Copyright A3</p>
+        </div>
+    </footer>
+</th:block>
+
+
+<th:block th:fragment="scripts">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/reader/js/script.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
+    <script src="http://identicon.net/js/vendor/identicon.js"></script>
+    <script src="http://identicon.net/js/vendor/pnglib.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+    <script src="http://identicon.net/js/vendor/sha.js"></script>
+    <script>
+        function get_identicon (text, size) {
+            let outputType = "HEX";
+            let hashtype = "SHA-1";
+
+            let shaObj = new jsSHA(text, "TEXT");
+            let hash = shaObj.getHash(hashtype, outputType, 1);
+            let data = new Identicon(hash, size).toString();
+            return 'data:image/png;base64,' + data;
+        }
+    </script>
+</th:block>
+
+
+<th:block th:fragment="search-templates">
+    <script id="search-result-template" type="text/x-handlebars-template">
+        <tr>
+            <td class="col-lg-3"><img class="rounded img-fluid" src="{{coverUrl}}?token=GroupA3">
+            </td>
+
+            <td class="col-lg-9">
+
+                <a href="/reader/book/{{isbn}}"><h4 style="font-size:27px;">{{title}}</h4></a>
+                <span class="text-muted" style="font-size:18px;"></span>
+                <br>
+                <h5 class="text-muted">{{author}}</h5>
+                <h5 class="text-muted">{{publisher}} {{publishYear}}</h5>
+                <h3 class="text-danger">${{price}}</h3>
+
+                <span>{{location}}</span><br>
+
+                <span>ISBN: {{isbn}}</span>
+            </td>
+        </tr>
+    </script>
+
+    <script id="searching-words" type="text/x-handlebars-template">
+        <div style="color: #808080;" class="col-sm-12 text-center">
+            <h1>Now searching ...</h1>
+            <p>Please wait a moment</p>
+        </div>
+    </script>
+
+    <script id="empty-words" type="text/x-handlebars-template">
+        <div style="color: #808080;" class="col-sm-12 text-center">
+            <h1>The search result is empty</h1>
+            <p>Please enter another keyword</p>
+        </div>
+    </script>
+
+    <script id="error-words" type="text/x-handlebars-template">
+        <div style="color: #808080;" class="col-sm-12 text-center">
+            <h1>Something error</h1>
+            <p>{{message}}</p>
+        </div>
+    </script>
+</th:block>
+
+<th:block th:fragment="book-history">
+    <script id="book-borrow-template" type="text/x-handlebars-template">
+        <tr>
+            <td>
+                <div class="review-item" style="width: 100%;margin-bottom: 0px;">
+                    <div class="row">
+                        <div class="col-3"><img class="rounded img-fluid"
+                                                src="http://106.13.1.40:8081/img/s24966915.jpg?token=GroupA3">
+                        </div>
+                        <dic class="col-9">
+                            <h4 style="font-size:27px;">Computer Networking</h4>
+                            <span
+                                    class="text-muted"
+                                    style="font-size:18px;"></span>
+                            <br>
+                            <h5 class="text-muted">John Smith / Rose</h5>
+                            <h5 class="text-muted">Pearson 2012</h5>
+                            <h3 class="text-danger">¥100</h3>
+
+                            <span>Floor 2 - Shelf 3</span><br>
+
+                            <span>ISBN: 9780132856201</span></dic>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </script>
+</th:block>
+
+</body>
+</html>

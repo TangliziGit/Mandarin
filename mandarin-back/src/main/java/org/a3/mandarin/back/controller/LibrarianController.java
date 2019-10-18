@@ -41,12 +41,10 @@ public class LibrarianController {
     @ResponseBody
     @Transactional
     @Permission({PermissionType.ADMIN})
-    public ResponseEntity<RESTfulResponse> registerLibrarian(@RequestParam String name,
+    public ResponseEntity<RESTfulResponse<User>> registerLibrarian(@RequestParam String name,
                                                     		 @RequestParam String password,
                                                     		 @RequestParam String phoneNumber,
-                                                    		 @RequestParam String email,
-                                                    		 HttpSession session,
-                                                    		 HttpServletResponse response) throws ApiNotFoundException {
+                                                    		 @RequestParam String email) throws ApiNotFoundException {
     	if(password == null) {
     		password = "00010001";
     	}
@@ -56,7 +54,10 @@ public class LibrarianController {
         user.getRoles().add(RoleUtil.librarianRole);
         userRepository.save(user);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(RESTfulResponse.ok());
+        RESTfulResponse<User> response = RESTfulResponse.ok();
+        response.setData(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/librarian/{id}")

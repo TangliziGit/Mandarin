@@ -32,6 +32,10 @@ public class BookController {
     private DeletingHistoryRepository deletingHistoryRepository;
     @Resource
     private CategoryRepository categoryRepository;
+    @Resource
+    private BorrowingHistoryRepository borrowingHistoryRepository;
+    @Resource
+    private ReservationHistoryRepository reservationHistoryRepository;
 
     @PostMapping("/book")
     @ResponseBody
@@ -41,13 +45,13 @@ public class BookController {
                                                                   @RequestParam String title,
                                                                   @RequestParam String author,
                                                                   @RequestParam Double price,
+                                                                  @RequestParam String coverUrl,
                                                                   @RequestParam String location,
                                                                   @RequestParam String categoryName,
                                                                   @RequestParam Integer publishYear,
                                                                   @RequestParam String publisher,
                                                                   @RequestParam String summary,
                                                                   @RequestParam Integer copyNumber){
-        // TODO: check string isEmpty
         BookDescription tmpBookDescription = bookDescriptionRepository.findById(ISBN).orElse(null);
         Category category=categoryRepository.findByCategoryNameEquals(categoryName);
 
@@ -60,7 +64,7 @@ public class BookController {
         if (copyNumber <= 0)
             throw new ApiNotFoundException("please enter a correct copy number");
 
-        BookDescription bookDescription = new BookDescription(ISBN, title,  author, price,
+        BookDescription bookDescription = new BookDescription(ISBN, title, author, price, coverUrl,
                 location, publishYear, publisher, summary, category);
         List<Integer> bookIdList=new ArrayList<>();
 
@@ -70,7 +74,6 @@ public class BookController {
             bookRepository.saveAndFlush(book);
             bookIdList.add(book.getBookId());
         }
-        // TODO: test this
         bookDescriptionRepository.save(bookDescription);
 
         RESTfulResponse<List<Integer>> response=RESTfulResponse.ok();
@@ -93,7 +96,6 @@ public class BookController {
                                                       @RequestParam Integer publishYear,
                                                       @RequestParam String publisher,
                                                       @RequestParam String summary){
-        // TODO: check string isEmpty
         Book book=bookRepository.findById(bookId).orElse(null);
         Category category=categoryRepository.findByCategoryNameEquals(categoryName);
 
@@ -139,6 +141,94 @@ public class BookController {
         return ResponseEntity.ok(RESTfulResponse.ok());
     }
 
+    @PostMapping("/book/borrow/{id}")
+    @ResponseBody
+    @Transactional
+    @Permission({PermissionType.LIBRARIAN})
+    public ResponseEntity<RESTfulResponse> borrowBook(@PathVariable("id") Integer targetBookId,
+                                                      @RequestParam Integer targetReaderId,
+                                                      HttpSession session){
+        Book targetBook=bookRepository.findById(targetBookId).orElse(null);
+        if (null == targetBook )throw new ApiNotFoundException("no such book");
+        if(bookRepository.isOnBorrowing(targetBookId))throw new ApiNotFoundException("book is on brorrowing");
+        if(bookRepository.isOnReserving(targetBookId))throw new ApiNotFoundException("book is on reserving");
 
+        User reader = userRepository.findById(targetReaderId).orElse(null);
+        if (null == reader)throw new ApiNotFoundException("no such reader");
+        if (reader.getBorrowingHistories().size()>=3)  throw new ApiNotFoundException("a reader can borrow no more than three books");
+
+        BorrowingHistory borrowingHistory = new BorrowingHistory(targetBook, reader, Instant.now());
+        borrowingHistoryRepository.save(borrowingHistory);
+
+        /*
+        targetBook.getBorrowingHistories().add(borrowingHistory);
+        reader.getBorrowingHistories().add(borrowingHistory);
+        userRepository.save(reader);
+        bookRepository.save(targetBook);
+        */
+        return ResponseEntity.ok(RESTfulResponse.ok());
+    }
+
+    @PostMapping("/book/return/{id}")
+    @ResponseBody
+    @Transactional
+    @Permission({PermissionType.LIBRARIAN})
+    public ResponseEntity<RESTfulResponse> returnBook(@PathVariable("id") Integer targetBookId,
+                                                      @RequestParam Integer targetReaderId,
+                                                      HttpSession session){
+        Book targetBook=bookRepository.findById(targetBookId).orElse(null);
+        if (null == targetBook )throw new ApiNotFoundException("no such book");
+
+        User reader = userRepository.findById(targetReaderId).orElse(null);
+        if (null == reader)throw new ApiNotFoundException("no such reader");
+
+        Instant endtime = Instant.now();
+        List<BorrowingHistory> borrowingHistories = targetBook.getBorrowingHistories();
+        borrowingHistories.get(borrowingHistories.size()-1).setBorrowingEndTime(endtime);
+        BorrowingHistory borrowingHistory = borrowingHistories.get(borrowingHistories.size()-1);
+        borrowingHistoryRepository.save(borrowingHistory);
+
+        /*
+        Duration between = Duration.between(borrowingHistory.getBorrowingStartTime(),borrowingHistory.getBorrowingEndTime());
+        long time = 30*24*60*60;
+        if (between.getSeconds()>time){
+            BorrowingFineHistory borrowingFineHistory = new BorrowingFineHistory(borrowingHistory.getBorrowingEndTime());
+            borrowingFineHistory.setBorrowingHistory(borrowingHistory);
+            borrowingHistory.setBorrowingFineHistory(borrowingFineHistory);
+        }
+        */
+
+        /*
+        List<BorrowingHistory> readerBorrowingHistories = reader.getBorrowingHistories();
+        borrowingHistories.get(readerBorrowingHistories.size()-1).setBorrowingEndTime(endtime);
+        userRepository.save(reader);
+        */
+        return ResponseEntity.ok(RESTfulResponse.ok());
+    }
+
+
+    @PostMapping("/book/reserve/{id}")
+    @ResponseBody
+    @Transactional
+    @Permission({PermissionType.READER})
+    public ResponseEntity<RESTfulResponse> reserveBook(@PathVariable("id") Integer targetBookId,
+                                                       HttpSession session){
+        Book targetBook=bookRepository.findById(targetBookId).orElse(null);
+        if (null == targetBook )
+            throw new ApiNotFoundException("no such book");
+
+        Integer readerId = (Integer) session.getAttribute("userId");
+        User reader = userRepository.findById(readerId).orElse(null);
+        if (null == reader)
+            throw new ApiNotFoundException("no such reader");
+
+        if (bookRepository.isDeleted(targetBookId) || bookRepository.isOnBorrowing(targetBookId) || bookRepository.isOnReserving(targetBookId))
+            throw new ApiNotFoundException("this book can not be reserved");
+
+        ReservingHistory reservingHistory = new ReservingHistory(targetBook, reader, Instant.now());
+        reservationHistoryRepository.save(reservingHistory);
+
+        return ResponseEntity.ok(RESTfulResponse.ok());
+    }
 }
 

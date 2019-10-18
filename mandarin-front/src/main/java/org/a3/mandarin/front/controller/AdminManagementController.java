@@ -18,7 +18,7 @@ public class AdminManagementController {
     @GetMapping({"/index", "/welcome"})
     @Permission(PermissionType.ADMIN)
     public String index(){
-        return "admin/index";
+        return "admin/welcome";
     }
 
     @GetMapping({"/search"})

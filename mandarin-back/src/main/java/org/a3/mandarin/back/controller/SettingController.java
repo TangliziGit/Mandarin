@@ -91,7 +91,7 @@ public class SettingController {
             throw new ApiUnauthorizedException("role validation not passed");
 
         checkAndUpdateSetting(SettingUtil.FINE, fine);
-        checkAndUpdateSetting(SettingUtil.PERIOD, period);
+        checkAndUpdateSetting(SettingUtil.BOOK_RETURN_PERIOD, period);
         checkAndUpdateSetting(SettingUtil.DEPOSIT, deposit);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(RESTfulResponse.ok());

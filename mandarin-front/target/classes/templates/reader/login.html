@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <th:block th:replace="reader/common :: heads"></th:block>
+</head>
+<body>
+
+<th:block th:replace="reader/common :: navbar"></th:block>
+
+<main class="page login-page">
+    <section class="clean-block clean-form dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Log In</h2>
+                <p>If you don't have an account, please contact the librarian to register a new account. </p>
+            </div>
+
+            <div id="login-body">
+                <form>
+                    <div class="form-group"><label for="name">Name</label><input class="form-control item" type="text" id="login-name" value="" placeholder="" name="username" ></div>
+                    <div class="form-group"><label for="password">Password</label><input class="form-control" type="password" id="login-password" placeholder="" name="password"></div>
+                    <div class="form-group">
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="checkbox"><label class="form-check-label" for="checkbox">Remember me</label></div>
+                    </div><!-- a href="forgot.html" class="forgot-password">Forget your password?</a --><a class="d-flex mr-auto forgot-password" href="#">Librarian</a><div class="btn btn-primary btn-block" id="login-btn" type="button">Log in</div>
+                </form>
+
+            </div>
+        </div>
+    </section>
+</main>
+
+<th:block th:replace="reader/common :: footer"></th:block>
+<th:block th:replace="reader/common :: scripts"></th:block>
+
+<script>
+    $("#login-btn").bind("click", function () {
+        let formData = new FormData();
+        formData.append("name", $("#login-name").val());
+        formData.append("password", $("#login-password").val());
+
+        $.ajax({
+            url: "/api/user/token",
+            type: "POST",
+            dataType: "json",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (resp) {
+                window.location.href="/reader/index";
+            },
+            error: function (resp) {
+                alert(resp.responseJSON.message);
+            }
+        })
+    })
+</script>
+
+</body>
+</html>

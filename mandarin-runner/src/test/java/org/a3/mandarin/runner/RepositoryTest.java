@@ -1,6 +1,7 @@
 package org.a3.mandarin.runner;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import org.a3.mandarin.common.dto.IncomeSummary;
 import org.a3.mandarin.common.entity.Book;
 import org.a3.mandarin.common.entity.BorrowingFineHistory;
 import org.a3.mandarin.common.entity.QUser;
@@ -77,5 +78,16 @@ public class RepositoryTest extends MandarinRunnerApplicationTests{
         System.out.println(RoleUtil.readerRole);
 
         Assert.assertEquals(1, page.getContent().size());
+    }
+
+    @Test
+    public void testIncomeRepository(){
+        List<IncomeSummary> incomeSummaries = incomeSummaryMapper.findDepositByPerMonth();
+
+        for (IncomeSummary incomeSummary: incomeSummaries)
+            System.out.println(incomeSummary.getDate()+" "+incomeSummary.getAmount());
+
+        Assert.assertEquals(1, incomeSummaries.size());
+        Assert.assertEquals(600.0, incomeSummaries.get(0).getAmount(), 0.01);
     }
 }
