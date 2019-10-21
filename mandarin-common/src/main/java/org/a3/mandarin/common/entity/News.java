@@ -11,10 +11,10 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer newsId;
 
-    @Column(columnDefinition = "VARCHAR(20)", nullable = false)
+    @Column(columnDefinition = "VARCHAR(100)", nullable = false)
     private String title;
 
-    @Column(columnDefinition = "VARCHAR(300)", nullable = false)
+    @Column(columnDefinition = "LONGTEXT)", nullable = false)
     private String content;
 
     @ManyToOne
