@@ -32,7 +32,7 @@ public class FrontPermissionAspect extends AbstractPermissionAspect {
     @Pointcut("execution(public * org.a3.mandarin.front.controller.AdminManagementController.*(..))")
     public void frontAdminPointcut(){}
 
-    @Around(value = "authorize(permission) && frontAdminPointcut()", argNames = "joinPoint,permission")
+    // @Around(value = "authorize(permission) && frontAdminPointcut()", argNames = "joinPoint,permission")
     public Object adminDoAround(ProceedingJoinPoint joinPoint, Permission permission) throws Throwable{
         ServletRequestAttributes attributes=(ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (null == attributes)
@@ -67,7 +67,7 @@ public class FrontPermissionAspect extends AbstractPermissionAspect {
     @Pointcut("execution(public * org.a3.mandarin.front.controller.LibrarianManagementController.*(..))")
     public void frontLibrarianPointcut(){}
 
-    @Around(value = "authorize(permission) && frontLibrarianPointcut()", argNames = "joinPoint,permission")
+    // @Around(value = "authorize(permission) && frontLibrarianPointcut()", argNames = "joinPoint,permission")
     public Object librarianDoAround(ProceedingJoinPoint joinPoint, Permission permission) throws Throwable{
         ServletRequestAttributes attributes=(ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         String type="librarian";
