@@ -59,6 +59,11 @@ public class User {
     @JsonIgnore
     private List<Income> incomes;
 
+    @OneToMany(mappedBy = "user")
+    @OrderBy("date DESC ")
+    @JsonIgnore
+    private List<News> news;
+
     public User() {}
 
     public User(String name, String phoneNumber, String email, Instant signUpTime, String password) {
@@ -78,6 +83,14 @@ public class User {
                 ", email='" + email + '\'' +
                 ", signUpTime=" + signUpTime +
                 '}';
+    }
+
+    public List<News> getNews() {
+        return news;
+    }
+
+    public void setNews(List<News> news) {
+        this.news = news;
     }
 
     public List<Income> getIncomes() {
