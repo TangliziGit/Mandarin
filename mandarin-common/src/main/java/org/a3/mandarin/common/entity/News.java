@@ -14,7 +14,7 @@ public class News {
     @Column(columnDefinition = "VARCHAR(100)", nullable = false)
     private String title;
 
-    @Column(columnDefinition = "LONGTEXT)", nullable = false)
+    @Column(columnDefinition = "LONGTEXT", nullable = false)
     private String content;
 
     @ManyToOne

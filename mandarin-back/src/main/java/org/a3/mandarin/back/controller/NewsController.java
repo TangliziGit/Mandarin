@@ -89,4 +89,28 @@ public class NewsController {
 
     }
 
+    @GetMapping("/news")
+    @ResponseBody
+    @Transactional
+    public ResponseEntity<RESTfulResponse<List<News>>> getNews(){
+
+        List<News> newsList = newsRepository.findAll();
+        RESTfulResponse<List<News>> response=RESTfulResponse.ok();
+        response.setData(newsList);
+
+        return ResponseEntity.ok(response);
+
+    }
+
+    @GetMapping("/news/{id}")
+    @ResponseBody
+    @Transactional
+    public ResponseEntity<RESTfulResponse<News>> getNewsById(@PathVariable("id") Integer targetNewsId ){
+        News news= newsRepository.findById(targetNewsId).orElse(null);
+        RESTfulResponse<News> response=RESTfulResponse.ok();
+        response.setData(news);
+
+        return ResponseEntity.ok(response);
+
+    }
 }
