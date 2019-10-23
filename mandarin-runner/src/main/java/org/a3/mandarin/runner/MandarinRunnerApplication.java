@@ -2,6 +2,7 @@ package org.a3.mandarin.runner;
 
 import org.a3.mandarin.back.MandarinBackApplication;
 import org.a3.mandarin.common.MandarinCommonApplication;
+import org.a3.mandarin.common.util.RoleUtil;
 import org.a3.mandarin.front.MandarinFrontApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +19,7 @@ public class MandarinRunnerApplication {
         }, args);
 
         Initializer initializer=new Initializer(applicationContext);
-        initializer.init();
+        // initializer.init();
+        RoleUtil.initRoles();
     }
 }

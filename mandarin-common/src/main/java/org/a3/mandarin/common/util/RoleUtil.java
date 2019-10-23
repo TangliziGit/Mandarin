@@ -18,6 +18,9 @@ public class RoleUtil {
     }
 
     public static void initRoles(){
+        if (null!=readerRole && null!=librarianRole && null!=adminRole)
+            return;
+
         RoleUtil.readerRole=RoleUtil.roleRepository.findByRoleName(RoleType.READER.toString());
         RoleUtil.librarianRole=RoleUtil.roleRepository.findByRoleName(RoleType.LIBRARIAN.toString());
         RoleUtil.adminRole=RoleUtil.roleRepository.findByRoleName(RoleType.ADMIN.toString());

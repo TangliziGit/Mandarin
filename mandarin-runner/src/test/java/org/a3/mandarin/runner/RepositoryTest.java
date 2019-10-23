@@ -1,5 +1,6 @@
 package org.a3.mandarin.runner;
 
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.a3.mandarin.common.dto.IncomeSummary;
 import org.a3.mandarin.common.entity.Book;
@@ -31,7 +32,7 @@ public class RepositoryTest extends MandarinRunnerApplicationTests{
         Assert.assertTrue(book1onBorrowing);
         Assert.assertFalse(book2deleted);
         Assert.assertFalse(book2onReserving);
-        Assert.assertFalse(book2onBorrowing);
+        Assert.assertTrue(book2onBorrowing);
     }
 
     @Test
@@ -67,8 +68,6 @@ public class RepositoryTest extends MandarinRunnerApplicationTests{
     @Test
     public void testFindReadersWithSpec(){
         QUser qUser=QUser.user;
-        // Predicate predicate=qUser.roles.contains(RoleUtil.readerRole)
-        //         .and(qUser.userId.eq(3));
 
         PageRequest pageRequest=PageRequest.of(0, 20, Sort.by("signUpTime"));
         BooleanExpression expression=qUser.roles.contains(RoleUtil.readerRole);
