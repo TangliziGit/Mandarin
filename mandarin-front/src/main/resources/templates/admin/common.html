@@ -80,6 +80,11 @@
                         <i class="icon icon-puzzle"></i> Setting Management
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a th:href="@{/admin/retrieve}" class="nav-link">
+                        <i class="icon icon-puzzle"></i> Retrieve password
+                    </a>
+                </li>
 
 
                 <li class="nav-title">More</li>
@@ -110,6 +115,48 @@
     <script src="/vendor/jquery.cookie/jquery.cookie.js"> </script>
     <script src="/vendor/chart.js/chart.min.js"></script>
     <script src="/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script>
+
+        function alertSuccess(message, time=4000){
+            myAlert("success", "Success!", message, time);
+        }
+
+        function alertError(message, time=4000) {
+            myAlert("danger", "Error!", message, time);
+        }
+
+        function alertWarning(message, time=4000) {
+            myAlert("warning", "Warning!", message, time);
+        }
+
+        var alertCounter = 0;
+
+        $("<div />", {
+            style: "position: fixed; top: 100px; width: 30%; left: 41%",
+            id: "alertBoxDiv"
+        }).appendTo($("body"));
+        function myAlert(cls, head, message, time){
+            var html=
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\" style=\"margin-left: 10px;\"></a>\n" +
+                "<strong>"+head+"</strong> " + message + " \n";
+
+            var id = "alertDiv"+ alertCounter++;
+            $("<div />", {
+                "class": "alert alert-"+cls,
+                id: id
+            }).appendTo($("#alertBoxDiv"));
+
+            $("#"+id).append(html);
+
+            $("#"+id).fadeIn(100, function(){
+                setTimeout(function(){
+                    $("#"+id).fadeOut(100, function () {
+                        $("#"+id).remove();
+                    });
+                }, time);
+            })
+        }
+    </script>
 </th:block>
 
 </body>

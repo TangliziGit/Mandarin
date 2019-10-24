@@ -44,4 +44,10 @@ public class AdminManagementController {
     public String about(){
         return "admin/about";
     }
+
+    @GetMapping({"/retrieve"})
+    @Permission(PermissionType.ADMIN)
+    public String retrieve(){
+        return "admin/retrieve";
+    }
 }

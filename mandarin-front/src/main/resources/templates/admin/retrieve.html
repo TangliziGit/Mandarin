@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <th:block th:replace="admin/common :: heads"></th:block>
+</head>
+<body class="sidebar-fixed header-fixed">
+<div class="page-wrapper">
+    <th:block th:replace="admin/common :: navbar"></th:block>
+
+    <div class="main-container">
+        <th:block th:replace="admin/common :: sidebar"></th:block>
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <div class="row">
+                                <div class="col-10">Retrieve password</div>
+                                <div class="col-2">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <section class="forms">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-lg-12" style="display: flex; flex-direction:column">
+                                                <div class="card">
+                                                    <div class="card-close">
+                                                    </div>
+                                                    <div class="card-header d-flex align-items-center">
+                                                        <h3 class="h4">Help librarian to retrieve password</h3>
+                                                    </div>
+
+                                                    <div style="align-self: center" class="card-body col-sm-8">
+                                                        <form style="border-top: 2px solid #5ea4f3;background-color: #fff;max-width: 500px;margin: auto;padding: 40px;box-shadow: 0 2px 10px rgba(0,0,0,.075);">
+                                                            <div class="form-group">
+
+                                                                <h3>Enter name or phone number</h3>
+                                                                <input class="form-control item" type="text" id="login-name" value="" placeholder="" name="username" data-_extension-text-contrast="bg"></div>
+                                                            <div class="btn btn-primary btn-block" id="retrieve-btn" type="button">Retrieve</div>
+                                                        </form>
+                                                    </div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <th:block th:replace="admin/common :: scripts"></th:block>
+
+        <script>
+            let source = document.getElementById("librarian-result-template").innerHTML;
+            let template = Handlebars.compile(source);
+
+            let searchingWords = Handlebars.compile($("#searching-words").html());
+            let emptyWords = Handlebars.compile($("#empty-words").html());
+            let errorWords = Handlebars.compile($("#error-words").html());
+
+            $("#search-btn").bind("click", function () {
+                let formData = new FormData();
+                if ($("#inlineFormInput").val() == "") {
+                    alert("con not be empty");
+                    return;
+                }
+
+                formData.append("name", $("#inlineFormInput").val());
+
+                for (elem of $("#librarian-result").children()) elem.remove();
+                $("#librarian-result").append(searchingWords(""));
+
+                $.ajax({
+                    url: "/api/search/librarian/",
+                    type: "POST",
+                    dataType: "json",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (resp) {
+                        for (elem of $("#librarian-result").children()) elem.remove();
+
+                        if (resp.data.length == 0)
+                            $("#librarian-result").append(emptyWords(""));
+                        else for (elem of resp.data) {
+                            elem.avatar = get_identicon(elem.name);
+                            elem.signUpTime = moment(elem.signUpTime, "YYYY-MM-DD hh:mm:ss").format('YYYY-MM-DD');
+                            $("#librarian-result").append(template(elem));
+                        }
+                    },
+                    error: function (resp) {
+                        for (elem of $("#librarian-result").children()) elem.remove();
+
+                        $("#librarian-result").append(errorWords(resp));
+                    }
+                });
+            })
+
+            function get_identicon(text) {
+                let size = 100;
+                let outputType = "HEX";
+                let hashtype = "SHA-1";
+
+                let shaObj = new jsSHA(text, "TEXT");
+                let hash = shaObj.getHash(hashtype, outputType, 1);
+                let data = new Identicon(hash, size).toString();
+                return 'data:image/png;base64,' + data;
+            }
+        </script>
+
+        <script>
+            function deleteLibrarian(userId) {
+                $.ajax({
+                    url: "/api/librarian/" + userId,
+                    type: "DELETE",
+                    success: function (resp) {
+                        $("#librarian-" + userId).remove();
+                        $("#edit-librarian-" + userId).remove();
+                        if ($("#librarian-result").children().length == 0) {
+                            let emptyWords = Handlebars.compile($("#empty-words").html());
+                            $("#librarian-result").html(emptyWords(""));
+                        }
+                    },
+                    error: function (resp) {
+                        alert(resp.message);
+                    }
+                });
+            }
+
+            function editLibrarian(userId) {
+                let formData = new FormData();
+                formData.append("name", $("#edit-librarian-name-" + userId).val());
+                formData.append("phoneNumber", $("#edit-librarian-phoneNumber-" + userId).val());
+                formData.append("email", $("#edit-librarian-email-" + userId).val());
+                formData.append("password", $("#edit-librarian-password-" + userId).val());
+
+                $.ajax({
+                    url: "/api/librarian/" + userId,
+                    type: "PUT",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (resp) {
+                        alert("success");
+                    },
+                    error: function (resp) {
+                        alert(resp.responseJSON.message);
+                    }
+                });
+            }
+        </script>
+
+        <script>
+            $("#logout").bind("click", function () {
+                $.ajax({
+                    url: "/api/user/token",
+                    type: "DELETE",
+                    success: function (resp) {
+                        console.log(resp);
+                    }
+                });
+                window.location.href = "login.html";
+            });
+        </script>
+
+
+        <script>
+            $("#submit").bind("click", function () {
+                let formData = new FormData();
+                formData.append("name", $("#name").val());
+                formData.append("phoneNumber", $("#phoneNumber").val());
+                formData.append("email", $("#email").val());
+                formData.append("password", $("#password").val());
+
+                $.ajax({
+                    url: "/api/librarian/",
+                    type: "POST",
+                    dataType: "json",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (resp) {
+                        alert("success");
+                        $("#name").val("");
+                        $("#phoneNumber").val("");
+                        $("#email").val("");
+                        $("#password").val("");
+                        window.location.href=window.location.href;
+                    },
+                    error: function (resp) {
+                        alert(resp.responseJSON.message);
+                    }
+                });
+            })
+        </script>
+
+        <script>
+            $("#retrieve-btn").bind("click", function () {
+                let formData = new FormData();
+
+                $.ajax({
+                    url: "/api/user/"+$("#login-name").val()+"/password/retrieve",
+                    type: "POST",
+                    dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    success: function (resp) {
+                        alertSuccess("User password has been sent to your email");
+                    },
+                    error: function (resp) {
+                        alertError(resp.responseJSON.message);
+                    }
+                })
+            })
+        </script>
+</body>
+</html>
