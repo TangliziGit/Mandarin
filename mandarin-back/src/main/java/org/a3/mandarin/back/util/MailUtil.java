@@ -36,8 +36,8 @@ public class MailUtil {
             for (int i = 0; i < borrowingHistory.size(); i++) {
                 long borrowingStartTime = borrowingHistory.get(i).getBorrowingStartTime().getEpochSecond();
                 if(now - borrowingStartTime >= 27 * 24 * 60 * 60 && now - borrowingStartTime <= 28 * 24 * 60 * 60) {
-                User user = borrowingHistory.get(i).getReader();
-                sendMail(user.getEmail(),
+                    User user = borrowingHistory.get(i).getReader();
+                    sendMail(user.getEmail(),
                         "IMPORTANT! This is a Alter mail form Mandarin!",
                         "The book you borrowed is due in three days. PLease don't forget to return it back or you will be fine 1 yuan per day");
                 }
