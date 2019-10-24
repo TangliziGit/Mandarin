@@ -3,7 +3,7 @@ package org.a3.mandarin.runner;
 import org.a3.mandarin.back.MandarinBackApplication;
 import org.a3.mandarin.common.MandarinCommonApplication;
 import org.a3.mandarin.common.dao.repository.*;
-import org.a3.mandarin.common.mapper.IncomeSummaryMapper;
+import org.a3.mandarin.common.dao.mapper.IncomeSummaryMapper;
 import org.a3.mandarin.common.util.RoleUtil;
 import org.a3.mandarin.front.MandarinFrontApplication;
 import org.junit.Before;

@@ -6,6 +6,7 @@ import org.a3.mandarin.common.annotation.Permission;
 import org.a3.mandarin.common.dao.repository.*;
 import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.PermissionType;
+import org.a3.mandarin.common.util.RoleUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import javax.servlet.http.HttpSession;
 
 import javax.annotation.Resource;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -146,26 +148,39 @@ public class BookController {
     @Transactional
     @Permission({PermissionType.LIBRARIAN})
     public ResponseEntity<RESTfulResponse> borrowBook(@PathVariable("id") Integer targetBookId,
-                                                      @RequestParam Integer targetReaderId,
-                                                      HttpSession session){
+                                                      @RequestParam Integer targetReaderId){
         Book targetBook=bookRepository.findById(targetBookId).orElse(null);
-        if (null == targetBook )throw new ApiNotFoundException("no such book");
-        if(bookRepository.isOnBorrowing(targetBookId))throw new ApiNotFoundException("book is on brorrowing");
-        if(bookRepository.isOnReserving(targetBookId))throw new ApiNotFoundException("book is on reserving");
+        User user = userRepository.findById(targetReaderId).orElse(null);
 
-        User reader = userRepository.findById(targetReaderId).orElse(null);
-        if (null == reader)throw new ApiNotFoundException("no such reader");
-        if (reader.getBorrowingHistories().size()>=3)  throw new ApiNotFoundException("a reader can borrow no more than three books");
+        if (null == user)
+            throw new ApiNotFoundException("no such user");
+        if (!user.getRoles().contains(RoleUtil.readerRole))
+            throw new ApiNotFoundException("only reader can borrow books");
+        if (user.getBorrowingHistories().size()>=3)
+            throw new ApiNotFoundException("the number of this reader's books has reached the limit of 3 book");
 
-        BorrowingHistory borrowingHistory = new BorrowingHistory(targetBook, reader, Instant.now());
+        if (null == targetBook)
+            throw new ApiNotFoundException("no such book");
+        if (bookRepository.isOnBorrowing(targetBookId))
+            throw new ApiNotFoundException("this book is on borrowing");
+        if (bookRepository.isDeleted(targetBookId))
+            throw new ApiNotFoundException("this book is deleted");
+        if (bookRepository.isOnReserving(targetBookId)){
+            List<ReservingHistory> reservingHistories = targetBook.getReservingHistories();
+            ReservingHistory reservingHistory = reservingHistories.get(reservingHistories.size() - 1);
+
+            if (!reservingHistory.getReader().equals(user))
+                throw new ApiNotFoundException("this book is reserved by other reader");
+            else {
+                // TODO: should be handled in task schedule
+                reservingHistory.setFetched(true);
+                reservingHistory.setReservingEndTime(Instant.now());
+            }
+        }
+
+        BorrowingHistory borrowingHistory = new BorrowingHistory(targetBook, user, Instant.now());
         borrowingHistoryRepository.save(borrowingHistory);
 
-        /*
-        targetBook.getBorrowingHistories().add(borrowingHistory);
-        reader.getBorrowingHistories().add(borrowingHistory);
-        userRepository.save(reader);
-        bookRepository.save(targetBook);
-        */
         return ResponseEntity.ok(RESTfulResponse.ok());
     }
 
@@ -173,36 +188,28 @@ public class BookController {
     @ResponseBody
     @Transactional
     @Permission({PermissionType.LIBRARIAN})
-    public ResponseEntity<RESTfulResponse> returnBook(@PathVariable("id") Integer targetBookId,
-                                                      @RequestParam Integer targetReaderId,
-                                                      HttpSession session){
+    public ResponseEntity<RESTfulResponse> returnBook(@PathVariable("id") Integer targetBookId){
         Book targetBook=bookRepository.findById(targetBookId).orElse(null);
-        if (null == targetBook )throw new ApiNotFoundException("no such book");
+        if (null == targetBook)
+            throw new ApiNotFoundException("no such book");
+        if (bookRepository.isDeleted(targetBookId))
+            throw new ApiNotFoundException("It seems you take this book back? " +
+                    "It's too late, we have deleted this book already. " +
+                    "You can take this book back. " +
+                    "Because our sponsor did not mention this condition.");
 
-        User reader = userRepository.findById(targetReaderId).orElse(null);
-        if (null == reader)throw new ApiNotFoundException("no such reader");
+        if (bookRepository.isOnReserving(targetBookId))
+            throw new ApiNotFoundException("this book is on reserving, but not borrowed");
 
-        Instant endtime = Instant.now();
+        if (!bookRepository.isOnBorrowing(targetBookId))
+            throw new ApiNotFoundException("this book has not been borrowed");
+
         List<BorrowingHistory> borrowingHistories = targetBook.getBorrowingHistories();
-        borrowingHistories.get(borrowingHistories.size()-1).setBorrowingEndTime(endtime);
         BorrowingHistory borrowingHistory = borrowingHistories.get(borrowingHistories.size()-1);
-        borrowingHistoryRepository.save(borrowingHistory);
+        borrowingHistory.setBorrowingEndTime(Instant.now());
 
-        /*
-        Duration between = Duration.between(borrowingHistory.getBorrowingStartTime(),borrowingHistory.getBorrowingEndTime());
-        long time = 30*24*60*60;
-        if (between.getSeconds()>time){
-            BorrowingFineHistory borrowingFineHistory = new BorrowingFineHistory(borrowingHistory.getBorrowingEndTime());
-            borrowingFineHistory.setBorrowingHistory(borrowingHistory);
-            borrowingHistory.setBorrowingFineHistory(borrowingFineHistory);
-        }
-        */
+        bookRepository.save(targetBook);
 
-        /*
-        List<BorrowingHistory> readerBorrowingHistories = reader.getBorrowingHistories();
-        borrowingHistories.get(readerBorrowingHistories.size()-1).setBorrowingEndTime(endtime);
-        userRepository.save(reader);
-        */
         return ResponseEntity.ok(RESTfulResponse.ok());
     }
 
@@ -222,8 +229,29 @@ public class BookController {
         if (null == reader)
             throw new ApiNotFoundException("no such reader");
 
-        if (bookRepository.isDeleted(targetBookId) || bookRepository.isOnBorrowing(targetBookId) || bookRepository.isOnReserving(targetBookId))
-            throw new ApiNotFoundException("this book can not be reserved");
+        if (bookRepository.isOnReserving(targetBookId))
+            throw new ApiNotFoundException("this book is on reserving");
+        if (bookRepository.isOnBorrowing(targetBookId))
+            throw new ApiNotFoundException("this book is on borrowing");
+        if (bookRepository.isDeleted(targetBookId))
+            throw new ApiNotFoundException("this book has been deleted");
+
+        // this code is useless, because book is already reserved
+        // if (bookRepository.isOnReserving(targetBookId)){
+        //     List<ReservingHistory> reservingHistories = targetBook.getReservingHistories();
+        //     ReservingHistory lastReservingHistory  = reservingHistories.get(reservingHistories.size() - 1);
+        //     Instant limitation = lastReservingHistory.getReservingStartTime().plus(Duration.ofHours(2));
+
+        //     // maintain book reserving history
+        //     if (Instant.now().isAfter(limitation)){
+        //         // reservation failed
+        //         lastReservingHistory.setFetched(false);
+        //         lastReservingHistory.setReservingEndTime(limitation);
+        //     }else{
+        //         // on reserving
+        //         throw new ApiNotFoundException("this book in on reserving");
+        //     }
+        // }
 
         ReservingHistory reservingHistory = new ReservingHistory(targetBook, reader, Instant.now());
         reservationHistoryRepository.save(reservingHistory);

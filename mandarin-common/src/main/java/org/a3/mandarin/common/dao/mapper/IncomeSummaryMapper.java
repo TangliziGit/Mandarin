@@ -1,4 +1,4 @@
-package org.a3.mandarin.common.mapper;
+package org.a3.mandarin.common.dao.mapper;
 
 import org.a3.mandarin.common.dto.IncomeSummary;
 import org.apache.ibatis.annotations.*;

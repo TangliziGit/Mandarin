@@ -266,7 +266,7 @@ CREATE TABLE `reserving_history` (
 
 LOCK TABLES `reserving_history` WRITE;
 /*!40000 ALTER TABLE `reserving_history` DISABLE KEYS */;
-INSERT INTO `reserving_history` VALUES (1,_binary '\0',NULL,'2019-10-13 15:50:12',1,3);
+INSERT INTO `reserving_history` VALUES (1,_binary '','2019-10-13 15:50:12','2019-10-13 15:50:12',1,3);
 /*!40000 ALTER TABLE `reserving_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -385,4 +385,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-23 15:50:19
+-- Dump completed on 2019-10-24  6:18:08

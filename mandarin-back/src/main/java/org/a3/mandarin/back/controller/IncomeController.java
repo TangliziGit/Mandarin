@@ -4,7 +4,7 @@ import org.a3.mandarin.back.model.RESTfulResponse;
 import org.a3.mandarin.common.annotation.Permission;
 import org.a3.mandarin.common.dto.IncomeSummary;
 import org.a3.mandarin.common.enums.PermissionType;
-import org.a3.mandarin.common.mapper.IncomeSummaryMapper;
+import org.a3.mandarin.common.dao.mapper.IncomeSummaryMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
