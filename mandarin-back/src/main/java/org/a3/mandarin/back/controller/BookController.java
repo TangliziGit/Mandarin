@@ -7,6 +7,8 @@ import org.a3.mandarin.common.dao.repository.*;
 import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.PermissionType;
 import org.a3.mandarin.common.util.RoleUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +25,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/api")
 public class BookController {
+    private Logger logger = LoggerFactory.getLogger(BookController.class);
 
     @Resource
     private BookRepository bookRepository;
@@ -156,8 +159,12 @@ public class BookController {
             throw new ApiNotFoundException("no such user");
         if (!user.getRoles().contains(RoleUtil.readerRole))
             throw new ApiNotFoundException("only reader can borrow books");
-        if (user.getBorrowingHistories().size()>=3)
+        // TODO: critical bug
+        if (bookRepository.findBorrowingBooksByUserId(targetReaderId).size()>=3)
             throw new ApiNotFoundException("the number of this reader's books has reached the limit of 3 book");
+
+        for (Book book: bookRepository.findBorrowingBooksByUserId(targetReaderId))
+            logger.error(book.toString());
 
         if (null == targetBook)
             throw new ApiNotFoundException("no such book");

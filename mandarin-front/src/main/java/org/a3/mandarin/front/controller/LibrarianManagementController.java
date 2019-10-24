@@ -16,6 +16,11 @@ public class LibrarianManagementController {
         return "librarian/login";
     }
 
+    @GetMapping({"/forgetPswd"})
+    public String forgetPassword(){
+        return "librarian/forgetPswd";
+    }
+
     @GetMapping("{path}")
     @Permission(PermissionType.LIBRARIAN)
     public String map(@PathVariable("path") String path){

@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Purple Admin</title>
-    <th:block th:replace="librarian/common :: head"></th:block>
-</head>
+<th:block th:replace="librarian/common :: head"></th:block>
 <body>
   <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
 
+
       <div th:replace="librarian/common :: navbar"></div>
+
 
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <div class="row row-offcanvas row-offcanvas-right">
         <!-- partial:../../partials/_sidebar.html -->
+
           <th:block th:replace="librarian/common :: sidebar"></th:block>
-        <div class="content-wrapper">
+
+          <div class="content-wrapper">
           <div id="lendandreturn">
                     <header class="page-header">
             <div class="container-fluid">
@@ -39,21 +40,45 @@
           
         </div>
         <div id="tablelar" class="col-12 grid-margin">
-         <div class="card">
+         <div class="card"  id="borrowBody">
           <div class="card-body">
             <h4 class="card-tltle">Borrow book by BookId and ReaderId.</h4>
             <div class="container-fluid">
+              <div class="row" id="addForm">
+              <div class="col-4">
               <div class="form-group row">
                 <label for="exampleInputtext2" class="col-sm-3 col-form-label">BookId</label>
                 
-                <input type="text" class="form-control" id="bookid" placeholder="Enter the BookId">
+                <input type="text" class="form-control" id="bookid1" placeholder="Enter the BookId">
+          
+              </div>
+            </div>
+             <div class="col-4">
+              <div class="form-group row">
+                <label for="exampleInputtext2" class="col-sm-3 col-form-label">BookId</label>
+                
+                <input type="text" class="form-control" id="bookid2" placeholder="Enter the BookId">
             
              
-              <label for="exampleInputtext2" class="col-sm-3 col-form-label">ReaderId</label>
+              </div>
+            </div>
+             <div class="col-4">
+              <div class="form-group row">
+                <label for="exampleInputtext2" class="col-sm-3 col-form-label">BookId</label>
+                
+                <input type="text" class="form-control" id="bookid3" placeholder="Enter the BookId">
+            
+             
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <label for="exampleInputtext2" class="col-sm-3 col-form-label">ReaderId</label>
               <input type="text" class="form-control" id="readerid" placeholder="Enter the ReaderId">
                
               <button onclick="submitBorrow()" class="btn btn-primary">submit</button>
-              </div>
+          </div>
+
             </div>
           </div>
         </div>
@@ -66,11 +91,11 @@
               <div class="form-group row">
                 <label for="exampleInputtext2" class="col-sm-3 col-form-label">BookId</label>
                 
-                <input type="text" class="form-control" id="bookid1" placeholder="Enter the BookId">
+                <input type="text" class="form-control" id="bookidR" placeholder="Enter the BookId">
             
              
-              <label for="exampleInputtext2" class="col-sm-3 col-form-label">ReaderId</label>
-              <input type="text" class="form-control" id="readerid1" placeholder="Enter the ReaderId">
+              <!-- label for="exampleInputtext2" class="col-sm-3 col-form-label">ReaderId</label>
+              <input type="text" class="form-control" id="readeridR" placeholder="Enter the ReaderId" -->
                
               <button onclick="submitReturn()" class="btn btn-primary">submit</button>
               </div>
@@ -84,7 +109,9 @@
         <!-- partial:../../partials/_footer.html -->
 
 
+
         <div th:replace="librarian/common :: footer"></div>
+
         <!-- partial -->
       </div>
       <!-- row-offcanvas ends -->
@@ -95,59 +122,61 @@
 
   <!-- plugins:js -->
 
+
   <div th:replace="librarian/common :: scripts"></div>
 
-    <script>
-      // function borrowBook(){
-      //     $('#tablelar').empty();
-      //     $('#tablelar').append(
-      //        "<div class=\"card\"><div class=\"card-body\"><h4 class=\"card-tltle\">Borrow book by BookId and ReaderId.</h4><div class=\"container-fluid\"><div class=\"form-group row\"><label for=\"exampleInputtext2\" class=\"col-sm-3 col-form-label\">BookId</label>"+
-      //                                                "<input type=\"text\" class=\"form-control\" id=\"bookid\" placeholder=\"Enter the BookId\">"+"<label for=\"exampleInputtext2\" class=\"col-sm-3 col-form-label\">ReaderId</label>"+
-                          
-      //                       "<input type=\"text\" class=\"form-control\" id=\"readerid\" placeholder=\"Enter the ReaderId\">"+"<button onclick=\"submitBorrow()\" class=\"btn btn-primary\">submit</button></div></div></div></div>");
-      // }
-      // function returnBook(){
-      //     $('#tablelar').empty();
-      //     $('#tablelar').append(
-      //        "<div class=\"card\"><div class=\"card-body\"><h4 class=\"card-tltle\">Return book by BookId and ReaderId.</h4><div class=\"container-fluid\"><div class=\"form-group row\"><label for=\"exampleInputtext2\" class=\"col-sm-3 col-form-label\">BookId</label>"+
-                          
-      //                       "<input type=\"text\" class=\"form-control\" id=\"bookid\" placeholder=\"Enter the BookId\">"+"<label for=\"exampleInputtext2\" class=\"col-sm-3 col-form-label\">ReaderId</label>"+
-                          
-      //                       "<input type=\"text\" class=\"form-control\" id=\"readerid\" placeholder=\"Enter the ReaderId\">"+"<button onclick=\"submitReturn()\" class=\"btn btn-primary\">submit</button></div></div></div></div>");
-      // }
 
+    <script>
+    
       function submitBorrow(){
+          let sum = 0;
+
+          for (let i=1; i<=3; i++){
+              // TODO: make sure why 'var' can not be used
+              const bookId = $('#bookid'+i).val();
+              if (bookId==="") continue;
+
+              const formData = new FormData();
+              formData.append("targetReaderId", $('#readerid').val());
+
               $.ajax({
-                url: "/api/book/borrow/"+$('#bookid').val()+"?targetReaderId="+$('#readerid').val(),
-                type: "POST",
-                dataType: "json",
-                processData: false,
-                contentType: false,
-                success: function (resp){
-                    alert("success");
-                    $("#bookid").val("");
-                    $("#readerid").val("");
-                },
-                error: function (resp) {
-                    alert(resp.responseJSON.message);
-                }
-            });
+                  url: "/api/book/borrow/"+bookId,
+                  type: "POST",
+                  data: formData,
+                  dataType: "json",
+                  processData: false,
+                  contentType: false,
+                  success: function (resp){
+                      $("#bookid"+i).val("");
+                      sum++;
+                      console.log(sum);
+                  },
+                  error: function (resp) {
+                      alertError(resp.responseJSON.message+" ( BookID: "+bookId+" )");
+                  }
+              });
+          }
+
+          setTimeout(function () {
+              alertSuccess("you have borrowed "+sum+" book(s).");
+          }, 400);
       }
+             
 
             function submitReturn(){
               $.ajax({
-                url: "/api/book/return/"+$('#bookid1').val()+"?targetReaderId="+$('#readerid1').val(),
+                url: "/api/book/return/"+$('#bookidR').val(),
                 type: "POST",
                 dataType: "json",
                 processData: false,
                 contentType: false,
                 success: function (resp){
-                    alert("success");
-                    $("#bookid1").val("");
-                    $("#readerid1").val("");
+                    alertSuccess("the book has returned.");
+                    $("#bookidR").val("");
+                    // $("#readeridR").val("");
                 },
                 error: function (resp) {
-                    alert(resp.responseJSON.message);
+                    alertError(resp.responseJSON.message);
                 }
             });
       }

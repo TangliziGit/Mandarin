@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:fragment="head">
+        <title>Mandarin - Librarian</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- plugins:css -->
@@ -24,12 +25,7 @@
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
 
             <ul class="navbar-nav navbar-nav-right">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle nav-profile" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                        <!-- img th:src="@{/librarain/images/faces/face1.jpg}" alt="image" -->
-                        <span class="d-none d-lg-inline" th:text="${session.userName}"></span>
-                    </a>
-                </li>
+
                 <li class="nav-item nav-logout d-none d-lg-block">
                     <a class="nav-link" th:href="@{/librarian/login}">
                         <i class="mdi mdi-power"></i>
@@ -75,7 +71,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="bookManage.html">
+                <a class="nav-link" href="bookManage2.html">
                     <span class="menu-title">Book Manage</span>
                     <i class="mdi mdi-format-list-bulleted menu-icon"></i>
                 </a>
@@ -101,9 +97,13 @@
                     </ul>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="postManage.html">
+                    <span class="menu-title">Post Manage</span>
+                    <i class="mdi mdi-chart-bar menu-icon"></i>
+                </a>
+            </li>
         </ul>
-
-
     </nav>
 </th:block>
 
@@ -138,6 +138,52 @@
             for (var key in dic)
                 formData.append(key, dic[key]);
             return formData;
+        }
+        function padNumber(num){
+            num=""+num
+            for (var i=num.length; i<10; i++)
+                num="0"+num;
+            return num
+        }
+
+        function alertSuccess(message, time=4000){
+            myAlert("success", "Success!", message, time);
+        }
+
+        function alertError(message, time=4000) {
+            myAlert("danger", "Error!", message, time);
+        }
+
+        function alertWarning(message, time=4000) {
+            myAlert("warning", "Warning!", message, time);
+        }
+
+        var alertCounter = 0;
+
+        $("<div />", {
+            style: "position: fixed; top: 60px; width: 30%; left: 35%",
+            id: "alertBoxDiv"
+        }).appendTo($("body"));
+        function myAlert(cls, head, message, time){
+            var html=
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\" style=\"margin-left: 10px;\">&times;</a>\n" +
+                "<strong>"+head+"</strong> " + message + " \n";
+
+            var id = "alertDiv"+ alertCounter++;
+            $("<div />", {
+                "class": "alert alert-"+cls,
+                id: id
+            }).appendTo($("#alertBoxDiv"));
+
+            $("#"+id).append(html);
+
+            $("#"+id).fadeIn(100, function(){
+                setTimeout(function(){
+                    $("#"+id).fadeOut(100, function () {
+                        $("#"+id).remove();
+                    });
+                }, time);
+            })
         }
     </script>
 </th:block>

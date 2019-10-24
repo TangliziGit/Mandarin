@@ -10,33 +10,20 @@
           <div class="card col-lg-4 mx-auto">
             <div class="card-body px-5 py-5">
               <h2>Mandarin - Librarian</h2>
-              <h3 class="card-title text-left mb-3">Login</h3>
+              <h3 class="card-title text-left mb-3">Retrieve password</h3>
 
 
 
               <div>
+                <div id="inputIfo">
                 <div class="form-group">
                   <label>Username or PhoneNumber *</label>
                   <input id="login-username" type="text" name="loginUsername" required data-msg="Please enter your username" class="form-control p_input">
                 </div>
-                <div class="form-group">
-                  <label>Password *</label>
-                  <input id="login-password" type="password" name="loginPassword" required data-msg="Please enter your password" class="form-control p_input">
-                </div>
-<!--                 <div class="form-group d-flex align-items-center justify-content-between">
-                  <div class="form-check">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input">
-                        Remember me
-                      </label>
-                  </div>
-                  <a href="#" class="forgot-pass">Forgot password</a>
-                </div> -->
                 <div class="text-center">
-                  <button id="login" class="btn btn-primary btn-block enter-btn">Login</button>
+                  <button id="login" class="btn btn-primary btn-block enter-btn">Submit</button>
                 </div>
-                <a href="forgetPswd" class="forgot-pass" style="color: gray" target="view_window">Forgot Password?</a><br>
-                <!-- <small>Please contact the database administrator to reset your password</small> -->
+                </div>
               </div>
 
 
@@ -57,22 +44,27 @@
 
   <script>
       $("#login").bind("click", function () {
+       
+
         let formData = new FormData();
         formData.append("name", $("#login-username").val());
-        formData.append("password", $("#login-password").val());
+   
 
         $.ajax({
-          url: "https://virtserver.swaggerhub.com/tanglizi/MandarinAPI/1.0/api/user/token",
+          // TODO: forget password
+          url: "/api/user/token",
           type: "POST",
           dataType: "json",
           data: formData,
           processData: false,
           contentType: false,
           success: function (resp) {
-            window.location.href="index.html";
+            $("#inputIfo").empty();
+            $("#inputIfo").append("<div class=\"form-group\"><img height=\"20\" width=\"20\" src=\"/librarian/images/dashboard/img_success.jpg\"/>"+"<span>&nbsp;&nbsp;Password has sent to your email.</span></div><div class=\"text-center\"><button onclick=\"location='login.html'\" class=\"btn btn-primary btn-block enter-btn\">return to login</button></div>")
+            // $("#list").append("<span>Password has sent to your email.</span><button onclick=\"location='login.html'\" class=\"btn btn-primary btn-block enter-btn\">return to login</button>");
           },
           error: function (resp) {
-            alert(resp.responseJSON.message);
+            alertError(resp.responseJSON.message);
           }
         })
       })
