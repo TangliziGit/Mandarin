@@ -96,4 +96,8 @@ public class ReaderFrontController {
         return "reader/book";
     }
 
+    @GetMapping("/retrieve")
+    public String retrievePassword(){
+        return "reader/retrieve";
+    }
 }

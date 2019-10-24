@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <th:block th:replace="reader/common :: heads"></th:block>
+</head>
+<body>
+
+<th:block th:replace="reader/common :: navbar"></th:block>
+
+<main class="page login-page">
+    <section class="clean-block clean-form dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Forget password?</h2>
+            </div>
+
+            <div id="login-body">
+                <form>
+                    <div class="form-group">
+                        <h3 style="text-align: center">Retrieve your password</h3>
+                        <small>Write your account name or phone number to retrieve your password.</small>
+                        <input class="form-control item" type="text" id="login-name" value="" placeholder="" name="username" ></div>
+                    <div class="btn btn-primary btn-block" id="retrieve-btn" type="button">Retrieve</div>
+                </form>
+
+            </div>
+        </div>
+    </section>
+</main>
+
+<th:block th:replace="reader/common :: footer"></th:block>
+<th:block th:replace="reader/common :: scripts"></th:block>
+
+<script>
+    $("#retrieve-btn").bind("click", function () {
+        let formData = new FormData();
+
+        $.ajax({
+            url: "/api/user/"+$("#login-name").val()+"/password/retrieve",
+            type: "POST",
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function (resp) {
+                // $("login-body").html(html);
+
+                alertSuccess("Your password has been sent to your email");
+                alertSuccess("Automatically redirects to main page after 5 seconds");
+                setTimeout(function () {
+                    window.location.href="/reader/index";
+                }, 5000);
+            },
+            error: function (resp) {
+                alertError(resp.responseJSON.message);
+            }
+        })
+    })
+</script>
+
+</body>
+</html>
