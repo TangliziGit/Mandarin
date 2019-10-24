@@ -1,5 +1,7 @@
 package org.a3.mandarin.back.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -12,11 +14,13 @@ import org.a3.mandarin.common.entity.BorrowingHistory;
 import org.a3.mandarin.common.entity.User;
 
 import javax.annotation.Resource;
+import java.time.Duration;
 import java.util.List;
 import java.time.Instant;
 
 @Component
 public class MailUtil {
+    private Logger logger = LoggerFactory.getLogger(MailUtil.class);
 
     @Autowired
     private JavaMailSender mailSender;
@@ -27,20 +31,28 @@ public class MailUtil {
     @Resource
     private BorrowingHistoryRepository borrowingHistoryRepository;
 
-    //@Scheduled(fixedRate=30000)
-    @Scheduled(cron = "0 0 8 * * ?")
-    public void sendAlter() {
+    // @Scheduled(cron = "0 0 8 * * ?")
+    @Scheduled(cron = "0 */1 * * * ?")
+    public void sendAlert() {
         List<BorrowingHistory> borrowingHistory= borrowingHistoryRepository.findNoReturnHistory();
-        if(!borrowingHistory.isEmpty()) {
-            long now = Instant.now().getEpochSecond();
-            for (int i = 0; i < borrowingHistory.size(); i++) {
-                long borrowingStartTime = borrowingHistory.get(i).getBorrowingStartTime().getEpochSecond();
-                if(now - borrowingStartTime >= 27 * 24 * 60 * 60 && now - borrowingStartTime <= 28 * 24 * 60 * 60) {
-                    User user = borrowingHistory.get(i).getReader();
-                    sendMail(user.getEmail(),
-                        "IMPORTANT! This is a Alter mail form Mandarin!",
-                        "The book you borrowed is due in three days. PLease don't forget to return it back or you will be fine 1 yuan per day");
+        Instant now = Instant.now();
+        for (BorrowingHistory history : borrowingHistory) {
+            Instant start = history.getBorrowingStartTime();
+            Instant limitation = start.plus(Duration.ofMinutes(1));
+            if (now.isAfter(limitation)){
+                User user = history.getReader();
+
+                // TODO: comment this code in the future
+                if (user.getEmail().contains("mandarin")){
+                    logger.info("filtered mandarin testing account: " + user.getName());
+                    continue;
                 }
+                logger.info("alert mail will send to " + user.getName());
+
+                sendMail(user.getEmail(),
+                        "Mandarin Library: Your book is about to expire",
+                        "The book you borrowed is due in three days.\n" +
+                                "PLease don't forget to return it back or you will be fine 1 yuan per day");
             }
         }
     }

@@ -42,28 +42,29 @@ public class ForgetPasswordController {
     @Value("${spring.mail.username}")
     private String from;
 
-    @PostMapping("/forgetpassword")
+    @PostMapping("/user/{name}/password/retrieve")
     @ResponseBody
     @Transactional
-    @Permission({PermissionType.ADMIN, PermissionType.LIBRARIAN, PermissionType.READER})
-    public ResponseEntity<RESTfulResponse<SimpleMailMessage>> forgetPassword(@RequestParam String name,
-                                                                             @RequestParam String email) throws ApiNotFoundException {
-        if (null == name || null == email)
-            throw new ApiNotFoundException("please enter the information.");
+    // @Permission({PermissionType.ADMIN, PermissionType.LIBRARIAN, PermissionType.READER})
+    public ResponseEntity<RESTfulResponse<SimpleMailMessage>> forgetPassword(
+            @PathVariable("name") String nameOrPhoneNumber
+    ) throws ApiNotFoundException {
+        User user = userRepository.findByName(nameOrPhoneNumber);
 
-        User forgetPasswordUser = userRepository.findByEmail(email);
+        if (null == user)
+            user = userRepository.findByPhoneNumber(nameOrPhoneNumber);
 
-        if(null == forgetPasswordUser)
-            throw new ApiNotFoundException("user doesn't exist.");
-
-        if(!forgetPasswordUser.getName().equals(name))
-            throw new ApiNotFoundException("the email doesn't match the user.");
+        if(null == user)
+            throw new ApiNotFoundException("no such user");
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
-        message.setTo(forgetPasswordUser.getEmail());
-        message.setSubject("retrieve password");
-        message.setText("password is " + forgetPasswordUser.getPasswordHash());
+        message.setTo(user.getEmail());
+        message.setSubject("Mandarin Library: retrieve your password");
+        message.setText("Here is your password. \n" +
+                user.getPasswordHash() +
+                "\nPlease keep it well in case you forget it. \n\n" +
+                "Note, this is not a spam mail.");
         mailSender.send(message);
 
         RESTfulResponse<SimpleMailMessage> response = RESTfulResponse.ok();
