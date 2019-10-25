@@ -35,7 +35,7 @@
                 <div class="text-center">
                   <button id="login" class="btn btn-primary btn-block enter-btn">Login</button>
                 </div>
-                <a href="forgetPswd" class="forgot-pass" style="color: gray" target="view_window">Forgot Password?</a><br>
+                <a href="/librarian/forgetPswd" class="forgot-pass" style="color: gray" target="view_window">Forgot Password?</a><br>
                 <!-- <small>Please contact the database administrator to reset your password</small> -->
               </div>
 
@@ -62,14 +62,14 @@
         formData.append("password", $("#login-password").val());
 
         $.ajax({
-          url: "https://virtserver.swaggerhub.com/tanglizi/MandarinAPI/1.0/api/user/token",
+          url: "/api/user/token",
           type: "POST",
           dataType: "json",
           data: formData,
           processData: false,
           contentType: false,
           success: function (resp) {
-            window.location.href="index.html";
+            window.location.href="/librarian/index.html";
           },
           error: function (resp) {
             alert(resp.responseJSON.message);

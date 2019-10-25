@@ -43,16 +43,17 @@
   <div th:replace="librarian/common :: scripts"></div>
 
   <script>
-      $("#login").bind("click", function () {
-       
 
-        let formData = new FormData();
+    $("#login").bind("click", function () {
+
+
+      let formData = new FormData();
         formData.append("name", $("#login-username").val());
    
 
         $.ajax({
           // TODO: forget password
-          url: "/api/user/token",
+          url: "/api/user/"+$("#login-username").val()+"/password/retrieve",
           type: "POST",
           dataType: "json",
           data: formData,
