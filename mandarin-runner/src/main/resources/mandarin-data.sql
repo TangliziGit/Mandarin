@@ -228,7 +228,7 @@ CREATE TABLE `news` (
   `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`news_id`),
   KEY `FK4538gbwfa03nwr9edl3fdloo9` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,6 +237,7 @@ CREATE TABLE `news` (
 
 LOCK TABLES `news` WRITE;
 /*!40000 ALTER TABLE `news` DISABLE KEYS */;
+INSERT INTO `news` VALUES (1,'The Ministry of Education has completed the review of the 2019 national innovation and entrepreneurship training program for college students. A total of 710 projects of our school have passed the audit, including 236 national innovation training projects, 14 national entrepreneurship training projects, 2 national entrepreneurship practice projects, 428 provincial innovation training projects, 22 provincial entrepreneurship training projects and 8 provincial entrepreneurship practice projects. (annex 1)','2019-10-24 23:09:16','List of innovative projects for college students in 2019',1);
 /*!40000 ALTER TABLE `news` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -385,4 +386,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-24  6:18:08
+-- Dump completed on 2019-10-24 15:31:28
