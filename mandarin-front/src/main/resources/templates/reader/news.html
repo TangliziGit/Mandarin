@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <th:block th:replace="reader/common :: heads"></th:block>
+</head>
+<body>
+<th:block th:replace="reader/common :: navbar"></th:block>
+
+<main class="page blog-post-list">
+    <section class="clean-block clean-blog-list dark">
+        <div class="container">
+
+
+            <div class="block-content">
+                <div th:if="${news == null}">
+                    <h1>There is no such news.</h1>
+                </div>
+                <div th:if="${news != null}">
+                <h2 class="h2Center" th:text="${news.getTitle()}" id="title">title</h2>
+
+                <div class="container">
+                    <p id="content" th:text="${news.getContent()}">content</p>
+                </div>
+                    <p class="spanNews" style="float: right" id="author" th:text="${news.getUser().getName()}">author</p>
+                    <h5 style="float: right; margin-right: 10px;">Poster: </h5>
+                <!-- p class="spanNews" id="date" th:text="${news.getDate()}">date</p -->
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<th:block th:replace="reader/common :: footer"></th:block>
+<th:block th:replace="reader/common :: scripts"></th:block>
+
+</body>
+</html>
