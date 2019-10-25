@@ -6,10 +6,7 @@ import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.PermissionType;
 import org.a3.mandarin.front.model.BookModel;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -28,6 +25,9 @@ public class ReaderFrontController {
     private UserRepository userRepository;
     @Resource
     private BorrowingFineHistoryRepository borrowingFineHistoryRepository;
+
+    @Resource
+    private NewsRepository newsRepository;
 
     @GetMapping({"", "/", "/index", "/home"})
     public String index(){
@@ -96,4 +96,18 @@ public class ReaderFrontController {
         return "reader/book";
     }
 
+    @GetMapping("/retrieve")
+    public String retrievePassword(){
+        return "reader/retrieve";
+    }
+
+    @GetMapping("/news")
+    public String news(@RequestParam(value = "id", defaultValue = "1") Integer id,
+                       Map<String, Object> map){
+        News news = newsRepository.findById(id).orElse(null);
+
+        map.put("news", news);
+
+        return "reader/news";
+    }
 }

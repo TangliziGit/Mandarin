@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <th:block th:replace="admin/common :: heads"></th:block>
+</head>
+<body class="sidebar-fixed header-fixed">
+<div class="page-wrapper">
+    <th:block th:replace="admin/common :: navbar"></th:block>
+
+    <div class="main-container">
+        <th:block th:replace="admin/common :: sidebar"></th:block>
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <div class="row">
+                                <div class="col-10">Retrieve password</div>
+                                <div class="col-2">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <section class="forms">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-lg-12" style="display: flex; flex-direction:column">
+                                                <div class="card">
+                                                    <div class="card-close">
+                                                    </div>
+                                                    <div class="card-header d-flex align-items-center">
+                                                        <h3 class="h4">Help librarian to retrieve password</h3>
+                                                    </div>
+
+                                                    <div style="align-self: center" class="card-body col-sm-8">
+                                                        <form style="border-top: 2px solid #5ea4f3;background-color: #fff;max-width: 500px;margin: auto;padding: 40px;box-shadow: 0 2px 10px rgba(0,0,0,.075);">
+                                                            <div class="form-group">
+
+                                                                <h3>Enter name or phone number</h3>
+                                                                <input class="form-control item" type="text" id="login-name" value="" placeholder="" name="username" data-_extension-text-contrast="bg"></div>
+                                                            <div class="btn btn-primary btn-block" id="retrieve-btn" type="button">Retrieve</div>
+                                                        </form>
+                                                    </div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+        <th:block th:replace="admin/common :: scripts"></th:block>
+
+        <script>
+            $("#retrieve-btn").bind("click", function () {
+                let formData = new FormData();
+
+                $.ajax({
+                    url: "/api/user/"+$("#login-name").val()+"/password/retrieve",
+                    type: "POST",
+                    dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    success: function (resp) {
+                        alertSuccess("User password has been sent to your email");
+                    },
+                    error: function (resp) {
+                        alertError(resp.responseJSON.message);
+                    }
+                })
+            })
+        </script>
+</body>
+</html>

@@ -25,6 +25,7 @@
                         <a th:case="null" class="nav-link" th:href="@{/reader/login}">LOG IN</a>
                         <a th:case="*" class="nav-link" th:href="@{/reader/account}">MY ACCOUNT</a>
                     </li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/librarian/login}">LIBRARIAN ENTRY</a></li>
                 </ul>
             </div>
         </div>
@@ -94,6 +95,46 @@
             let hash = shaObj.getHash(hashtype, outputType, 1);
             let data = new Identicon(hash, size).toString();
             return 'data:image/png;base64,' + data;
+        }
+
+        function alertSuccess(message, time=4000){
+            myAlert("success", "Success!", message, time);
+        }
+
+        function alertError(message, time=4000) {
+            myAlert("danger", "Error!", message, time);
+        }
+
+        function alertWarning(message, time=4000) {
+            myAlert("warning", "Warning!", message, time);
+        }
+
+        var alertCounter = 0;
+
+        $("<div />", {
+            style: "position: fixed; top: 100px; width: 30%; left: 35%",
+            id: "alertBoxDiv"
+        }).appendTo($("body"));
+        function myAlert(cls, head, message, time){
+            var html=
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\" style=\"margin-left: 10px;\">&times;</a>\n" +
+                "<strong>"+head+"</strong> " + message + " \n";
+
+            var id = "alertDiv"+ alertCounter++;
+            $("<div />", {
+                "class": "alert alert-"+cls,
+                id: id
+            }).appendTo($("#alertBoxDiv"));
+
+            $("#"+id).append(html);
+
+            $("#"+id).fadeIn(100, function(){
+                setTimeout(function(){
+                    $("#"+id).fadeOut(100, function () {
+                        $("#"+id).remove();
+                    });
+                }, time);
+            })
         }
     </script>
 </th:block>

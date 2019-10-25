@@ -1,66 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Purple Admin</title>
-    <th:block th:replace="librarian/common :: head"></th:block>
-</head>
+<th:block th:replace="librarian/common :: head"></th:block>
 <body>
   <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
+
       <div th:replace="librarian/common :: navbar"></div>
+
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <div class="row row-offcanvas row-offcanvas-right">
         <!-- partial:../../partials/_sidebar.html -->
-       <nav class="sidebar sidebar-offcanvas" id="sidebar">
-          <ul class="nav">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">
-                <span class="menu-title">Home</span>
-             
-                <i class="mdi mdi-home menu-icon"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="menu-title">Reader Manage</span>
-                <i class="menu-arrow"></i>
-                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-              </a>
-              <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="register.html">Register</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="deleteReader.html">Reader Delete</a></li>
-                       <li class="nav-item"> <a class="nav-link" href="updateReader.html">ReaderUpdate</a></li>
-                </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="category.html">
-                <span class="menu-title">Category Manage</span>
-                <i class="mdi mdi-contacts menu-icon"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="bookManage.html">
-                <span class="menu-title">Book Manage</span>
-                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="history.html">
-                <span class="menu-title">Delete History</span>
-                <i class="mdi mdi-chart-bar menu-icon"></i>
-              </a>
-            </li>
-            </ul>
-
-
-
-
-        </nav>
-        <!-- partial -->
-        <div class="content-wrapper">
+          <th:block th:replace="librarian/common :: sidebar"></th:block>
+          <!-- partial -->
+         <div class="content-wrapper">
 
  <header class="page-header">
                 <div class="container-fluid">
@@ -119,11 +72,25 @@
                 </div>
             </div>
             </section>
-        
+          <div class="col-12 grid-margin">
+    <div class="card">
+                        <div class="container-fluid">
+                          <div class="card-body" >
+                          <div id="titleid"></div>
+                          <div id="barcode">
+                            <!-- img id="imgcode"/ -->
+                          </div>
+                          <div id="download"></div>
+                         </div>
+</div>
+</div>
+</div>
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
+
           <div th:replace="librarian/common :: footer"></div>
+
         <!-- partial -->
       </div>
       <!-- row-offcanvas ends -->
@@ -136,6 +103,9 @@
 
     <script>
         $("#submit").bind("click", function () {
+            if($("#name").val()==""||$("#phoneNumber").val()==""||$("#email").val()==""||$("#password").val()=="")
+                alertWarning("the input can not be empty");
+            else{
             let formData=new FormData();
             formData.append("name", $("#name").val());
             formData.append("phoneNumber", $("#phoneNumber").val());
@@ -150,17 +120,41 @@
                 processData: false,
                 contentType: false,
                 success: function (resp){
-                    alert("success");
+                    alertSuccess("registered succeed");
                     $("#name").val("");
                     $("#phoneNumber").val("");
                     $("#email").val("");
                     $("#password").val("");
+                    $("#titleid").empty();
+                    $("#titleid").append("<h4 class=\"card-title\">Reader Barcode</h4>");
+                    var key='barcode_img'+resp.data.userId;
+                    $("<img />", {
+                        id: key
+                    }).appendTo($("#barcode"));
+                    $("#"+key).JsBarcode(padNumber(resp.data.userId), {
+                        height: 40,
+                    });
+                    $('#download').empty();
+                    $('#download').append("<button onclick=\"downloadId()\">download</button>");
                 },
+               
                 error: function (resp) {
-                    alert(resp.responseJSON.message);
+                    alertError(resp.responseJSON.message);
                 }
             });
-        })
+        }})
+
+        function downloadId(){
+            var barcode = document.getElementById("barcode");
+            var imgs = barcode.getElementsByTagName("img");
+            var a = document.createElement('a');
+            a.download = 'readerId' + new Date().getTime() || 'readerId.jpg';
+            a.href = imgs[0].src;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            // alertSuccess("download success!");
+        }
     </script>
 
 </body>

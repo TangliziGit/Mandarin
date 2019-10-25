@@ -47,7 +47,7 @@ public class ReaderControllerTest extends MandarinRunnerApplicationTests{
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/api/reader/")
                 .param("name", "reader3")
-                .param("phoneNumber", "1123456789")
+                .param("phoneNumber", "18681941700")
                 .param("email", "1234@12345.com")
                 .param("password", "passwd")
                 .session(librarianSession))
@@ -62,7 +62,7 @@ public class ReaderControllerTest extends MandarinRunnerApplicationTests{
                 .put("/api/reader/3")
                 .param("name", "reader_")
                 .param("email", "123123@12323131.com")
-                .param("phoneNumber", "11234567819")
+                .param("phoneNumber", "18681941701")
                 .session(reader1Session))
                 .andExpect(jsonPath("$.success").value(true));
 
@@ -82,7 +82,7 @@ public class ReaderControllerTest extends MandarinRunnerApplicationTests{
                 .param("email", "123123@12323131.com")
                 .param("phoneNumber", "11234567819123123")
                 .session(librarianSession))
-                .andExpect(jsonPath("$.success").value(true));
+                .andExpect(jsonPath("$.success").value(false));
 
         // admin
         mockMvc.perform(MockMvcRequestBuilders
