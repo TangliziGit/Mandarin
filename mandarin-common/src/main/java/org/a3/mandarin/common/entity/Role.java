@@ -14,7 +14,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer roleId;
 
-    @Column(name = "role_name", unique = true)
+    // Specified key was too long; max key length is 1000 bytes
+    @Column(columnDefinition = "VARCHAR(50)", name = "role_name", unique = true)
     private String roleName;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
