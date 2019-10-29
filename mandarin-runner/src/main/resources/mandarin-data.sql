@@ -1,3 +1,4 @@
+mysqldump: [Warning] Using a password on the command line interface can be insecure.
 -- MySQL dump 10.13  Distrib 8.0.15, for Linux (x86_64)
 --
 -- Host: localhost    Database: mandarin
@@ -27,7 +28,7 @@ CREATE TABLE `book` (
   `isbn` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`book_id`),
   KEY `FKgm8oqrkr94uj3rv5w9rbq97s2` (`isbn`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +37,6 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (1,'9780393351378'),(2,'9780393351378'),(3,'9780132856201'),(4,'9780134177298'),(5,'9780134177298'),(6,'9780262035613'),(7,'9780262035613');
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,7 +69,6 @@ CREATE TABLE `book_description` (
 
 LOCK TABLES `book_description` WRITE;
 /*!40000 ALTER TABLE `book_description` DISABLE KEYS */;
-INSERT INTO `book_description` VALUES ('9780393351378','Kip Thorne','http://106.13.1.40:8081/img/s27824536.jpg','Floor 2 - Shelf 1',24.95,2014,'W. W. Norton & Company','A journey through the otherworldly science behind Christopher Nolan’s highly anticipated film, Interstellar, from executive producer and theoretical physicist Kip Thorne.','The Science of Interstellar',1),('9780132856201','James F. Kurose / Keith W. Ross','http://106.13.1.40:8081/img/s24966915.jpg','Floor 1 - Shelf 2',171.6,2012,'Pearson','Computer Networking continues with an early emphasis on application-layer paradigms and application programming interfaces (the top layer), encouraging a hands-on experience with protocols and networking concepts, before working down the protocol stack to more abstract layers.','Computer Networking',2),('9780134177298','Cay S. Horstmann','http://106.13.1.40:8081/img/s28069282.jpg','Floor 2 - Shelf 3',59.99,2016,'Prentice Hall','Core Java® has long been recognized as the leading, no-nonsense tutorial and reference for experienced programmers who want to write robust Java code for real-world applications. Now, Core Java®, Volume II—Advanced Topics, Tenth Edition, has been extensively updated to reflect the most eagerly awaited and innovative version of Java in years: Java SE 8. Rewritten and reorganized...Core Java® has long been recognized as the leading, no-nonsense tutorial and reference for experienced programmers who want to write robust Java code for real-world applications. Now, Core Java®, Volume II—Advanced Topics, Tenth Edition, has been extensively updated to reflect the most eagerly awaited and innovative version of Java in years: Java SE 8. Rewritten and reorganized to illuminate powerful new Java features, idioms, and best practices for enterprise and desktop development, it contains hundreds of up-to-date example programs—all carefully crafted for easy understanding and practical applicability.Writing for serious programmers solving real-world problems, Cay Horstmann deepens your understanding of today’s Java language and library. In this second of two updated volumes, he offers in-depth coverage of expert-level topics including the new Streams API and date/time/calendar library, advanced Swing, security, code processing, and more. This guide will help youUse the new Streams library to process collections more flexibly and efficientlyEfficiently access files and directories, read/write binary or text data, and serialize objectsWork with Java SE 8’s regular expression packageMake the most of XML in Java: parsing, validation, XPath, document generation, XSL, and moreEfficiently connect Java programs to network servicesProgram databases with JDBC 4.2Elegantly overcome date/time programming complexities with the new java.time APIWrite internationalized programs with localized dates/times, numbers, text, and GUIsProcess code with the scripting API, compiler API, and annotation processorsEnforce security via class loaders, bytecode verification, security managers, permissions, user authentication, digital signatures, code signing, and encryptionMaster advanced Swing components for lists, tables, trees, text, and progress indicatorsProduce high-quality drawings with the Java 2D APIUse JNI native methods to leverage code in other languagesIf you’re an experienced programmer moving to Java SE 8, Core Java®, Tenth Edition, will be your reliable, practical companion—now and for many years to come.Look for the companion volume, Core Java®, Volume I—Fundamentals, Tenth Edition (ISBN-13: 978-0-13-417730-4), for foundational coverage of Java 8 language concepts, UI programming, objects, generics, collections, lambda expressions, concurrency, functional programming, and more.Cay S. Horstmann is author of Core Java ® for the Impatient (2015), Java SE 8 for the Really Impatient (2014), and Scala for the Impatient (2012), all from Addison-Wesley. He has written more than a dozen other books for professional programmers and computer science students. He is a professor of computer science at San Jose State University and is a Java Champion.','Core Java, Volume II (10th Edition) : Advanced Features',2),('9780262035613','Ian Goodfellow / Yoshua Bengio / Aaron Courville','http://106.13.1.40:8081/img/s29133163.jpg','Floor 2 - Shelf 4',72,2016,'The MIT Press','Written by three experts in the field, Deep Learning is the only comprehensive book on the subject.\\\" -- Elon Musk, co-chair of OpenAI; co-founder and CEO of Tesla and SpaceXDeep learning is a form of machine learning that enables computers to learn from experience and understand the world in terms of a hierarchy of concepts. Because the computer gathers knowledge from experie...\\\"Written by three experts in the field, Deep Learning is the only comprehensive book on the subject.\\\" -- Elon Musk, co-chair of OpenAI; co-founder and CEO of Tesla and SpaceXDeep learning is a form of machine learning that enables computers to learn from experience and understand the world in terms of a hierarchy of concepts. Because the computer gathers knowledge from experience, there is no need for a human computer operator to formally specify all the knowledge that the computer needs. The hierarchy of concepts allows the computer to learn complicated concepts by building them out of simpler ones; a graph of these hierarchies would be many layers deep. This book introduces a broad range of topics in deep learning.The text offers mathematical and conceptual background, covering relevant concepts in linear algebra, probability theory and information theory, numerical computation, and machine learning. It describes deep learning techniques used by practitioners in industry, including deep feedforward networks, regularization, optimization algorithms, convolutional networks, sequence modeling, and practical methodology; and it surveys such applications as natural language processing, speech recognition, computer vision, online recommendation systems, bioinformatics, and videogames. Finally, the book offers research perspectives, covering such theoretical topics as linear factor models, autoencoders, representation learning, structured probabilistic models, Monte Carlo methods, the partition function, approximate inference, and deep generative models.Deep Learning can be used by undergraduate or graduate students planning careers in either industry or research, and by software engineers who want to begin using deep learning in their products or platforms. A website offers supplementary material for both readers and instructors.Ian Goodfellow is Research Scientist at OpenAI. Yoshua Bengio is Professor of Computer Science at the Université de Montréal. Aaron Courville is Assistant Professor of Computer Science at the Université de Montréal.','Deep Learning : Adaptive Computation and Machine Learning series',2);
 /*!40000 ALTER TABLE `book_description` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,7 +87,7 @@ CREATE TABLE `borrowing_fine_history` (
   `borrowing_history_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`fine_id`),
   KEY `FKd8btcmpcvm4u63401njjf6cof` (`borrowing_history_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +96,6 @@ CREATE TABLE `borrowing_fine_history` (
 
 LOCK TABLES `borrowing_fine_history` WRITE;
 /*!40000 ALTER TABLE `borrowing_fine_history` DISABLE KEYS */;
-INSERT INTO `borrowing_fine_history` VALUES (1,NULL,'2019-10-13 15:50:12',_binary '\0',1),(2,NULL,'2019-10-13 15:50:12',_binary '\0',2);
 /*!40000 ALTER TABLE `borrowing_fine_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +117,7 @@ CREATE TABLE `borrowing_history` (
   KEY `FKdvuybvabjhkpvdxq6ho62c7a8` (`book_id`),
   KEY `FKf8tfg78drlnfiy6cy8c09jb4j` (`borrowing_fine_history_fine_id`),
   KEY `FK8og47hd6iod43w33n4oiy44nc` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +126,6 @@ CREATE TABLE `borrowing_history` (
 
 LOCK TABLES `borrowing_history` WRITE;
 /*!40000 ALTER TABLE `borrowing_history` DISABLE KEYS */;
-INSERT INTO `borrowing_history` VALUES (1,NULL,'2019-10-13 15:50:12',1,1,3),(2,NULL,'2019-10-13 15:50:12',2,2,3);
 /*!40000 ALTER TABLE `borrowing_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +141,7 @@ CREATE TABLE `category` (
   `category_name` varchar(40) NOT NULL,
   PRIMARY KEY (`category_id`),
   UNIQUE KEY `UK_lroeo5fvfdeg4hpicn4lw7x9b` (`category_name`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +150,6 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'science'),(2,'technology');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,7 +168,7 @@ CREATE TABLE `deleting_history` (
   PRIMARY KEY (`id`),
   KEY `FKpky6rar6x52fiubxq76e8gdrk` (`book_id`),
   KEY `FKkcj9gxgexpna2t03jyk5pxkae` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,7 +177,6 @@ CREATE TABLE `deleting_history` (
 
 LOCK TABLES `deleting_history` WRITE;
 /*!40000 ALTER TABLE `deleting_history` DISABLE KEYS */;
-INSERT INTO `deleting_history` VALUES (1,'2019-10-13 15:50:12',1,1);
 /*!40000 ALTER TABLE `deleting_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,7 +195,7 @@ CREATE TABLE `income` (
   `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK8qxqvv9oy66uuotjtfvqu1fxy` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,7 +204,6 @@ CREATE TABLE `income` (
 
 LOCK TABLES `income` WRITE;
 /*!40000 ALTER TABLE `income` DISABLE KEYS */;
-INSERT INTO `income` VALUES (1,300,'2019-10-23 15:50:12','DEPOSIT',3),(2,300,'2019-10-23 15:50:12','DEPOSIT',4);
 /*!40000 ALTER TABLE `income` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -228,7 +222,7 @@ CREATE TABLE `news` (
   `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`news_id`),
   KEY `FK4538gbwfa03nwr9edl3fdloo9` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,7 +231,6 @@ CREATE TABLE `news` (
 
 LOCK TABLES `news` WRITE;
 /*!40000 ALTER TABLE `news` DISABLE KEYS */;
-INSERT INTO `news` VALUES (1,'The Ministry of Education has completed the review of the 2019 national innovation and entrepreneurship training program for college students. A total of 710 projects of our school have passed the audit, including 236 national innovation training projects, 14 national entrepreneurship training projects, 2 national entrepreneurship practice projects, 428 provincial innovation training projects, 22 provincial entrepreneurship training projects and 8 provincial entrepreneurship practice projects. (annex 1)','2019-10-24 23:09:16','List of innovative projects for college students in 2019',1);
 /*!40000 ALTER TABLE `news` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -258,7 +251,7 @@ CREATE TABLE `reserving_history` (
   PRIMARY KEY (`id`),
   KEY `FK86j2f06c9ckl2le8gdw2igewa` (`book_id`),
   KEY `FK9magv2r11h9sv5fpnc7me0kpn` (`reader_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -267,7 +260,6 @@ CREATE TABLE `reserving_history` (
 
 LOCK TABLES `reserving_history` WRITE;
 /*!40000 ALTER TABLE `reserving_history` DISABLE KEYS */;
-INSERT INTO `reserving_history` VALUES (1,_binary '','2019-10-13 15:50:12','2019-10-13 15:50:12',1,3);
 /*!40000 ALTER TABLE `reserving_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,9 +272,10 @@ DROP TABLE IF EXISTS `role`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `role` (
   `role_id` int(11) NOT NULL AUTO_INCREMENT,
-  `role_name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`role_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `role_name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`role_id`),
+  UNIQUE KEY `UK_iubw515ff0ugtm28p8g3myt0h` (`role_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -291,7 +284,6 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'READER'),(2,'LIBRARIAN'),(3,'ADMIN');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -308,7 +300,7 @@ CREATE TABLE `setting` (
   `value` double NOT NULL,
   PRIMARY KEY (`setting_id`),
   UNIQUE KEY `UK_bk4oycm648x0ox633r4m22b7d` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -317,7 +309,6 @@ CREATE TABLE `setting` (
 
 LOCK TABLES `setting` WRITE;
 /*!40000 ALTER TABLE `setting` DISABLE KEYS */;
-INSERT INTO `setting` VALUES (1,'FINE',1),(2,'BOOK_RETURN_PERIOD',30),(3,'DEPOSIT',300);
 /*!40000 ALTER TABLE `setting` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -339,7 +330,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `UK_ob8kqyqqgmefl0aco34akdtpe` (`email`),
   UNIQUE KEY `UK_gj2fy3dcix7ph7k8684gka40c` (`name`),
   UNIQUE KEY `UK_4bgmpi98dylab6qdvf9xyaxu4` (`phone_number`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -348,7 +339,6 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'librarian@mandarin.com','librarian','passwd','18681941718','2019-10-23 15:50:12'),(2,'admin@mandarin.com','admin','passwd','18681941717','2019-10-23 15:50:12'),(3,'reader1@mandarin.com','reader1','passwd','18681941716','2019-10-23 15:50:12'),(4,'reader2@mandarin.com','reader2','passwd','18681941715','2019-10-23 15:50:12');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,7 +363,6 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (1,2),(2,3),(3,1),(4,1);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -386,4 +375,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-24 15:31:28
+-- Dump completed on 2019-10-29  1:19:06
