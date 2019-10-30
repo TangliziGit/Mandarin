@@ -121,7 +121,7 @@
         var alertCounter = 0;
 
         $("<div />", {
-            style: "position: fixed; top: 100px; width: 30%; left: 35%",
+            style: "z-index: 10000; position: fixed; top: 100px; width: 30%; left: 35%",
             id: "alertBoxDiv"
         }).appendTo($("body"));
 
@@ -145,6 +145,16 @@
                     });
                 }, time);
             })
+        }
+
+        function checkInputBoxEmpty(id) {
+            let content = $(id).val();
+
+            if (content.trim() === "") {
+                alertWarning("the field should not be empty.");
+                return false;
+            }
+            return true;
         }
     </script>
 </th:block>
