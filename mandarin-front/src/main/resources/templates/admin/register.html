@@ -112,14 +112,14 @@
                 processData: false,
                 contentType: false,
                 success: function (resp){
-                    alert("success");
+                    alertSuccess("the librarian has been created.");
                     $("#name").val("");
                     $("#phoneNumber").val("");
                     $("#email").val("");
                     $("#password").val("");
                 },
                 error: function (resp) {
-                    alert(resp.message);
+                    alertError(resp.responseJSON.message);
                 }
             });
         })

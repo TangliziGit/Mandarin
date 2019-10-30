@@ -117,12 +117,12 @@
             url: "/api/book/reserve/"+id,
             type: "POST",
             success: function (resp){
-                alert("success");
+                alertSuccess("reserved this book succeed.");
                 window.location.href=window.location.href;
             },
             error: function (resp) {
                 console.log(resp);
-                alert(resp.responseJSON.message);
+                alertError(resp.responseJSON.message);
             }
         });
     }
