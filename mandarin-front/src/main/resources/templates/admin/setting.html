@@ -105,7 +105,7 @@
                 $("#"+id).attr("value", resp.data.value);
             },
             error: function (resp) {
-                alert(resp.message);
+                alertError(resp.responseJSON.message);
             }
         })
     }
@@ -127,10 +127,10 @@
             processData: false,
             contentType: false,
             success: function (resp) {
-                alert("success");
+                alertSuccess("modified settings succeed");
             },
             error: function (resp) {
-                alert(resp.message);
+                alertError(resp.responseJSON.message);
             }
         });
     })
