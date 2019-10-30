@@ -160,7 +160,7 @@ class Initializer {
         News news1 = new News();
         News news2 = new News();
 
-        news1.setTitle("Notice on holding digital textbook construction and publishing exchange meeting");
+        news1.setTitle("The party branch of the library reader service department held party classes on the theme of \"never forget the original intention and bear the mission in mind\"");
         news1.setContent("For the further implementation of the national education conference spirit, explore the deepening the reform of digital instructional innovation model, promote new media and the integration of traditional culture, with the development of teaching resources sharing needs, on the morning of November 1, and higher education press office jointly sponsored digital textbook construction and publishing communication meeting. ");
         news1.setDate(Instant.now());
         news1.setUser(librarian);

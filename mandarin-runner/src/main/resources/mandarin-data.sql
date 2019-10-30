@@ -97,7 +97,7 @@ CREATE TABLE `borrowing_fine_history` (
 
 LOCK TABLES `borrowing_fine_history` WRITE;
 /*!40000 ALTER TABLE `borrowing_fine_history` DISABLE KEYS */;
-INSERT INTO `borrowing_fine_history` VALUES (1,NULL,'2019-10-20 12:29:56',_binary '\0',1),(2,NULL,'2019-10-20 12:29:56',_binary '\0',2);
+INSERT INTO `borrowing_fine_history` VALUES (1,NULL,'2019-10-20 15:18:53',_binary '\0',1),(2,NULL,'2019-10-20 15:18:53',_binary '\0',2);
 /*!40000 ALTER TABLE `borrowing_fine_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,7 +128,7 @@ CREATE TABLE `borrowing_history` (
 
 LOCK TABLES `borrowing_history` WRITE;
 /*!40000 ALTER TABLE `borrowing_history` DISABLE KEYS */;
-INSERT INTO `borrowing_history` VALUES (1,NULL,'2019-10-20 12:29:56',1,1,3),(2,NULL,'2019-10-20 12:29:56',2,2,3);
+INSERT INTO `borrowing_history` VALUES (1,NULL,'2019-10-20 15:18:53',1,1,3),(2,NULL,'2019-10-20 15:18:53',2,2,3);
 /*!40000 ALTER TABLE `borrowing_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +181,7 @@ CREATE TABLE `deleting_history` (
 
 LOCK TABLES `deleting_history` WRITE;
 /*!40000 ALTER TABLE `deleting_history` DISABLE KEYS */;
-INSERT INTO `deleting_history` VALUES (1,'2019-10-20 12:29:56',1,1);
+INSERT INTO `deleting_history` VALUES (1,'2019-10-20 15:18:53',1,1);
 /*!40000 ALTER TABLE `deleting_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,7 +209,7 @@ CREATE TABLE `income` (
 
 LOCK TABLES `income` WRITE;
 /*!40000 ALTER TABLE `income` DISABLE KEYS */;
-INSERT INTO `income` VALUES (1,300,'2019-10-30 12:29:56','DEPOSIT',3),(2,300,'2019-10-30 12:29:56','DEPOSIT',4);
+INSERT INTO `income` VALUES (1,300,'2019-10-30 15:18:52','DEPOSIT',3),(2,300,'2019-10-30 15:18:53','DEPOSIT',4);
 /*!40000 ALTER TABLE `income` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,7 +224,7 @@ CREATE TABLE `news` (
   `news_id` int(11) NOT NULL AUTO_INCREMENT,
   `content` longtext NOT NULL,
   `date` datetime DEFAULT NULL,
-  `title` varchar(100) NOT NULL,
+  `title` text NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`news_id`),
   KEY `FK4538gbwfa03nwr9edl3fdloo9` (`user_id`)
@@ -237,7 +237,7 @@ CREATE TABLE `news` (
 
 LOCK TABLES `news` WRITE;
 /*!40000 ALTER TABLE `news` DISABLE KEYS */;
-INSERT INTO `news` VALUES (1,'For the further implementation of the national education conference spirit, explore the deepening the reform of digital instructional innovation model, promote new media and the integration of traditional culture, with the development of teaching resources sharing needs, on the morning of November 1, and higher education press office jointly sponsored digital textbook construction and publishing communication meeting. ','2019-10-30 12:29:56','Notice on holding digital textbook construction and publishing exchange meeting',1),(2,'Scientific research and paper writing are inseparable from scientific and technological information retrieval and database resources. In order to facilitate teachers and students to effectively use various database resources to carry out their work and study, the graduate school specially invites \"cnknet\" technical personnel to introduce functions and services of various data resources and answer questions from teachers and students on site. This paper will focus on the application of the academic misconduct detection system of cnki and how to interpret the detection report. Welcome to join teachers and students.','2019-10-30 12:29:56','\"China National Knowledge Infrastructure\" function and use method information session',1);
+INSERT INTO `news` VALUES (1,'<p><br />\r\nOn October 25, 2019, all party members of the party branch of the library&#39;s reader service department held a party class themed &quot;never forget the original intention and keep the mission in mind&quot; in the party member activity room of the library. Li caixiang, leader of the second tour group of the school&#39;s theme education &quot;never forget the original intention and keep the mission in mind&quot;, attended the party class.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img alt=\"\" src=\"https://portalfiles.nwpu.edu.cn/resources/image/2/1572436247802_3fb16c62-3497-39fd-20b0-a242f8e62d2d.JPG\" style=\"height:600px; width:800px\" /></p>\r\n\r\n<p><br />\r\nHe huiru, deputy secretary and deputy director of the general party branch of the library, made a profound party lesson education of &quot;never forget the original intention to undertake the mission and fulfill the purpose to make contributions&quot; with the title of &quot;never forget the original intention and keep the mission in mind&quot;. He Huiru from the party&#39;s nature and the party&#39;s purpose, its characteristics, its development course, beginner&#39;s mind and the mission of our party to do the thorough elaboration, combined with the theme &quot;don&#39;t forget the beginner&#39;s mind, keep in mind that the mission&quot; education, the thought of socialism with Chinese characteristics in jinping new era as a guide, tells the story of how to bear the mission, bear, at the same time with practice to find gaps and improvement measures are put forward.</p>\r\n\r\n<p><br />\r\n<img alt=\"\" src=\"https://portalfiles.nwpu.edu.cn/resources/image/2/1572436264181_c42fafe2-e5a5-baa9-29b7-c9910c706fe4.JPG\" style=\"height:600px; width:800px\" /></p>\r\n\r\n<p><br />\r\nWu lixin, secretary of the party branch of the reader service department, took the party lesson with the title of &quot;studying together the work regulations of the party branch of the communist party of China&quot;. All the party members of the branch studied the work regulations of the communist party branch of the People&#39;s Republic of China again seriously. According to the actual work of the branch, the main points of the branch&#39;s work were explained one by one.</p>\r\n\r\n<p><br />\r\nTo carry out education on the theme of &quot;never forgetting our original intention and keeping our mission in mind&quot; throughout the party is to equip our minds with the party&#39;s innovative theories and encourage the whole party to make unremitting efforts to realize the party&#39;s historical mission in the new era more consciously. We should carry out the whole process of theme education by &quot;keeping the original intention, undertaking the mission, finding the gap and carrying it out&quot;. We will firmly grasp and thoroughly study and implement xi jinping thought on socialism with Chinese characteristics for a new era, forge the political character of loyalty, cleanness and responsibility, and unite and lead the Chinese people of all ethnic groups in working together to realize the great dream. This special party course is to carry out the spirit of &quot;never forget the original intention, keep in mind the mission&quot; theme education, and strive to achieve the specific goals of theoretical learning, ideological and political baptism, undertaking, serving the people to solve problems, honesty and honesty as a model, to ensure that the theme education achieved solid results.</p>\r\n','2019-10-30 15:18:53','The party branch of the library reader service department held party classes on the theme of \"never forget the original intention and bear the mission in mind\"',1),(2,'<p>For the further implementation of the national education conference spirit, explore the deepening the reform of digital instructional innovation model, promote new media and the integration of traditional culture, with the development of teaching resources sharing needs, on the morning of November 1, and higher education press office jointly sponsored digital textbook construction and publishing communication meeting. The specific matters are hereby notified as follows:</p>\r\n\r\n<p><strong>I. meeting time</strong></p>\r\n\r\n<p>9:00 am, Thursday, November 1, 2018</p>\r\n\r\n<p><br />\r\n<strong>Ii. Venue of the meeting</strong><br />\r\nFriendship campus old library teacher development center C219</p>\r\n\r\n<p><br />\r\n<strong>Iii. Contents of the meeting</strong><br />\r\nDigital course customization and publishing services - create your own online courses</p>\r\n\r\n<p><br />\r\n<strong>Iv. Participants</strong></p>\r\n\r\n<ol>\r\n	<li>The responsible person of digital textbook construction and publishing and team teacher</li>\r\n	<li>Responsible for online course construction and team teachers</li>\r\n	<li>Teachers who are interested in the publication of new textbooks and digital courses</li>\r\n</ol>\r\n\r\n<p>Teachers are welcome to attend the meeting and participate in the discussion!</p>\r\n','2019-10-30 15:18:53',' Notice on holding digital textbook construction and publishing exchange meeting',1);
 /*!40000 ALTER TABLE `news` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -267,7 +267,7 @@ CREATE TABLE `reserving_history` (
 
 LOCK TABLES `reserving_history` WRITE;
 /*!40000 ALTER TABLE `reserving_history` DISABLE KEYS */;
-INSERT INTO `reserving_history` VALUES (1,_binary '\0',NULL,'2019-10-20 12:29:56',1,3);
+INSERT INTO `reserving_history` VALUES (1,_binary '\0',NULL,'2019-10-20 15:18:53',1,3);
 /*!40000 ALTER TABLE `reserving_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,7 +349,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'librarian@mandarin.com','librarian','passwd','18681941718','2019-10-30 12:29:56'),(2,'admin@mandarin.com','admin','passwd','18681941717','2019-10-30 12:29:56'),(3,'reader1@mandarin.com','reader1','passwd','18681941716','2019-10-30 12:29:56'),(4,'reader2@mandarin.com','reader2','passwd','18681941715','2019-10-30 12:29:56');
+INSERT INTO `user` VALUES (1,'librarian@mandarin.com','librarian','passwd','18681941718','2019-10-30 15:18:52'),(2,'admin@mandarin.com','admin','passwd','18681941717','2019-10-30 15:18:52'),(3,'reader1@mandarin.com','reader1','passwd','18681941716','2019-10-30 15:18:52'),(4,'reader2@mandarin.com','reader2','passwd','18681941715','2019-10-30 15:18:52');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -387,4 +387,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-30 14:04:58
+-- Dump completed on 2019-10-30 15:24:59
