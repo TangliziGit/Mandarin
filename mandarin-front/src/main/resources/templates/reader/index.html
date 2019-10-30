@@ -46,7 +46,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-5 feature-box" th:each="news: ${newsList}">
                     <i class="icon-star icon"></i>
-                    <h4 th:text="${news.getTitle()}">title</h4>
+                    <h4><a style="color: black;" th:href="@{/reader/news(id=${news.getNewsId()})}" th:text="${news.getTitle()}">title</a></h4>
                     <p th:text="${#strings.abbreviate(news.getContent(), 300)}">content</p>
                 </div>
             </div>
