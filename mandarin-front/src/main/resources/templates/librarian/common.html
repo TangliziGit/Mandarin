@@ -13,6 +13,12 @@
         <link rel="stylesheet" th:href="@{/librarian/node_modules/select2/dist/css/select2.min.css}" />
         <link rel="stylesheet" th:href="@{/librarian/node_modules/select2-bootstrap-theme/dist/select2-bootstrap.min.css}" />
         <link rel="stylesheet" th:href="@{/librarian/css/style.css}" />
+
+        <style>
+            #cke_content {
+                width: 100%;
+            }
+        </style>
     </th:block>
 </head>
 <body>
@@ -133,6 +139,7 @@
     <script th:src="@{/librarian/js/select2.js}"></script>
     <script th:src="@{/librarian/js/JsBarcode.all.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ckeditor@4.12.1/ckeditor.js"></script>
     <script>
         function getFormData(dic) {
             formData=new FormData();
