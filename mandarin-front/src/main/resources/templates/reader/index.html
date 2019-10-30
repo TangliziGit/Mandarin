@@ -63,6 +63,7 @@
 
 <script>
     $("#search-btn").bind("click", function () {
+        if (!checkInputBoxEmpty("#search-box")) return;
         window.location.href = "/reader/search/?q=" + $("#search-box").val();
     })
 </script>

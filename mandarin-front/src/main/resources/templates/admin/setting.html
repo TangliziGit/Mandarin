@@ -116,6 +116,10 @@
 
     $("#submit").bind("click", function () {
         let formData = new FormData();
+        if (!checkInputBoxEmpty("#fine")) return;
+        if (!checkInputBoxEmpty("#deposit")) return;
+        if (!checkInputBoxEmpty("#period")) return;
+
         formData.append("fine", $("#fine").val());
         formData.append("deposit", $("#deposit").val());
         formData.append("period", $("#period").val());

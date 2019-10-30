@@ -61,6 +61,8 @@
 
         <script>
             $("#retrieve-btn").bind("click", function () {
+                if (!checkInputBoxEmpty("#login-name")) return;
+
                 let formData = new FormData();
 
                 $.ajax({

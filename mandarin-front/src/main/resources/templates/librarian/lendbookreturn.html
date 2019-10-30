@@ -164,6 +164,7 @@
              
 
             function submitReturn(){
+                if (!checkInputBoxEmpty("#bookidR")) return;
               $.ajax({
                 url: "/api/book/return/"+$('#bookidR').val(),
                 type: "POST",

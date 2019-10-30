@@ -79,6 +79,12 @@
 
     function submitNewPost() {
         var formData = new FormData();
+        if (!checkInputBoxEmpty("#title")) return;
+        if (CKEDITOR.instances.content.getData() === ""){
+            alertWarning("news content should not be empty.");
+            return;
+        }
+
         formData.append("title", $("#title").val());
         formData.append("content", CKEDITOR.instances.content.getData());
 

@@ -157,6 +157,16 @@
                 }, time);
             })
         }
+
+        function checkInputBoxEmpty(id) {
+            let content = $(id).val();
+
+            if (content.trim() === "") {
+                alertWarning("the field should not be empty.");
+                return false;
+            }
+            return true;
+        }
     </script>
 </th:block>
 

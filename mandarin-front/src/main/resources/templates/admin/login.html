@@ -63,6 +63,9 @@
 
     <script>
       $("#login").bind("click", function () {
+        if (!checkInputBoxEmpty("#login-username")) return;
+        if (!checkInputBoxEmpty("#login-password")) return;
+
         let formData = new FormData();
         formData.append("name", $("#login-username").val());
         formData.append("password", $("#login-password").val());

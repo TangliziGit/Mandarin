@@ -390,6 +390,11 @@
         <script>
             $("#submit").bind("click", function () {
                 let formData = new FormData();
+                if (!checkInputBoxEmpty("#name")) return;
+                if (!checkInputBoxEmpty("#phoneNumber")) return;
+                if (!checkInputBoxEmpty("#email")) return;
+                if (!checkInputBoxEmpty("#password")) return;
+
                 formData.append("name", $("#name").val());
                 formData.append("phoneNumber", $("#phoneNumber").val());
                 formData.append("email", $("#email").val());

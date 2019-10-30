@@ -109,8 +109,18 @@
   <!-- End custom js for this page-->
   <script>
       function insert(){
-        var id = $("#id").val();
+          if (!checkInputBoxEmpty("#id")) return;
+          if (!checkInputBoxEmpty("#isbn")) return;
+          if (!checkInputBoxEmpty("#title")) return;
+          if (!checkInputBoxEmpty("#author")) return;
+          if (!checkInputBoxEmpty("#price")) return;
+          if (!checkInputBoxEmpty("#location")) return;
+          if (!checkInputBoxEmpty("#categoryName")) return;
+          if (!checkInputBoxEmpty("#publishYear")) return;
+          if (!checkInputBoxEmpty("#publisher")) return;
+          if (!checkInputBoxEmpty("#summary")) return;
 
+          var id = $("#id").val();
           var title = $("#title").val();
           var author = $("#author").val();
           var price = $("#price").val();

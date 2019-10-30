@@ -58,6 +58,9 @@
   <div th:replace="librarian/common :: scripts"></div>
   <script>
       function insert(){
+        if (!checkInputBoxEmpty("#category")) return;
+        if (!checkInputBoxEmpty("#register-email")) return;
+
         var categoryId = $("#categoryId").val();
         var categoryName = $("#register-email").val();
         var data = {

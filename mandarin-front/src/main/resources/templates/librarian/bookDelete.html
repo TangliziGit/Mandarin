@@ -58,6 +58,7 @@
   <div th:replace="librarian/common :: scripts"></div>
   <script>
       function insert(){
+        if (!checkInputBoxEmpty("#register-email")) return;
         var id = $("#register-email").val();
         
         $.ajax({

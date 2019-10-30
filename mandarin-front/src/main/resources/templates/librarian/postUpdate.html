@@ -86,11 +86,14 @@
                 return pair[1];
             }
         }
-        return (false);
+        return "";
     }
 
     CKEDITOR.config.removePlugins = 'elementspath';
     CKEDITOR.replace("content");
+
+    if (getQueryVariable("id") === "")
+        window.location.href="/librarian/postManage";
 
     $.ajax({
             url: "/api/news/" + getQueryVariable("id"),
@@ -109,6 +112,11 @@
 <script>
     function submitNewPost() {
         var formData = new FormData();
+        if (!checkInputBoxEmpty("#title")) return;
+        if (CKEDITOR.instances.content.getData() === ""){
+            alertWarning("news content should not be empty.");
+            return;
+        }
         formData.append("title", $("#title").val());
         formData.append("content", CKEDITOR.instances.content.getData());
 

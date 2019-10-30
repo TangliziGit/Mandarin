@@ -103,9 +103,10 @@
 
     <script>
         $("#submit").bind("click", function () {
-            if($("#name").val()==""||$("#phoneNumber").val()==""||$("#email").val()==""||$("#password").val()=="")
+            if($("#name").val()==""||$("#phoneNumber").val()==""||$("#email").val()==""||$("#password").val()=="") {
                 alertWarning("the input can not be empty");
-            else{
+                return;
+            } else{
             let formData=new FormData();
             formData.append("name", $("#name").val());
             formData.append("phoneNumber", $("#phoneNumber").val());
