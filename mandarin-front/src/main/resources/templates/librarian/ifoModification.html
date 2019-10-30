@@ -119,7 +119,7 @@
 <script id="reader-template" type="text/x-handlebars-template">
     <tr id="reader-{{userId}}">
         <td>{{userId}}</td>
-        <td onclick="$('#history-{{userId}}').slideToggle('fast')">{{name}}</td>
+        <td onclick="$('#history-{{userId}}').slideToggle('fast')"><a href="#">{{name}}</a></td>
         <td>{{email}}</td>
         <td>{{phoneNumber}}</td>
         <td>
@@ -253,7 +253,7 @@
 
     function insert() {
         var formData = new FormData();
-        if (!checkInputBoxEmpty("#name")) return;
+        if (!checkInputBoxEmpty("#inlineFormInput")) return;
         formData.append("name", $("#inlineFormInput").val());
 
         $('#ifo').empty();
@@ -279,6 +279,34 @@
             }
         });
     }
+
+    function init() {
+        var formData = new FormData();
+        formData.append("name", "");
+
+        $.ajax({
+            url: "/api/search/reader/detail",
+            type: "POST",
+            dataType: 'json',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (resp) {
+                console.log(resp.data);
+                for (var data of resp.data) {
+                    $('#ifo').append(template(data));
+                    $('#modal-body').append(modalTemplate(data));
+
+                    if (data.borrowingHistoryModels.length != 0)
+                        $('#history-' + data.userId).append(detailTemplate(data));
+                    for (var detail of data.borrowingHistoryModels)
+                        $('#content-' + data.userId).append(detailContentTemplate(detail));
+                }
+            }
+        });
+    };
+    init();
+
 </script>
 
 <script>
