@@ -8,7 +8,8 @@
 <th:block th:replace="reader/common :: navbar"></th:block>
 
 <main class="page landing-page">
-    <section class="clean-block clean-hero" style="min-height: 350px; background-image:url(&quot;reader/img/index_bg.jpg&quot;);color:rgba(9,162,255,0.76);">
+    <section class="clean-block clean-hero"
+             style="min-height: 350px; background-image:url(&quot;reader/img/index_bg.jpg&quot;);color:rgba(9,162,255,0.76);">
         <div class="text">
             <h2>Mandarin-Library Automation<br></h2>
             <p>Presenting Wonderful for You</p>
@@ -25,8 +26,11 @@
                             <label for="search-field">
                                 <i class="fa fa-search" style="font-size: 36px; color: rgb(34, 34, 34);"></i>
                             </label>
-                            <input id="search-box" type="search" class="fForm-control" style="width: 80%; height: 40px; margin: 9px;">
-                            <button id="search-btn" type="button" class="btn btn-primary" data-_extension-text-contrast="">Search</button>
+                            <input id="search-box" type="search" class="fForm-control"
+                                   style="width: 80%; height: 40px; margin: 9px;">
+                            <button id="search-btn" type="button" class="btn btn-primary"
+                                    data-_extension-text-contrast="">Search
+                            </button>
                         </div>
                         <div class="col-2"></div>
                     </div>
@@ -39,14 +43,14 @@
                 <h2 class="text-info">NEWS<br></h2>
             </div>
             <div class="row justify-content-center">
-                <div class="col-md-5 feature-box"><i class="icon-star icon"></i>
-                    <h4>Ernst Mayr and Botany Libraries Join Mandarin Library </h4>
-                    <p>Mandarin Library now includes the Botany Libraries of the Mandarin University Herbaria and the Ernst Mayr Library of the Museum of Comparative Zoology.</p>
+                <div class="col-md-5 feature-box" th:each="news: ${newsList}">
+                    <i class="icon-star icon"></i>
+                    <h4 th:text="${news.getTitle()}">title</h4>
+                    <p th:text="${#strings.abbreviate(news.getContent(), 300)}">content</p>
                 </div>
-                <div class="col-md-5 feature-box">
-                    <h4>The Bowlt-Misler Collection: announcement of forthcoming donation of thousands of books on Russian art</h4>
-                    <p>On Friday 20 April, Professor John Bowlt announced that he will donate his library to the University Library as the Bowlt-Misler Collection. A highly distinguished art historian of late Imperial and early Soviet visual culture,
-                        and the 2015-16 Cambridge Slade Professor of Fine Art, Professor Bowlt has built his library..</p><i class="icon-star icon"></i></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12"><a th:href="@{/reader/newslist}" style="float: right">more news</a></div>
             </div>
         </div>
     </section>
@@ -59,7 +63,7 @@
 
 <script>
     $("#search-btn").bind("click", function () {
-        window.location.href="/reader/search/?q="+$("#search-box").val();
+        window.location.href = "/reader/search/?q=" + $("#search-box").val();
     })
 </script>
 

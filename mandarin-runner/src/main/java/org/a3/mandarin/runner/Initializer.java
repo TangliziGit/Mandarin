@@ -22,6 +22,7 @@ class Initializer {
     private final BorrowingHistoryRepository borrowingHistoryRepository;
     private final SettingRepository settingRepository;
     private final IncomeRepository incomeRepository;
+    private final NewsRepository newsRepository;
 
     Initializer(ApplicationContext applicationContext){
         this.roleRepository=applicationContext.getBean(RoleRepository.class);
@@ -34,6 +35,7 @@ class Initializer {
         this.borrowingHistoryRepository=applicationContext.getBean(BorrowingHistoryRepository.class);
         this.settingRepository=applicationContext.getBean(SettingRepository.class);
         this.incomeRepository=applicationContext.getBean(IncomeRepository.class);
+        this.newsRepository=applicationContext.getBean(NewsRepository.class);
     }
 
     void init(){
@@ -41,6 +43,7 @@ class Initializer {
         generateMockUsers();
         generateMockBooks();
         generateMockUserBookRelation();
+        generateMockNews();
     }
 
     private void generateInitialData(){
@@ -50,7 +53,7 @@ class Initializer {
         RoleUtil.initRoles();
 
         settingRepository.save(new Setting(SettingUtil.FINE, 1.0));
-        settingRepository.save(new Setting(SettingUtil.BOOK_RETURN_PERIOD, 30.0));
+        settingRepository.save(new Setting(SettingUtil.PERIOD, 30.0));
         settingRepository.save(new Setting(SettingUtil.DEPOSIT, 300.0));
     }
 
@@ -150,5 +153,24 @@ class Initializer {
         deletingHistoryRepository.save(deletingHistory);
         borrowingHistoryRepository.save(borrowingHistory1);
         borrowingHistoryRepository.save(borrowingHistory2);
+    }
+
+    private void generateMockNews(){
+        User librarian = userRepository.findByName("librarian");
+        News news1 = new News();
+        News news2 = new News();
+
+        news1.setTitle("Notice on holding digital textbook construction and publishing exchange meeting");
+        news1.setContent("For the further implementation of the national education conference spirit, explore the deepening the reform of digital instructional innovation model, promote new media and the integration of traditional culture, with the development of teaching resources sharing needs, on the morning of November 1, and higher education press office jointly sponsored digital textbook construction and publishing communication meeting. ");
+        news1.setDate(Instant.now());
+        news1.setUser(librarian);
+
+        news2.setTitle("\"China National Knowledge Infrastructure\" function and use method information session");
+        news2.setContent("Scientific research and paper writing are inseparable from scientific and technological information retrieval and database resources. In order to facilitate teachers and students to effectively use various database resources to carry out their work and study, the graduate school specially invites \"cnknet\" technical personnel to introduce functions and services of various data resources and answer questions from teachers and students on site. This paper will focus on the application of the academic misconduct detection system of cnki and how to interpret the detection report. Welcome to join teachers and students.");
+        news2.setDate(Instant.now());
+        news2.setUser(librarian);
+
+        newsRepository.save(news1);
+        newsRepository.save(news2);
     }
 }

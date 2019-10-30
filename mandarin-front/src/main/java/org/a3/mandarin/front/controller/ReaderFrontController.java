@@ -5,13 +5,20 @@ import org.a3.mandarin.common.dao.repository.*;
 import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.PermissionType;
 import org.a3.mandarin.front.model.BookModel;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -30,7 +37,12 @@ public class ReaderFrontController {
     private NewsRepository newsRepository;
 
     @GetMapping({"", "/", "/index", "/home"})
-    public String index(){
+    public String index(Map<String, Object> map){
+        List<News> newsList = newsRepository.findAll(
+                PageRequest.of(0, 2, Sort.by("date").descending())).getContent();
+
+        map.put("newsList", newsList);
+
         return "reader/index";
     }
 
@@ -105,9 +117,22 @@ public class ReaderFrontController {
     public String news(@RequestParam(value = "id", defaultValue = "1") Integer id,
                        Map<String, Object> map){
         News news = newsRepository.findById(id).orElse(null);
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
+                        .withLocale(Locale.UK)
+                        .withZone(ZoneId.systemDefault());
 
         map.put("news", news);
+        map.put("date", formatter.format(news.getDate()));
 
         return "reader/news";
+    }
+
+    @GetMapping("/newslist")
+    public String newsList(Map<String, Object> map){
+        List<News> newsList = newsRepository.findAll();
+
+        map.put("newsList", newsList);
+
+        return "reader/newslist";
     }
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <th:block th:replace="reader/common :: heads"></th:block>
+</head>
+<body>
+<th:block th:replace="reader/common :: navbar"></th:block>
+
+<main class="page blog-post-list">
+<section class="clean-block clean-blog-list dark">
+    <div class="container">
+        <div class="block-heading" style="">
+            <h1 class="text-muted">News</h1a>
+        </div>
+
+        <div class="block-content">
+            <div>
+                <div class="container">
+
+                    <div class="row">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Date</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="news: ${newsList}">
+                                <td><a th:text="${news.getTitle()}" th:href="@{/reader/news(id=${news.getNewsId()})}">title</a></td>
+                                <td th:text="${news.getUser().getName()}">author</td>
+                                <td th:text="${#dates.format(news.getDate(), 'dd-MM-yyyy')}">date</td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</main>
+
+<th:block th:replace="reader/common :: footer"></th:block>
+<th:block th:replace="reader/common :: scripts"></th:block>
+
+</body>
+</html>

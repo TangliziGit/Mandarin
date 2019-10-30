@@ -7,25 +7,34 @@
         <link rel="stylesheet" th:href="@{/reader/bootstrap/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{/reader/css/styles.min.css}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
     </th:block>
 </head>
 <body>
 
 <th:block th:fragment="navbar">
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-        <div class="container"><a class="navbar-brand logo">Mandarin-Library</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container"><a class="navbar-brand logo">Mandarin-Library</a>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
+                    class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse"
                  id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/reader/index}">Homepage</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/reader/search}">SEARCH</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/reader/index}">HOME</a>
+                    </li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/reader/newslist}">NEWS</a>
+                    </li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/reader/search}">SEARCH</a>
+                    </li>
                     <li th:switch="${session.userName}" class="nav-item" role="presentation">
                         <a th:case="null" class="nav-link" th:href="@{/reader/login}">LOG IN</a>
                         <a th:case="*" class="nav-link" th:href="@{/reader/account}">MY ACCOUNT</a>
                     </li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/librarian/login}">LIBRARIAN ENTRY</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/librarian/login}">LIBRARIAN
+                        ENTRY</a></li>
                 </ul>
             </div>
         </div>
@@ -87,7 +96,7 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
     <script src="http://identicon.net/js/vendor/sha.js"></script>
     <script>
-        function get_identicon (text, size) {
+        function get_identicon(text, size) {
             let outputType = "HEX";
             let hashtype = "SHA-1";
 
@@ -97,15 +106,15 @@
             return 'data:image/png;base64,' + data;
         }
 
-        function alertSuccess(message, time=4000){
+        function alertSuccess(message, time = 4000) {
             myAlert("success", "Success!", message, time);
         }
 
-        function alertError(message, time=4000) {
+        function alertError(message, time = 4000) {
             myAlert("danger", "Error!", message, time);
         }
 
-        function alertWarning(message, time=4000) {
+        function alertWarning(message, time = 4000) {
             myAlert("warning", "Warning!", message, time);
         }
 
@@ -115,23 +124,24 @@
             style: "position: fixed; top: 100px; width: 30%; left: 35%",
             id: "alertBoxDiv"
         }).appendTo($("body"));
-        function myAlert(cls, head, message, time){
-            var html=
-                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\" style=\"margin-left: 10px;\">&times;</a>\n" +
-                "<strong>"+head+"</strong> " + message + " \n";
 
-            var id = "alertDiv"+ alertCounter++;
+        function myAlert(cls, head, message, time) {
+            var html =
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\" style=\"margin-left: 10px;\">&times;</a>\n" +
+                "<strong>" + head + "</strong> " + message + " \n";
+
+            var id = "alertDiv" + alertCounter++;
             $("<div />", {
-                "class": "alert alert-"+cls,
+                "class": "alert alert-" + cls,
                 id: id
             }).appendTo($("#alertBoxDiv"));
 
-            $("#"+id).append(html);
+            $("#" + id).append(html);
 
-            $("#"+id).fadeIn(100, function(){
-                setTimeout(function(){
-                    $("#"+id).fadeOut(100, function () {
-                        $("#"+id).remove();
+            $("#" + id).fadeIn(100, function () {
+                setTimeout(function () {
+                    $("#" + id).fadeOut(100, function () {
+                        $("#" + id).remove();
                     });
                 }, time);
             })
