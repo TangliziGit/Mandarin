@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <th:block th:replace="reader/common :: heads"></th:block>
+</head>
+<body>
+
+<th:block th:replace="reader/common :: navbar"></th:block>
+
+<main class="page landing-page">
+    <section class="clean-block clean-info dark">
+        <div class="container">
+            <div class="block-heading">
+                <div class="container" style="color: #808080;margin-top: 100px;margin-bottom: 200px">
+                    <h1 style="font-size: 4rem;font-weight: 900;">Oops...</h1>
+                    <h1>404</h1>
+                    <p>Page not found.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<th:block th:replace="reader/common :: footer"></th:block>
+
+<th:block th:replace="reader/common :: scripts"></th:block>
+
+<script>
+    $("#search-btn").bind("click", function () {
+        window.location.href="/reader/search/?q="+$("#search-box").val();
+    })
+</script>
+
+</body>
+</html>
