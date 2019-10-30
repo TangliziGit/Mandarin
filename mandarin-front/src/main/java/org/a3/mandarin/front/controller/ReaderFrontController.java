@@ -4,6 +4,7 @@ import org.a3.mandarin.common.annotation.Permission;
 import org.a3.mandarin.common.dao.repository.*;
 import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.PermissionType;
+import org.a3.mandarin.common.util.RoleUtil;
 import org.a3.mandarin.common.util.StringUtil;
 import org.a3.mandarin.front.model.BookModel;
 import org.springframework.data.domain.PageRequest;
@@ -77,6 +78,7 @@ public class ReaderFrontController {
         System.out.println(borrowingHistories);
         System.out.println(reservingHistories);
 
+        map.put("isReader", reader.getRoles().contains(RoleUtil.readerRole));
         map.put("reader", reader);
         map.put("fine", fine);
         map.put("borrowingHistories", borrowingHistories);

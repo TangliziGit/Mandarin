@@ -203,6 +203,10 @@
             }
         })
     })
+
+    if (![[${isReader}]]){
+        alertWarning("you are not using a reader account, so you can not do some operations.", 8000);
+    }
 </script>
 
 </body>
