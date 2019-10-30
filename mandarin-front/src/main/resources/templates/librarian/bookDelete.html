@@ -66,10 +66,10 @@
           datatype:"json",
           success:function(resp){
                 console.log(resp);
-                alert("success");
+                alertSuccess("the book has been deleted");
             },
            error:function (resp) {      
-               alert(resp.responseJSON.message);
+               alertError(resp.responseJSON.message);
             }
         });
       }

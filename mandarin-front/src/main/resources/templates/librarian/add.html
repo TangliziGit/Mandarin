@@ -74,10 +74,10 @@
           contentType: false,
           success:function(resp){
                 console.log(resp);
-                alert("success");
+                alertSuccess("the category has been created");
             },
            error:function (resp) {      
-               alert(resp.responseJSON.message);
+               alertError(resp.responseJSON.message);
             }
         });
       }

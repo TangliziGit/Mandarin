@@ -72,7 +72,7 @@
             window.location.href="/librarian/index.html";
           },
           error: function (resp) {
-            alert(resp.responseJSON.message);
+            alertError(resp.responseJSON.message);
           }
         })
       })

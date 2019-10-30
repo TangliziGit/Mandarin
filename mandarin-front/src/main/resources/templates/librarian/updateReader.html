@@ -94,10 +94,10 @@
           contentType: false,
           success:function(data){
                 console.log(data);
-                alert("success");
+                alertSuccess("the reader information has been modified.");
             },
            error:function (resp) {
-               alert(resp.responseJSON.message);
+               alertError(resp.responseJSON.message);
             }
         });
       }

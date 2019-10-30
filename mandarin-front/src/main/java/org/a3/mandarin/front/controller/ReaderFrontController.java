@@ -4,6 +4,7 @@ import org.a3.mandarin.common.annotation.Permission;
 import org.a3.mandarin.common.dao.repository.*;
 import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.PermissionType;
+import org.a3.mandarin.common.util.StringUtil;
 import org.a3.mandarin.front.model.BookModel;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +41,9 @@ public class ReaderFrontController {
     public String index(Map<String, Object> map){
         List<News> newsList = newsRepository.findAll(
                 PageRequest.of(0, 2, Sort.by("date").descending())).getContent();
+
+        for (News news: newsList)
+            news.setContent(StringUtil.escapeHtmlTag(news.getContent()));
 
         map.put("newsList", newsList);
 

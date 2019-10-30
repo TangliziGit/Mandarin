@@ -225,7 +225,7 @@
               },
               error:function (resp) {
                   console.log(resp);
-                  alert(resp.responseJSON.message);
+                  alertError(resp.responseJSON.message);
               }
           });
       }
@@ -288,7 +288,7 @@
           contentType: false,
           success:function(data){
                 console.log(data);
-                alert("success");
+                alertSuccess("the book has been added");
                 // $("#booklocation").append("<h4>"+"&nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp&nbsp;"+"Floor "+$('#floor').val()+" - "+"Shelf "+$('#floor').val()+"</h4>");
                 for (elem of data.data){
                     console.log(elem);
@@ -307,7 +307,7 @@
             },
            error:function (data) {
               console.log(data);
-               alert(data.responseJSON.message);
+               alertError(data.responseJSON.message);
             }
         });
       }
@@ -395,7 +395,7 @@ html2canvas(document.querySelector("#imgDiv"), {
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            alert("download success!");
+            alertSuccess("download success!");
 
   },
   width: 230,

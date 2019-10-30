@@ -295,10 +295,10 @@
             processData: false,
             contentType: false,
             success: function (resp) {
-                alert("success");
+                alertSuccess("information has been changed.");
             },
             error: function (resp) {
-                alert(resp.responseJSON.message);
+                alertError(resp.responseJSON.message);
             }
         });
     }
@@ -323,7 +323,7 @@
             contentType: false,
             success: function (resp) {
                 console.log(resp);
-                alert("success");
+                alertSuccess("the reader has been deleted.");
                 $("#reader-"+id).remove();
                 // if(resp.code == 200||resp.code == 201){
                 //     alert("success!");
@@ -334,7 +334,7 @@
 
             },
             error: function (resp) {
-                alert(resp.responseJSON.message);
+                alertError(resp.responseJSON.message);
                 // alert(typeof(errorThrown));
             }
 

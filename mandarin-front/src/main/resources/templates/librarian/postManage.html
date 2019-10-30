@@ -28,16 +28,18 @@
 
 
                                     </div>
-                                    <div style="align-self: center" class="card-body col-sm-8">
+                                    <div class="card-body col-sm-8" style="align-self: center">
                                         <div class="form-inline">
                                             <div class="form-group col-sm-10">
 
-                                                <input type="text" placeholder="Jane Doe" id="inlineFormInput"
-                                                       class="form-control col-12" style="">
+                                                <input class="form-control col-12" id="inlineFormInput"
+                                                       placeholder="Jane Doe"
+                                                       style="" type="text">
                                             </div>
                                             <div class="form-group col-sm-2">
-                                                <button type="" id="search-btn" data-_extension-text-contrast=""
-                                                        class="btn btn-primary" onclick="Search()">Search
+                                                <button class="btn btn-primary" data-_extension-text-contrast=""
+                                                        id="search-btn"
+                                                        onclick="Search()" type="">Search
                                                 </button>
                                             </div>
                                         </div>
@@ -70,100 +72,58 @@
                                     <div class="container-fluid">
                                         <div class="row" id="postContainer">
 
-
+                                            <div class="col-md-6" th:each="news: ${newsList}" style="margin-top: 20px; margin-bottom: 20px;" th:id="${news.getNewsId()}">
+                                                <div class="card111">
+                                                    <div class="card-header bg-light">
+                                                        <a th:href="@{/reader/news(id=${news.getNewsId()})}" th:text="${news.getTitle()}"></a>
+                                                        <div class="card-actions"></div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <span th:text="'Date: ' + ${#dates.format(news.getDate(), 'dd-MM-yyyy')}">Date</span>
+                                                        <span th:text="'Author: ' + ${news.getUser().getName()}">Author</span>
+                                                        <br>
+                                                        <hr>
+                                                        Content：
+                                                        <br>
+                                                        <p class="contentP" th:text="${news.getContent()}">content</p>
+                                                        <div style="float: right">
+                                                            <a class="btn" href="#" th:onclick="'deleteR(' + ${news.getNewsId()} + ')'">
+                                                                <i class="fa fa-times">Delete</i>
+                                                            </a>
+                                                            <a class="btn" href="#" th:onclick="'updatePost(' + ${news.getNewsId()} + ')'">
+                                                                <i class="fa fa-cog">Edit</i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
-
                 </section>
             </div>
 
-            <!-- content-wrapper ends -->
-            <!-- partial:../../partials/_footer.html -->
             <div th:replace="librarian/common :: footer"></div>
-
-            <!-- partial -->
         </div>
-        <!-- row-offcanvas ends -->
     </div>
-    <!-- page-body-wrapper ends -->
 </div>
-<!-- container-scroller -->
-
-<!-- plugins:js -->
-
 <div th:replace="librarian/common :: scripts"></div>
 
 <script>
-    $.ajax({
-            url: "/api/news",
-            type: "GET",
-            dataType: 'json',
-            async: false,
-            success: function (resp) {
-                $.each(resp.data,
-                    function (i, values) {
-                        newsid = values.newsId;
-                        newstitle = values.title;
-                        $('#postContainer').append(
-                            // "<div class=\"col-md-4\" id=i><div class=\"card111\"><div class=\"card-header bg-light\"><h4 class=\"titleHref\" onclick=\"readerNews(newstitle)\">" + newstitle + "</h4><div class=\"card-actions\"><a href=\"#\" class=\"btn\" onclick=\"deleteR(newsid)\"><i class=\"fa fa-times\">Delete</i></a><a href=\"#\" class=\"btn\" onclick=\"updatePost(newsid)\"><i class=\"fa fa-cog\">Edit</i></a></div></div><div class=\"card-body\"><span class=\"h5\">Time： </span><span class=\"text-muted\">" + values.date + "</span><span class=\"h5\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Author:   &nbsp;&nbsp</span><span class=\"text-muted\">" + values.user.name + "</span><hr><span class=\"h5\">Content： </span><br><p class=\"contentP\">" + values.content + "</p></div></div></div>"
-
-                        "<div class=\"col-md-4\" id=i  style=\"margin: 20px\"><div class=\"card111\"><div class=\"card-header bg-light\"><strong onclick=\"ReaderNews("+newstitle+")\">" + newstitle + "</strong><div class=\"card-actions\"></div></div><div class=\"card-body\">Time： " + values.date + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Author:   &nbsp;&nbsp" + values.user.name + "<br><hr>Content： <br><p class=\"contentP\">" + values.content + "</p><div style=\"float: right\">\n" +
-                        "  <a href=\"#\" class=\"btn\" onclick=\"deleteR("+newsid+")\"><i class=\"fa fa-times\">Delete</i></a><a href=\"#\" class=\"btn\" onclick=\"updatePost("+newsid+")\"><i class=\"fa fa-cog\">Edit</i></a>\n" +
-                        "  </div></div></div></div>"
-
-
-
-
-
-                            // "<div class=\"card-body\" id=i><h2>"+values.title+"</h2><p><font size=\"4\">"+values.content+"</font></p><div><span style=\"color: gray\">"+values.date+"</span><div style=\" float:right; \"><button onclick=\"updatePost(newsid)\" class=\"btn btn-secondary\">Edit</button><button onclick=\"deleteR(newsid)\" class=\"btn btn-danger\">Delete</button></div></div></div>"
-
-
-                        );
-                    })
-            }
-        }
-    );
-
-</script>
-<script>
     function Search() {
         if ($("#inlineFormInput").val() == "") {
-            alertWarning("The input can't be null!");
+            alertWarning("The input can't be empty!");
             return;
         }
-        $.ajax({
-            url: "/api/news/" + $('#inlineFormInput').val(),
-            type: "GET",
-            dataType: 'json',
-            async: false,
-            success: function (resp) {
-                $('#postNewHeader').html("<div><h3 class=\"h4\">Search Results&nbsp;&nbsp;</h3></div><div class=\"box111\" onclick=\"window.location.href='postAdd.html'\"></div>");
-                newsid = resp.data.newsId;
-                newstitle = resp.data.title;
-                $('#postContainer').empty();
-                $('#postContainer').append(
-                    "<div class=\"col-md-4\" id=i  style=\"margin: 20px\"><div class=\"card111\"><div class=\"card-header bg-light\"><strong onclick=\"ReaderNews("+newstitle+")\">" + newstitle + "</strong><div class=\"card-actions\"></div></div><div class=\"card-body\">Time： " + resp.data.date + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Author:   &nbsp;&nbsp" + resp.data.user.name + "<br><hr>Content： <br><p class=\"contentP\">" + resp.data.content + "</p><div style=\"float: right\">\n" +
-                    "  <a href=\"#\" class=\"btn\" onclick=\"deleteR("+newsid+")\"><i class=\"fa fa-times\">Delete</i></a><a href=\"#\" class=\"btn\" onclick=\"updatePost("+newsid+")\"><i class=\"fa fa-cog\">Edit</i></a>\n" +
-                    "  </div></div></div></div>"
-                );
 
-
-                console.log(resp.data);
-            }
-
-
-        });
+        window.location.href="/librarian/postManage?title=" + $('#inlineFormInput').val();
     }
 </script>
 <script>
     function updatePost(id) {
-
         window.open('postUpdate.html?id=' + id);
     }
 
@@ -184,69 +144,14 @@
             success: function (resp) {
                 console.log(resp);
                 alertSuccess("success");
-                $("#i").remove();
-                // if(resp.code == 200||resp.code == 201){
-                //     alert("success!");
-                //     console.log(resp);
-                //   }else{
-                //     alert(resp.message);
-                //   }
-
+                $("#"+id).remove();
             },
             error: function (resp) {
                 alertError(resp.responseJSON.message);
-                // alert(typeof(errorThrown));
             }
-
-
         });
     }
 
-    function readerNews(news) {
-        //路径不对
-        window.open('news.html?id=' + news);
-    }
-
-    function alertSuccess(message, time = 4000) {
-        myAlert("success", "Success!", message, time);
-    }
-
-    function alertError(message, time = 4000) {
-        myAlert("danger", "Error!", message, time);
-    }
-
-    function alertWarning(message, time = 4000) {
-        myAlert("warning", "Warning!", message, time);
-    }
-
-    var alertCounter = 0;
-
-    $("<div />", {
-        style: "position: fixed; top: 60px; width: 30%; left: 35%",
-        id: "alertBoxDiv"
-    }).appendTo($("body"));
-
-    function myAlert(cls, head, message, time) {
-        var html =
-            "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\" style=\"margin-left: 10px;\">&times;</a>\n" +
-            "<strong>" + head + "</强> " + message + " \n";
-
-        var id = "alertDiv" + alertCounter++;
-        $("<div />", {
-            "class": "alert alert-" + cls,
-            id: id
-        }).appendTo($("#alertBoxDiv"));
-
-        $("#" + id).append(html);
-
-        $("#" + id).fadeIn(100, function () {
-            setTimeout(function () {
-                $("#" + id).fadeOut(100, function () {
-                    $("#" + id).remove();
-                });
-            }, time);
-        })
-    }
 </script>
 
 

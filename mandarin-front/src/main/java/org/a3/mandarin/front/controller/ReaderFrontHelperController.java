@@ -8,6 +8,6 @@ public class ReaderFrontHelperController {
 
     @GetMapping({"", "/"})
     public String index(){
-        return "reader/index";
+        return "redirect:/reader/index";
     }
 }
