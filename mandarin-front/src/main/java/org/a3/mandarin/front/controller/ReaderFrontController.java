@@ -65,9 +65,12 @@ public class ReaderFrontController {
     }
 
     @GetMapping("/account")
-    @Permission(PermissionType.READER)
     public String account(Map<String, Object> map, HttpSession session){
         Integer userId = (Integer) session.getAttribute("userId");
+
+        if (null == userId)
+            return "reader/403";
+
         User reader = userRepository.findById(userId).orElse(null);
         Integer fine = borrowingFineHistoryRepository.findTotalFineAmountByUserId(userId);
 

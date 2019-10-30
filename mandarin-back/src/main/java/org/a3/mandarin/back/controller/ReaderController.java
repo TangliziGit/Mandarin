@@ -96,7 +96,7 @@ public class ReaderController {
         if (null!=email) targetUser.setEmail(email);
         if (null!=name) targetUser.setName(name);
         if (null!=phoneNumber) targetUser.setPhoneNumber(phoneNumber);
-        if (null!=password) targetUser.changePassword(password);
+        if (null!=password && !password.trim().equals("")) targetUser.changePassword(password);
 
         userRepository.save(targetUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(RESTfulResponse.ok());

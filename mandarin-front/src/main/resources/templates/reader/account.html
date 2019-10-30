@@ -159,7 +159,7 @@
 
                                                     </div>
                                                 </div>
-                                                <div class="line"></div>
+                                                <!-- div class="line"></div>
                                                 <div class="line"></div>
                                                 <br>
                                                 <div class="form-group row">
@@ -167,7 +167,7 @@
                                                     <div class="col-sm-9">
                                                         <input id="oriPassword" class="form-control" value="" type="password">
                                                     </div>
-                                                </div>
+                                                </div -->
                                                 <div class="line"></div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-4 offset-sm-3">
@@ -201,12 +201,45 @@
             success: function (resp) {
                 window.location.href="/reader/index";
             }
-        })
+        });
     })
 
     if (![[${isReader}]]){
         alertWarning("you are not using a reader account, so you can not do some operations.", 8000);
     }
+
+    var userId = [[${reader.getUserId()}]];
+    $("#submit").bind("click", function () {
+        if (!checkInputBoxEmpty("#username")) return;
+        if (!checkInputBoxEmpty("#email")) return;
+        if (!checkInputBoxEmpty("#phoneNumber")) return;
+
+        var form = new FormData();
+        form.append("id", userId);
+        form.append("name", $("#username").val());
+        form.append("email", $("#email").val());
+        form.append("phoneNumber", $("#phoneNumber").val());
+        form.append("password", $("#password").val());
+
+        $.ajax({
+            url: "/api/reader/"+userId,
+            method: "PUT",
+            data: form,
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (resp) {
+                alertSuccess("your information has been modified.");
+
+                setTimeout(function () {
+                    window.location.href="/reader/index";
+                }, 4000);
+            },
+            error: function (resp) {
+                alertError(resp.responseJSON.message);
+            }
+        });
+    })
 </script>
 
 </body>
