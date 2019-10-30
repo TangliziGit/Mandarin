@@ -97,7 +97,7 @@ CREATE TABLE `borrowing_fine_history` (
 
 LOCK TABLES `borrowing_fine_history` WRITE;
 /*!40000 ALTER TABLE `borrowing_fine_history` DISABLE KEYS */;
-INSERT INTO `borrowing_fine_history` VALUES (1,NULL,'2019-10-20 07:37:50',_binary '\0',1),(2,NULL,'2019-10-20 07:37:50',_binary '\0',2);
+INSERT INTO `borrowing_fine_history` VALUES (1,NULL,'2019-10-20 12:29:56',_binary '\0',1),(2,NULL,'2019-10-20 12:29:56',_binary '\0',2);
 /*!40000 ALTER TABLE `borrowing_fine_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,7 +128,7 @@ CREATE TABLE `borrowing_history` (
 
 LOCK TABLES `borrowing_history` WRITE;
 /*!40000 ALTER TABLE `borrowing_history` DISABLE KEYS */;
-INSERT INTO `borrowing_history` VALUES (1,NULL,'2019-10-20 07:37:50',1,1,3),(2,NULL,'2019-10-20 07:37:50',2,2,3);
+INSERT INTO `borrowing_history` VALUES (1,NULL,'2019-10-20 12:29:56',1,1,3),(2,NULL,'2019-10-20 12:29:56',2,2,3);
 /*!40000 ALTER TABLE `borrowing_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +181,7 @@ CREATE TABLE `deleting_history` (
 
 LOCK TABLES `deleting_history` WRITE;
 /*!40000 ALTER TABLE `deleting_history` DISABLE KEYS */;
-INSERT INTO `deleting_history` VALUES (1,'2019-10-20 07:37:50',1,1);
+INSERT INTO `deleting_history` VALUES (1,'2019-10-20 12:29:56',1,1);
 /*!40000 ALTER TABLE `deleting_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,7 +209,7 @@ CREATE TABLE `income` (
 
 LOCK TABLES `income` WRITE;
 /*!40000 ALTER TABLE `income` DISABLE KEYS */;
-INSERT INTO `income` VALUES (1,300,'2019-10-30 07:37:50','DEPOSIT',3),(2,300,'2019-10-30 07:37:50','DEPOSIT',4);
+INSERT INTO `income` VALUES (1,300,'2019-10-30 12:29:56','DEPOSIT',3),(2,300,'2019-10-30 12:29:56','DEPOSIT',4);
 /*!40000 ALTER TABLE `income` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -237,7 +237,7 @@ CREATE TABLE `news` (
 
 LOCK TABLES `news` WRITE;
 /*!40000 ALTER TABLE `news` DISABLE KEYS */;
-INSERT INTO `news` VALUES (1,'For the further implementation of the national education conference spirit, explore the deepening the reform of digital instructional innovation model, promote new media and the integration of traditional culture, with the development of teaching resources sharing needs, on the morning of November 1, and higher education press office jointly sponsored digital textbook construction and publishing communication meeting. ','2019-10-30 07:37:50','Notice on holding digital textbook construction and publishing exchange meeting',1),(2,'For the further implementation of the national education conference spirit, explore the deepening the reform of digital instructional innovation model, promote new media and the integration of traditional culture, with the development of teaching resources sharing needs, on the morning of November 1, and higher education press office jointly sponsored digital textbook construction and publishing communication meeting. ','2019-10-30 07:37:50','\"China National Knowledge Infrastructure\" function and use method information session',1);
+INSERT INTO `news` VALUES (1,'For the further implementation of the national education conference spirit, explore the deepening the reform of digital instructional innovation model, promote new media and the integration of traditional culture, with the development of teaching resources sharing needs, on the morning of November 1, and higher education press office jointly sponsored digital textbook construction and publishing communication meeting. ','2019-10-30 12:29:56','Notice on holding digital textbook construction and publishing exchange meeting',1),(2,'Scientific research and paper writing are inseparable from scientific and technological information retrieval and database resources. In order to facilitate teachers and students to effectively use various database resources to carry out their work and study, the graduate school specially invites \"cnknet\" technical personnel to introduce functions and services of various data resources and answer questions from teachers and students on site. This paper will focus on the application of the academic misconduct detection system of cnki and how to interpret the detection report. Welcome to join teachers and students.','2019-10-30 12:29:56','\"China National Knowledge Infrastructure\" function and use method information session',1);
 /*!40000 ALTER TABLE `news` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -267,7 +267,7 @@ CREATE TABLE `reserving_history` (
 
 LOCK TABLES `reserving_history` WRITE;
 /*!40000 ALTER TABLE `reserving_history` DISABLE KEYS */;
-INSERT INTO `reserving_history` VALUES (1,_binary '\0',NULL,'2019-10-20 07:37:50',1,3);
+INSERT INTO `reserving_history` VALUES (1,_binary '\0',NULL,'2019-10-20 12:29:56',1,3);
 /*!40000 ALTER TABLE `reserving_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,7 +318,7 @@ CREATE TABLE `setting` (
 
 LOCK TABLES `setting` WRITE;
 /*!40000 ALTER TABLE `setting` DISABLE KEYS */;
-INSERT INTO `setting` VALUES (1,'FINE',1),(2,'BOOK_RETURN_PERIOD',30),(3,'DEPOSIT',300);
+INSERT INTO `setting` VALUES (1,'FINE',1),(2,'PERIOD',30),(3,'DEPOSIT',300);
 /*!40000 ALTER TABLE `setting` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,7 +349,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'librarian@mandarin.com','librarian','passwd','18681941718','2019-10-30 07:37:50'),(2,'admin@mandarin.com','admin','passwd','18681941717','2019-10-30 07:37:50'),(3,'reader1@mandarin.com','reader1','passwd','18681941716','2019-10-30 07:37:50'),(4,'reader2@mandarin.com','reader2','passwd','18681941715','2019-10-30 07:37:50');
+INSERT INTO `user` VALUES (1,'librarian@mandarin.com','librarian','passwd','18681941718','2019-10-30 12:29:56'),(2,'admin@mandarin.com','admin','passwd','18681941717','2019-10-30 12:29:56'),(3,'reader1@mandarin.com','reader1','passwd','18681941716','2019-10-30 12:29:56'),(4,'reader2@mandarin.com','reader2','passwd','18681941715','2019-10-30 12:29:56');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -387,4 +387,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-30  7:38:24
+-- Dump completed on 2019-10-30 14:04:58
