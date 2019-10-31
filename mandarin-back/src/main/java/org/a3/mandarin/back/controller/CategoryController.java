@@ -47,6 +47,20 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(RESTfulResponse.ok());
     }
 
+    @DeleteMapping("/category/{id}")
+    @ResponseBody
+    @Transactional
+    @Permission({ PermissionType.LIBRARIAN})
+    public ResponseEntity<RESTfulResponse> updateCategory(@PathVariable("id") Integer categoryId){
+        Category category=categoryRepository.findById(categoryId).orElse(null);
+
+        if (null == category)
+            throw new ApiNotFoundException("no such category");
+
+        categoryRepository.delete(category);
+        return ResponseEntity.ok(RESTfulResponse.ok());
+    }
+
     @PutMapping("/category/{id}")
     @ResponseBody
     @Transactional

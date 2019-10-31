@@ -312,9 +312,9 @@
 <script>
     function editReader(id){
         let formData = new FormData();
-        if (!checkInputBoxEmpty("#name")) return;
-        if (!checkInputBoxEmpty("#phoneNumber")) return;
-        if (!checkInputBoxEmpty("#email")) return;
+        if (!checkInputBoxEmpty("#name-"+id)) return;
+        if (!checkInputBoxEmpty("#phoneNumber-"+id)) return;
+        if (!checkInputBoxEmpty("#email-"+id)) return;
 
         formData.append("name", $("#name-"+id).val());
         formData.append("phoneNumber", $("#phoneNumber-"+id).val());
@@ -329,6 +329,7 @@
             contentType: false,
             success: function (resp) {
                 alertSuccess("information has been changed.");
+                reflash();
             },
             error: function (resp) {
                 alertError(resp.responseJSON.message);

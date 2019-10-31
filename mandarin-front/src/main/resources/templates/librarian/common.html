@@ -212,6 +212,12 @@
             }
             return true;
         }
+
+        function reflash(time = 1500) {
+            setTimeout(function () {
+                window.location.href=window.location.href;
+            }, time);
+        }
     </script>
 </th:block>
 

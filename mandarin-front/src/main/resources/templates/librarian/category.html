@@ -64,34 +64,131 @@
     </div>
     <!-- page-body-wrapper ends -->
   </div>
-  <!-- container-scroller -->
-  <!-- plugins:js -->
-  <div th:replace="librarian/common :: scripts"></div>
-      <script>
-    // $("#select1").bind("click", function(){
-        $.ajax({
-            url: "/api/category",
-            type: "GET",
-            dataType:'json',
-            async: false, 
 
-            success: function(resp){
-              
-                $.each(resp.data,
-                function(i,values){
-                    $('#list').append(
-                         // "<tr><td>"+values.bookId+"</td></tr>"
-                    "<tr><td>"+values.categoryId+"</td>"+
-                    "<td>"+values.categoryName+"</td>"
-                    +"<td>"+"<button onclick=\"window.location.href="+"'/librarian/update'"+"\">update</button>"+"</td></tr>"
-                    );
-                }
-                   
-                );
-                  console.log(resp.data);
-            }   
-    });    
-</script>
+  <script id="category-template" type="text/x-handlebars-template">
+    <tr id="category-{{categoryId}}">
+      <td>{{categoryId}}</td>
+      <td>{{categoryName}}</td>
+      <td>
+        <button id="btn1" class="btn btn-success mr-2" data-target="#edit-{{categoryId}}" data-toggle="modal">Update</button>
+        <button id="btn2" class="btn btn-success mr-2" onclick="deleteR({{categoryId}})">Delete</button>
+      </td>
+    </tr>
+  </script>
+
+  <script id="modal-template" type="text/x-handlebars-template">
+    <div class="modal fade" id="edit-{{categoryId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">
+              Edit Category
+            </h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <div>
+              <div class="form-group">
+                <label>CategoryName</label>
+                <input id="name-{{categoryId}}" type="text" value="{{categoryName}}" class="form-control"
+                       data-_extension-text-contrast="bg">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-secondary"
+                    data-_extension-text-contrast="">Close
+            </button>
+            <button type="button" data-dismiss="modal" onclick="editCategory({{categoryId}})" class="btn btn-primary"
+                    data-_extension-text-contrast="">Save changes
+            </button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal -->
+    </div>
+  </script>
+
+    <div th:replace="librarian/common :: scripts"></div>
+    <script>
+      // $("#select1").bind("click", function(){
+      let source = $('#category-template').html();
+      let template = Handlebars.compile(source);
+      let modalTemplate = Handlebars.compile($('#modal-template').html());
+
+      $.ajax({
+        url: "/api/category",
+        type: "GET",
+        dataType:'json',
+        async: false,
+        success: function(resp){
+          for (var data of resp.data) {
+            $('#list').append(template(data));
+            $('#list').append(modalTemplate(data));
+          }
+          console.log(resp.data);
+        }
+    });
+
+      function editCategory(id){
+        let formData = new FormData();
+        if (!checkInputBoxEmpty("#name-"+id)) return;
+
+        formData.append("categoryName", $("#name-"+id).val());
+
+        $.ajax({
+          url: "/api/category/"+id,
+          type: "PUT",
+          dataType: "json",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function (resp) {
+            alertSuccess("information has been changed.");
+            reflash();
+          },
+          error: function (resp) {
+            alertError(resp.responseJSON.message);
+          }
+        });
+      }
+
+      function deleteR(id) {
+        var str = window.confirm("Delete this category?");
+        if (str == true) {
+          deleteCategory(id);
+        }
+      }
+
+      function deleteCategory(id) {
+        $.ajax({
+          url: "/api/category/" + id,
+          type: "delete",
+          datatype: "json",
+          processData: false,
+          contentType: false,
+          success: function (resp) {
+            console.log(resp);
+            alertSuccess("the category has been deleted.");
+            $("#category-"+id).remove();
+            // if(resp.code == 200||resp.code == 201){
+            //     alert("success!");
+            //     console.log(resp);
+            //   }else{
+            //     alert(resp.message);
+            //   }
+
+          },
+          error: function (resp) {
+            alertError(resp.responseJSON.message);
+            // alert(typeof(errorThrown));
+          }
+
+
+        });
+      }
+    </script>
 </body>
 
 </html>
