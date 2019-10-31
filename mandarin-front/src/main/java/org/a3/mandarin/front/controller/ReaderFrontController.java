@@ -7,6 +7,7 @@ import org.a3.mandarin.common.enums.PermissionType;
 import org.a3.mandarin.common.util.RoleUtil;
 import org.a3.mandarin.common.util.StringUtil;
 import org.a3.mandarin.front.model.BookModel;
+import org.a3.mandarin.front.model.BorrowingHistoryModel;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -77,6 +78,11 @@ public class ReaderFrontController {
         List<BorrowingHistory> borrowingHistories = reader.getBorrowingHistories();
         List<ReservingHistory> reservingHistories = reader.getReservingHistories();
 
+        List<BorrowingHistoryModel> borrowingHistoryModelList = new ArrayList<>();
+        for (BorrowingHistory borrowingHistory: borrowingHistories)
+            borrowingHistoryModelList.add(new BorrowingHistoryModel(borrowingHistory));
+
+
         System.out.println(reader);
         System.out.println(borrowingHistories);
         System.out.println(reservingHistories);
@@ -84,7 +90,7 @@ public class ReaderFrontController {
         map.put("isReader", reader.getRoles().contains(RoleUtil.readerRole));
         map.put("reader", reader);
         map.put("fine", fine);
-        map.put("borrowingHistories", borrowingHistories);
+        map.put("borrowingHistories", borrowingHistoryModelList);
         map.put("reservingHistories", reservingHistories);
 
         return "reader/account";

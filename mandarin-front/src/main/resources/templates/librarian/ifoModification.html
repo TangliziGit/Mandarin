@@ -271,7 +271,7 @@
                     $('#ifo').append(template(data));
                     $('#modal-body').append(modalTemplate(data));
 
-                    if (data.borrowingHistoryModels.length != 0)
+                    if (data.borrowingHistoryModels.length !== 0)
                         $('#history-' + data.userId).append(detailTemplate(data));
                     for (var detail of data.borrowingHistoryModels)
                         $('#content-' + data.userId).append(detailContentTemplate(detail));

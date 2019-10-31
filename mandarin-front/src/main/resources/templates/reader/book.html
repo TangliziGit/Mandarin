@@ -97,9 +97,9 @@
                             <td th:text="${bookModel.getBookDescription().getLocation()}"></td>
                             <td>
                                 <button th:if="${bookModel.getDeleted() == false && bookModel.getReserved() == false && bookModel.getBorrowed() == false}" class="btn btn-primary" th:onclick="reserve([[${bookModel.getBookId()}]])">+ Reserve</button>
-                                <p th:if="${bookModel.getDeleted() == true}" class="text-danger" >lost</p>
-                                <p th:if="${bookModel.getReserved()== true}" class="text-danger" >reserved</p>
-                                <p th:if="${bookModel.getBorrowed()== true}" class="text-danger" >borrowed</p>
+                                <p th:if="${bookModel.getDeleted() == true}" class="btn btn-danger disabled" >&times; lost</p>
+                                <p th:if="${bookModel.getReserved()== true && bookModel.getDeleted() == false}" class="btn btn-danger disabled" >&times; reserved</p>
+                                <p th:if="${bookModel.getBorrowed()== true && bookModel.getDeleted() == false}" class="btn btn-danger disabled" >&times; borrowed</p>
                             </td>
                         </tr>
                     </tbody>

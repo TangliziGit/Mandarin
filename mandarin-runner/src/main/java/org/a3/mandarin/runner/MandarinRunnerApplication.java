@@ -22,7 +22,7 @@ public class MandarinRunnerApplication {
         }, args);
 
         Initializer initializer=new Initializer(applicationContext);
-        // initializer.init();
+        initializer.init();
         RoleUtil.initRoles();
     }
 }

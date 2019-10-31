@@ -63,6 +63,9 @@
     let emptyWords = Handlebars.compile($("#empty-words").html());
     let errorWords = Handlebars.compile($("#error-words").html());
 
+
+    $("#search-body").append(emptyWords(""));
+
     $("#search-btn").bind("click", function () {
         let formData = new FormData();
         if ($("#search-box").val() == ""){
