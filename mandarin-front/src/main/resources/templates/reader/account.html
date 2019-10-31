@@ -272,7 +272,8 @@
         form.append("name", $("#username").val());
         form.append("email", $("#email").val());
         form.append("phoneNumber", $("#phoneNumber").val());
-        form.append("password", $("#password").val());
+        if ($('#newPassword').val() !== "")
+            form.append("password", $("#newPassword").val());
 
         $.ajax({
             url: "/api/reader/" + userId,

@@ -9,9 +9,6 @@
         <link rel="stylesheet" th:href="@{/admin/vendor/font-awesome/css/fontawesome-all.min.css}">
         <link rel="stylesheet" th:href="@{/librarian/node_modules/mdi/css/materialdesignicons.min.css}">
         <link rel="stylesheet" th:href="@{/librarian/node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css}">
-        <link rel="stylesheet" th:href="@{/librarian/node_modules/icheck/skins/all.css}" />
-        <link rel="stylesheet" th:href="@{/librarian/node_modules/select2/dist/css/select2.min.css}" />
-        <link rel="stylesheet" th:href="@{/librarian/node_modules/select2-bootstrap-theme/dist/select2-bootstrap.min.css}" />
         <link rel="stylesheet" th:href="@{/librarian/css/style.css}" />
         <link rel="stylesheet" th:href="@{/admin/vendor/font-awesome/css/fontawesome-all.min.css}">
 
@@ -26,6 +23,20 @@
                 height: 60px;
                 margin: auto auto auto 42px;
                 vertical-align: middle;
+            }
+
+            .book-list .text-false{
+                color: #b7b7b7 !important;
+            }
+
+            .book-list .text-true{
+                font-weight: 900;
+                color: #1976d2 !important;
+            }
+
+            .book-list .btn-true{
+                background-color: #e74a25;
+                border-color: #e74a25;
             }
         </style>
     </th:block>
@@ -137,15 +148,8 @@
     <script th:src="@{/librarian/node_modules/popper.js/dist/umd/popper.min.js}"></script>
     <script th:src="@{/librarian/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
     <script th:src="@{/librarian/node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js}"></script>
-    <script th:src="@{/librarian/node_modules/icheck/icheck.min.js}"></script>
-    <script th:src="@{/librarian/bower_components/typeahead.js/dist/typeahead.bundle.min.js}"></script>
-    <script th:src="@{/librarian/node_modules/select2/dist/js/select2.min.js}"></script>
     <script th:src="@{/librarian/js/off-canvas.js}"></script>
     <script th:src="@{/librarian/js/misc.js}"></script>
-    <script th:src="@{/librarian/js/file-upload.js}"></script>
-    <script th:src="@{/librarian/js/iCheck.js}"></script>
-    <script th:src="@{/librarian/js/typeahead.js}"></script>
-    <script th:src="@{/librarian/js/select2.js}"></script>
     <script th:src="@{/librarian/js/JsBarcode.all.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/ckeditor@4.12.1/ckeditor.js"></script>

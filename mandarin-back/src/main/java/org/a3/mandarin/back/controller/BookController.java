@@ -173,7 +173,10 @@ public class BookController {
         Integer operatorUserId=(Integer) session.getAttribute("userId");
         User librarian = userRepository.findById(operatorUserId).orElse(null);
 
-        if (null != deletingHistoryRepository.findByBook_BookId(targetBookId))
+        if (null == targetBook)
+            throw new ApiNotFoundException("no such book");
+
+        if (null != targetBook.getDeletingHistory())
             throw new ApiNotFoundException("such book have been deleted");
 
         DeletingHistory deletingHistory = new DeletingHistory(targetBook, librarian, Instant.now());
