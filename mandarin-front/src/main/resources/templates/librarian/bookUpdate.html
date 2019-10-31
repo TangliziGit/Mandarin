@@ -26,61 +26,61 @@
                         Please update the book information at the form. 
                       </p>
                         <div class="form-group row">
-                            <label for="exampleInputtext2" class="col-sm-3 col-form-label">id</label>
-                            <div class="col-sm-9"><input type="text" class="form-control" id="id" placeholder="Enter the id"></div>
+                            <label for="exampleInputtext2" class="col-sm-3 col-form-label">isbn</label>
+                            <div class="col-sm-9"><input type="text" class="form-control" disabled="disabled" id="id" th:value="${bookDes.getISBN()}"></div>
 
                         </div>
                         <div class="form-group row">
                             <label for="exampleInputPassword2" class="col-sm-3 col-form-label">title</label>
                             <div class="col-sm-9">
 
-                                <input type="text" class="form-control" id="title" placeholder="Enter the title">
+                                <input type="text" class="form-control" id="title" placeholder="Enter the title" th:value="${bookDes.getTitle()}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="exampleInputtext2" class="col-sm-3 col-form-label">author</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="author" placeholder="Enter the author">
+                                <input type="text" class="form-control" id="author" placeholder="Enter the author" th:value="${bookDes.getAuthor()}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="exampleInputPassword2" class="col-sm-3 col-form-label">price</label>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control" id="price" placeholder="Enter the price">
+                                <input type="number" class="form-control" id="price" placeholder="Enter the price" th:value="${bookDes.getPrice()}">
                                 <small style="color: grey">must be a number</small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="exampleInputtext2" class="col-sm-3 col-form-label">location</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="location" placeholder="Enter the location">
+                                <input type="text" class="form-control" id="location" placeholder="Enter the location" th:value="${bookDes.getLocation()}">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="exampleInputtext2" class="col-sm-3 col-form-label">categoryName</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="categoryName" placeholder="Enter the categoryName">
+                                <input type="text" class="form-control" id="categoryName" placeholder="Enter the categoryName" th:value="${bookDes.getCategory().getCategoryName()}">
                                 <small style="color: grey">category must exist</small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="exampleInputtext2" class="col-sm-3 col-form-label">publishYear</label>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control" id="publishYear" placeholder="Enter the publishYear">
+                                <input type="number" class="form-control" id="publishYear" placeholder="Enter the publishYear" th:value="${bookDes.getPublishYear()}">
                                 <small style="color: grey">must be a number</small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="exampleInputtext2" class="col-sm-3 col-form-label">publisher</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="publisher" placeholder="Enter the publisher">
+                                <input type="text" class="form-control" id="publisher" placeholder="Enter the publisher" th:value="${bookDes.getPublisher()}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="exampleInputtext2" class="col-sm-3 col-form-label">summary</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="summary" placeholder="Enter the summary">
+                                <input type="text" class="form-control" id="summary" placeholder="Enter the summary" th:value="${bookDes.getSummary()}">
                             </div>
                         </div>
                         <button  class="btn btn-success mr-2" onclick="insert()">Submit</button>
@@ -108,9 +108,22 @@
   <div th:replace="librarian/common :: scripts"></div>
   <!-- End custom js for this page-->
   <script>
+      // function getQueryVariable(variable) {
+      //     var query = window.location.search.substring(1);
+      //     var vars = query.split("&");
+      //     for (var i = 0; i < vars.length; i++) {
+      //         var pair = vars[i].split("=");
+      //         if (pair[0] == variable) {
+      //             return pair[1];
+      //         }
+      //     }
+      //     return "";
+      // }
+
+      // $("#id").val(getQueryVariable("isbn"));
+
       function insert(){
           if (!checkInputBoxEmpty("#id")) return;
-          if (!checkInputBoxEmpty("#isbn")) return;
           if (!checkInputBoxEmpty("#title")) return;
           if (!checkInputBoxEmpty("#author")) return;
           if (!checkInputBoxEmpty("#price")) return;
@@ -130,7 +143,7 @@
           var publisher = $("#publisher").val();
           var summary = $("#summary").val();
           var data = {
-              "id":id,
+              "isbn":id,
               "title":title,
               "author":author,
               "price":price,
@@ -141,7 +154,7 @@
               "summary":summary,
           };
         $.ajax({
-          url:"/api/book/"+id,
+          url:"/api/book/description/"+id,
           type:"put",
           datatype:"json",
           data: getFormData(data),

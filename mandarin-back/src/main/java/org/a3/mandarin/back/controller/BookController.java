@@ -88,6 +88,42 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @PutMapping("/book/description/{isbn}")
+    @ResponseBody
+    @Transactional
+    @Permission({PermissionType.LIBRARIAN})
+    public ResponseEntity<RESTfulResponse> updateBook(@PathVariable("isbn") String isbn,
+                                                      @RequestParam String title,
+                                                      @RequestParam String author,
+                                                      @RequestParam Double price,
+                                                      @RequestParam String location,
+                                                      @RequestParam String categoryName,
+                                                      @RequestParam Integer publishYear,
+                                                      @RequestParam String publisher,
+                                                      @RequestParam String summary){
+        Category category=categoryRepository.findByCategoryNameEquals(categoryName);
+        BookDescription bookDescription = bookDescriptionRepository.findByISBN(isbn);
+
+        if (null == category)
+            throw new ApiNotFoundException("no such category");
+
+        if (null == bookDescription)
+            throw new ApiNotFoundException("no such book");
+
+        bookDescription.setTitle(title);
+        bookDescription.setAuthor(author);
+        bookDescription.setPrice(price);
+        bookDescription.setLocation(location);
+        bookDescription.setCategory(category);
+        bookDescription.setPublisher(publisher);
+        bookDescription.setPublishYear(publishYear);
+        bookDescription.setSummary(summary);
+
+        bookDescriptionRepository.save(bookDescription);
+        return ResponseEntity.ok(RESTfulResponse.ok());
+
+    }
+
     @PutMapping("/book/{id}")
     @ResponseBody
     @Transactional

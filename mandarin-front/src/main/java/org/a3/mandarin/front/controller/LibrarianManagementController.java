@@ -3,8 +3,10 @@ package org.a3.mandarin.front.controller;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.extern.slf4j.Slf4j;
 import org.a3.mandarin.common.annotation.Permission;
+import org.a3.mandarin.common.dao.repository.BookDescriptionRepository;
 import org.a3.mandarin.common.dao.repository.NewsQueryRepository;
 import org.a3.mandarin.common.dao.repository.NewsRepository;
+import org.a3.mandarin.common.entity.BookDescription;
 import org.a3.mandarin.common.entity.News;
 import org.a3.mandarin.common.entity.QNews;
 import org.a3.mandarin.common.enums.PermissionType;
@@ -32,6 +34,9 @@ public class LibrarianManagementController {
 
     @Resource
     private NewsRepository newsRepository;
+
+    @Resource
+    private BookDescriptionRepository bookDescriptionRepository;
 
     @GetMapping({"", "/", "/login"})
     public String login(){
@@ -66,6 +71,19 @@ public class LibrarianManagementController {
         map.put("newsList", newsList);
 
         return "librarian/postManage";
+    }
+
+    @GetMapping({"/bookUpdate", "/bookUpdate.html"})
+    public String bookUpdate(@RequestParam("isbn") String isbn,
+                             Map<String, Object> map){
+        BookDescription bookDescription = bookDescriptionRepository.findByISBN(isbn);
+
+        if (null == bookDescription)
+            return "librarian/404";
+
+        map.put("bookDes", bookDescription);
+
+        return "librarian/bookUpdate";
     }
 
     @GetMapping("{path}")
