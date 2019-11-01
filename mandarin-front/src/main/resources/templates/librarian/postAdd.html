@@ -36,7 +36,7 @@
                                 <div class="line"></div>
                                 <div class="form-group row">
                                     <label for="exampleTextarea1" class="col-sm-3 form-control-label">Content</label>
-                                    <textarea class="form-control" id="content" rows="20"
+                                    <textarea class="form-control" id="content" style="width: 100%"
                                               placeholder="Please enter the content"></textarea>
                                     <!-- <label class="col-sm-3 form-control-label">Content</label>
                                     <div class="col-sm-9">
@@ -74,10 +74,19 @@
 
 <div th:replace="librarian/common :: scripts"></div>
 <script>
+    CKEDITOR.config.removePlugins = 'elementspath';
+    CKEDITOR.replace("content");
+
     function submitNewPost() {
         var formData = new FormData();
+        if (!checkInputBoxEmpty("#title")) return;
+        if (CKEDITOR.instances.content.getData() === ""){
+            alertWarning("news content should not be empty.");
+            return;
+        }
+
         formData.append("title", $("#title").val());
-        formData.append("content", $("#content").val());
+        formData.append("content", CKEDITOR.instances.content.getData());
 
         $.ajax({
             url: "/api/news/",
@@ -94,7 +103,6 @@
             }
         });
     }
-
 
     function cancelEdit() {
         $("#title").val("");

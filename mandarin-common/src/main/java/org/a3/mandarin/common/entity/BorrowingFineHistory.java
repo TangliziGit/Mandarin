@@ -13,13 +13,13 @@ public class BorrowingFineHistory {
     private Integer fineId;
 
     @Column(nullable = false)
-    private Boolean paid;
+    private Boolean paid = false;
 
     @Column(nullable = false)
     private Instant findStartTime;
 
     @Column
-    private Instant findEndTime;
+    private Instant findEndTime = null;
 
     @OneToOne
     @JoinColumn(name = "borrowing_history_id", referencedColumnName = "id")

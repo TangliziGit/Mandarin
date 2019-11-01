@@ -22,6 +22,7 @@ class Initializer {
     private final BorrowingHistoryRepository borrowingHistoryRepository;
     private final SettingRepository settingRepository;
     private final IncomeRepository incomeRepository;
+    private final NewsRepository newsRepository;
 
     Initializer(ApplicationContext applicationContext){
         this.roleRepository=applicationContext.getBean(RoleRepository.class);
@@ -34,6 +35,7 @@ class Initializer {
         this.borrowingHistoryRepository=applicationContext.getBean(BorrowingHistoryRepository.class);
         this.settingRepository=applicationContext.getBean(SettingRepository.class);
         this.incomeRepository=applicationContext.getBean(IncomeRepository.class);
+        this.newsRepository=applicationContext.getBean(NewsRepository.class);
     }
 
     void init(){
@@ -41,6 +43,7 @@ class Initializer {
         generateMockUsers();
         generateMockBooks();
         generateMockUserBookRelation();
+        generateMockNews();
     }
 
     private void generateInitialData(){
@@ -50,7 +53,7 @@ class Initializer {
         RoleUtil.initRoles();
 
         settingRepository.save(new Setting(SettingUtil.FINE, 1.0));
-        settingRepository.save(new Setting(SettingUtil.BOOK_RETURN_PERIOD, 30.0));
+        settingRepository.save(new Setting(SettingUtil.PERIOD, 30.0));
         settingRepository.save(new Setting(SettingUtil.DEPOSIT, 300.0));
     }
 
@@ -86,13 +89,13 @@ class Initializer {
         Book book31=new Book();
         Book book32=new Book();
 
-        BookDescription bookDescription1=new BookDescription("9780393351378", "The Science of Interstellar", "Kip Thorne", 24.95, "http://106.13.1.40:8081/img/s27824536.jpg",
+        BookDescription bookDescription1=new BookDescription("9780393351378", "The Science of Interstellar", "Kip Thorne", 24.95, "http://39.106.185.26:8081/img/s27824536.jpg",
                 "Floor 2 - Shelf 1", 2014, "W. W. Norton & Company", "A journey through the otherworldly science behind Christopher Nolan’s highly anticipated film, Interstellar, from executive producer and theoretical physicist Kip Thorne.", category1);
-        BookDescription bookDescription2=new BookDescription("9780132856201", "Computer Networking", "James F. Kurose / Keith W. Ross", 171.60, "http://106.13.1.40:8081/img/s24966915.jpg",
+        BookDescription bookDescription2=new BookDescription("9780132856201", "Computer Networking", "James F. Kurose / Keith W. Ross", 171.60, "http://39.106.185.26:8081/img/s24966915.jpg",
                 "Floor 1 - Shelf 2", 2012, "Pearson", "Computer Networking continues with an early emphasis on application-layer paradigms and application programming interfaces (the top layer), encouraging a hands-on experience with protocols and networking concepts, before working down the protocol stack to more abstract layers.", category2);
-        BookDescription bookDescription3=new BookDescription("9780134177298", "Core Java, Volume II (10th Edition) : Advanced Features", "Cay S. Horstmann", 59.99, "http://106.13.1.40:8081/img/s28069282.jpg",
+        BookDescription bookDescription3=new BookDescription("9780134177298", "Core Java, Volume II (10th Edition) : Advanced Features", "Cay S. Horstmann", 59.99, "http://39.106.185.26:8081/img/s28069282.jpg",
                 "Floor 2 - Shelf 3", 2016, "Prentice Hall", "Core Java® has long been recognized as the leading, no-nonsense tutorial and reference for experienced programmers who want to write robust Java code for real-world applications. Now, Core Java®, Volume II—Advanced Topics, Tenth Edition, has been extensively updated to reflect the most eagerly awaited and innovative version of Java in years: Java SE 8. Rewritten and reorganized...Core Java® has long been recognized as the leading, no-nonsense tutorial and reference for experienced programmers who want to write robust Java code for real-world applications. Now, Core Java®, Volume II—Advanced Topics, Tenth Edition, has been extensively updated to reflect the most eagerly awaited and innovative version of Java in years: Java SE 8. Rewritten and reorganized to illuminate powerful new Java features, idioms, and best practices for enterprise and desktop development, it contains hundreds of up-to-date example programs—all carefully crafted for easy understanding and practical applicability.Writing for serious programmers solving real-world problems, Cay Horstmann deepens your understanding of today’s Java language and library. In this second of two updated volumes, he offers in-depth coverage of expert-level topics including the new Streams API and date/time/calendar library, advanced Swing, security, code processing, and more. This guide will help youUse the new Streams library to process collections more flexibly and efficientlyEfficiently access files and directories, read/write binary or text data, and serialize objectsWork with Java SE 8’s regular expression packageMake the most of XML in Java: parsing, validation, XPath, document generation, XSL, and moreEfficiently connect Java programs to network servicesProgram databases with JDBC 4.2Elegantly overcome date/time programming complexities with the new java.time APIWrite internationalized programs with localized dates/times, numbers, text, and GUIsProcess code with the scripting API, compiler API, and annotation processorsEnforce security via class loaders, bytecode verification, security managers, permissions, user authentication, digital signatures, code signing, and encryptionMaster advanced Swing components for lists, tables, trees, text, and progress indicatorsProduce high-quality drawings with the Java 2D APIUse JNI native methods to leverage code in other languagesIf you’re an experienced programmer moving to Java SE 8, Core Java®, Tenth Edition, will be your reliable, practical companion—now and for many years to come.Look for the companion volume, Core Java®, Volume I—Fundamentals, Tenth Edition (ISBN-13: 978-0-13-417730-4), for foundational coverage of Java 8 language concepts, UI programming, objects, generics, collections, lambda expressions, concurrency, functional programming, and more.Cay S. Horstmann is author of Core Java ® for the Impatient (2015), Java SE 8 for the Really Impatient (2014), and Scala for the Impatient (2012), all from Addison-Wesley. He has written more than a dozen other books for professional programmers and computer science students. He is a professor of computer science at San Jose State University and is a Java Champion.", category2);
-        BookDescription bookDescription4=new BookDescription("9780262035613", "Deep Learning : Adaptive Computation and Machine Learning series", "Ian Goodfellow / Yoshua Bengio / Aaron Courville", 72.00, "http://106.13.1.40:8081/img/s29133163.jpg",
+        BookDescription bookDescription4=new BookDescription("9780262035613", "Deep Learning : Adaptive Computation and Machine Learning series", "Ian Goodfellow / Yoshua Bengio / Aaron Courville", 72.00, "http://39.106.185.26:8081/img/s29133163.jpg",
                 "Floor 2 - Shelf 4", 2016, "The MIT Press", "Written by three experts in the field, Deep Learning is the only comprehensive book on the subject.\\\" -- Elon Musk, co-chair of OpenAI; co-founder and CEO of Tesla and SpaceXDeep learning is a form of machine learning that enables computers to learn from experience and understand the world in terms of a hierarchy of concepts. Because the computer gathers knowledge from experie...\\\"Written by three experts in the field, Deep Learning is the only comprehensive book on the subject.\\\" -- Elon Musk, co-chair of OpenAI; co-founder and CEO of Tesla and SpaceXDeep learning is a form of machine learning that enables computers to learn from experience and understand the world in terms of a hierarchy of concepts. Because the computer gathers knowledge from experience, there is no need for a human computer operator to formally specify all the knowledge that the computer needs. The hierarchy of concepts allows the computer to learn complicated concepts by building them out of simpler ones; a graph of these hierarchies would be many layers deep. This book introduces a broad range of topics in deep learning.The text offers mathematical and conceptual background, covering relevant concepts in linear algebra, probability theory and information theory, numerical computation, and machine learning. It describes deep learning techniques used by practitioners in industry, including deep feedforward networks, regularization, optimization algorithms, convolutional networks, sequence modeling, and practical methodology; and it surveys such applications as natural language processing, speech recognition, computer vision, online recommendation systems, bioinformatics, and videogames. Finally, the book offers research perspectives, covering such theoretical topics as linear factor models, autoencoders, representation learning, structured probabilistic models, Monte Carlo methods, the partition function, approximate inference, and deep generative models.Deep Learning can be used by undergraduate or graduate students planning careers in either industry or research, and by software engineers who want to begin using deep learning in their products or platforms. A website offers supplementary material for both readers and instructors.Ian Goodfellow is Research Scientist at OpenAI. Yoshua Bengio is Professor of Computer Science at the Université de Montréal. Aaron Courville is Assistant Professor of Computer Science at the Université de Montréal.", category2);
 
         bookDescription1.getBooks().add(book11);
@@ -150,5 +153,24 @@ class Initializer {
         deletingHistoryRepository.save(deletingHistory);
         borrowingHistoryRepository.save(borrowingHistory1);
         borrowingHistoryRepository.save(borrowingHistory2);
+    }
+
+    private void generateMockNews(){
+        User librarian = userRepository.findByName("librarian");
+        News news1 = new News();
+        News news2 = new News();
+
+        news1.setTitle("The party branch of the library reader service department held party classes on the theme of \"never forget the original intention and bear the mission in mind\"");
+        news1.setContent("For the further implementation of the national education conference spirit, explore the deepening the reform of digital instructional innovation model, promote new media and the integration of traditional culture, with the development of teaching resources sharing needs, on the morning of November 1, and higher education press office jointly sponsored digital textbook construction and publishing communication meeting. ");
+        news1.setDate(Instant.now());
+        news1.setUser(librarian);
+
+        news2.setTitle("\"China National Knowledge Infrastructure\" function and use method information session");
+        news2.setContent("Scientific research and paper writing are inseparable from scientific and technological information retrieval and database resources. In order to facilitate teachers and students to effectively use various database resources to carry out their work and study, the graduate school specially invites \"cnknet\" technical personnel to introduce functions and services of various data resources and answer questions from teachers and students on site. This paper will focus on the application of the academic misconduct detection system of cnki and how to interpret the detection report. Welcome to join teachers and students.");
+        news2.setDate(Instant.now());
+        news2.setUser(librarian);
+
+        newsRepository.save(news1);
+        newsRepository.save(news2);
     }
 }

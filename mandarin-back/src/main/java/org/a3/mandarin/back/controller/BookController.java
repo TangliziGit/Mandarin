@@ -88,6 +88,42 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @PutMapping("/book/description/{isbn}")
+    @ResponseBody
+    @Transactional
+    @Permission({PermissionType.LIBRARIAN})
+    public ResponseEntity<RESTfulResponse> updateBook(@PathVariable("isbn") String isbn,
+                                                      @RequestParam String title,
+                                                      @RequestParam String author,
+                                                      @RequestParam Double price,
+                                                      @RequestParam String location,
+                                                      @RequestParam String categoryName,
+                                                      @RequestParam Integer publishYear,
+                                                      @RequestParam String publisher,
+                                                      @RequestParam String summary){
+        Category category=categoryRepository.findByCategoryNameEquals(categoryName);
+        BookDescription bookDescription = bookDescriptionRepository.findByISBN(isbn);
+
+        if (null == category)
+            throw new ApiNotFoundException("no such category");
+
+        if (null == bookDescription)
+            throw new ApiNotFoundException("no such book");
+
+        bookDescription.setTitle(title);
+        bookDescription.setAuthor(author);
+        bookDescription.setPrice(price);
+        bookDescription.setLocation(location);
+        bookDescription.setCategory(category);
+        bookDescription.setPublisher(publisher);
+        bookDescription.setPublishYear(publishYear);
+        bookDescription.setSummary(summary);
+
+        bookDescriptionRepository.save(bookDescription);
+        return ResponseEntity.ok(RESTfulResponse.ok());
+
+    }
+
     @PutMapping("/book/{id}")
     @ResponseBody
     @Transactional
@@ -137,7 +173,10 @@ public class BookController {
         Integer operatorUserId=(Integer) session.getAttribute("userId");
         User librarian = userRepository.findById(operatorUserId).orElse(null);
 
-        if (null != deletingHistoryRepository.findByBook_BookId(targetBookId))
+        if (null == targetBook)
+            throw new ApiNotFoundException("no such book");
+
+        if (null != targetBook.getDeletingHistory())
             throw new ApiNotFoundException("such book have been deleted");
 
         DeletingHistory deletingHistory = new DeletingHistory(targetBook, librarian, Instant.now());

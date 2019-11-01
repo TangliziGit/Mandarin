@@ -4,14 +4,24 @@ import org.a3.mandarin.common.annotation.Permission;
 import org.a3.mandarin.common.dao.repository.*;
 import org.a3.mandarin.common.entity.*;
 import org.a3.mandarin.common.enums.PermissionType;
+import org.a3.mandarin.common.util.RoleUtil;
+import org.a3.mandarin.common.util.StringUtil;
 import org.a3.mandarin.front.model.BookModel;
+import org.a3.mandarin.front.model.BorrowingHistoryModel;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -30,7 +40,15 @@ public class ReaderFrontController {
     private NewsRepository newsRepository;
 
     @GetMapping({"", "/", "/index", "/home"})
-    public String index(){
+    public String index(Map<String, Object> map){
+        List<News> newsList = newsRepository.findAll(
+                PageRequest.of(0, 2, Sort.by("date").descending())).getContent();
+
+        for (News news: newsList)
+            news.setContent(StringUtil.escapeHtmlTag(news.getContent()));
+
+        map.put("newsList", newsList);
+
         return "reader/index";
     }
 
@@ -48,22 +66,31 @@ public class ReaderFrontController {
     }
 
     @GetMapping("/account")
-    @Permission(PermissionType.READER)
     public String account(Map<String, Object> map, HttpSession session){
         Integer userId = (Integer) session.getAttribute("userId");
+
+        if (null == userId)
+            return "reader/403";
+
         User reader = userRepository.findById(userId).orElse(null);
         Integer fine = borrowingFineHistoryRepository.findTotalFineAmountByUserId(userId);
 
         List<BorrowingHistory> borrowingHistories = reader.getBorrowingHistories();
         List<ReservingHistory> reservingHistories = reader.getReservingHistories();
 
+        List<BorrowingHistoryModel> borrowingHistoryModelList = new ArrayList<>();
+        for (BorrowingHistory borrowingHistory: borrowingHistories)
+            borrowingHistoryModelList.add(new BorrowingHistoryModel(borrowingHistory));
+
+
         System.out.println(reader);
         System.out.println(borrowingHistories);
         System.out.println(reservingHistories);
 
+        map.put("isReader", reader.getRoles().contains(RoleUtil.readerRole));
         map.put("reader", reader);
         map.put("fine", fine);
-        map.put("borrowingHistories", borrowingHistories);
+        map.put("borrowingHistories", borrowingHistoryModelList);
         map.put("reservingHistories", reservingHistories);
 
         return "reader/account";
@@ -105,9 +132,22 @@ public class ReaderFrontController {
     public String news(@RequestParam(value = "id", defaultValue = "1") Integer id,
                        Map<String, Object> map){
         News news = newsRepository.findById(id).orElse(null);
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
+                        .withLocale(Locale.UK)
+                        .withZone(ZoneId.systemDefault());
 
         map.put("news", news);
+        map.put("date", formatter.format(news.getDate()));
 
         return "reader/news";
+    }
+
+    @GetMapping("/newslist")
+    public String newsList(Map<String, Object> map){
+        List<News> newsList = newsRepository.findAll();
+
+        map.put("newsList", newsList);
+
+        return "reader/newslist";
     }
 }

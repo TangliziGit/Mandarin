@@ -16,14 +16,20 @@
                     <h1>There is no such news.</h1>
                 </div>
                 <div th:if="${news != null}">
-                <h2 class="h2Center" th:text="${news.getTitle()}" id="title">title</h2>
+                    <h2 class="h2Center" th:text="${news.getTitle()}" id="title" style="font-size: 1.5rem;font-weight: 900;line-height: 2;">title</h2>
 
-                <div class="container">
-                    <p id="content" th:text="${news.getContent()}">content</p>
-                </div>
-                    <p class="spanNews" style="float: right" id="author" th:text="${news.getUser().getName()}">author</p>
-                    <h5 style="float: right; margin-right: 10px;">Poster: </h5>
-                <!-- p class="spanNews" id="date" th:text="${news.getDate()}">date</p -->
+                    <hr />
+
+                    <div class="container">
+                        <p id="content" th:utext="${news.getContent()}">content</p>
+                    </div>
+
+                    <div style="float: right; ">
+                        <p class="spanNews" style="float: right" id="author" th:text="${news.getUser().getName()}">author</p>
+                        <h5 style="float: right; margin-right: 10px;">Poster: </h5>
+                        <br>
+                        <p class="spanNews" id="date" style="float: right" th:text="${date}">date</p>
+                    </div>
                 </div>
             </div>
         </div>

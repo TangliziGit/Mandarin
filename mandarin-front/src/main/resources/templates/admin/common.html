@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Mandarin - Administrator</title>
-        <link rel="stylesheet" href="./vendor/simple-line-icons/css/simple-line-icons.css">
-        <link rel="stylesheet" href="./vendor/font-awesome/css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="./css/styles.css">
+        <link rel="stylesheet" th:href="@{/admin/vendor/simple-line-icons/css/simple-line-icons.css}">
+        <link rel="stylesheet" th:href="@{/admin/vendor/font-awesome/css/fontawesome-all.min.css}">
+        <link rel="stylesheet" th:href="@{/admin/css/styles.css}">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="robots" content="all,follow">
@@ -24,7 +24,10 @@
             </a>
 
             <a class="navbar-brand" href="#">
-                <div class="brand-text d-none d-lg-inline-block"><span>Mandarin </span><strong>Administrator</strong></div>
+                <div class="brand-text d-none d-lg-inline-block">
+                    <!-- span>Mandarin </span><strong>Administrator</strong -->
+                    <img th:src="@{/librarian/images/Logo2.png}" style="width: 150px; margin-left: 25px;margin-bottom: 10px;"/>
+                </div>
             </a>
 
             <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">
@@ -41,7 +44,7 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="/admin/" role="button" aria-haspopup="true" aria-expanded="false">
                         <img src="./imgs/avatar-1.png" class="avatar avatar-sm" alt="logo">
                         <span class="small ml-1 d-md-down-none">John Smith</span>
                     </a>
@@ -99,22 +102,23 @@
 </th:block>
 
 <th:block th:fragment="scripts">
-    <script src="./vendor/jquery/jquery.min.js"></script>
-    <script src="./vendor/popper.js/popper.min.js"></script>
-    <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="./vendor/chart.js/chart.min.js"></script>
-    <script src="./js/carbon.js"></script>
-    <script src="./js/demo.js"></script>
     <script src="https://cdn.bootcss.com/handlebars.js/4.2.0/handlebars.min.js"></script>
     <script src="http://identicon.net/js/vendor/identicon.js"></script>
     <script src="http://identicon.net/js/vendor/pnglib.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
     <script src="http://identicon.net/js/vendor/sha.js"></script>
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/vendor/jquery.cookie/jquery.cookie.js"> </script>
-    <script src="/vendor/chart.js/chart.min.js"></script>
-    <script src="/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script th:src="@{/admin/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/admin/vendor/popper.js/popper.min.js}"></script>
+    <script th:src="@{/admin/vendor/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/admin/vendor/chart.js/chart.min.js}"></script>
+    <script th:src="@{/admin/js/carbon.js}"></script>
+    <script th:src="@{/admin/js/demo.js}"></script>
+    <script th:src="@{/admin/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/admin/vendor/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/admin/vendor/jquery.cookie/jquery.cookie.js}"> </script>
+    <script th:src="@{/admin/vendor/chart.js/chart.min.js}"></script>
+    <script th:src="@{/admin/vendor/jquery-validation/jquery.validate.min.js}"></script>
+    <script th:src="@{/admin/js/front.js}"></script>
     <script>
 
         function alertSuccess(message, time=4000){
@@ -132,7 +136,7 @@
         var alertCounter = 0;
 
         $("<div />", {
-            style: "position: fixed; top: 100px; width: 30%; left: 41%",
+            style: "z-index: 10000; position: fixed; top: 100px; width: 30%; left: 41%",
             id: "alertBoxDiv"
         }).appendTo($("body"));
         function myAlert(cls, head, message, time){
@@ -155,6 +159,16 @@
                     });
                 }, time);
             })
+        }
+
+        function checkInputBoxEmpty(id) {
+            let content = $(id).val();
+
+            if (content.trim() === "") {
+                alertWarning("the field should not be empty.");
+                return false;
+            }
+            return true;
         }
     </script>
 </th:block>

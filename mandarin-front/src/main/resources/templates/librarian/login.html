@@ -8,6 +8,7 @@
       <div class="row">
         <div class="content-wrapper full-page-wrapper d-flex align-items-center auth-pages">
           <div class="card col-lg-4 mx-auto">
+            <img th:src="@{/librarian/images/Logo.png}" style="width: 300px; margin: auto">
             <div class="card-body px-5 py-5">
               <h2>Mandarin - Librarian</h2>
               <h3 class="card-title text-left mb-3">Login</h3>
@@ -58,6 +59,8 @@
   <script>
       $("#login").bind("click", function () {
         let formData = new FormData();
+        if (!checkInputBoxEmpty("#login-username")) return;
+        if (!checkInputBoxEmpty("#login-password")) return;
         formData.append("name", $("#login-username").val());
         formData.append("password", $("#login-password").val());
 
@@ -72,7 +75,7 @@
             window.location.href="/librarian/index.html";
           },
           error: function (resp) {
-            alert(resp.responseJSON.message);
+            alertError(resp.responseJSON.message);
           }
         })
       })

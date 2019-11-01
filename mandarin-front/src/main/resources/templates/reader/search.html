@@ -17,14 +17,22 @@
                         <div class="row">
                             <div class="col-2"></div>
                             <div class="col-8">
-                                <div id="navcol-1" class="collapse navbar-collapse">
-                                    <form target="_self" class="form-inline mr-auto" style="">
-                                        <div class="form-group" style="margin: 35px; width: 743px;">
-                                            <label><i class="fa fa-search" style="font-size: 36px; color: rgb(0, 123, 255);"></i></label>
-                                            <input id="search-box" type="search" th:value="${query}" class="form-control" style="width: 80%; height: 36px; margin: 9px;">
-                                            <button id="search-btn" type="button" class="btn btn-primary">Search</button>
+                                <div class="col-8">
+                                    <div id="navcol-1" class="collapse navbar-collapse">
+                                        <div target="_self" class="form-inline mr-auto" style="">
+                                            <div class="form-group" style="margin: 35px; width: 743px;">
+                                                <label><!-- i class="fa fa-search" style="font-size: 36px; color: rgb(0, 123, 255);"></i --></label>
+                                                <select id="search-type" class="btn combobox">
+                                                    <option value="title">Title</option>
+                                                    <option value="isbn">ISBN</option>
+                                                    <option value="author">Author</option>
+                                                    <option value="category">Category</option>
+                                                </select>
+                                                <input id="search-box" type="search" value="" class="form-control" style="width: 50%; height: 36px; margin: 9px;">
+                                                <button id="search-btn" type="button" class="btn btn-primary" data-_extension-text-contrast="">Search</button>
+                                            </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -63,14 +71,17 @@
     let emptyWords = Handlebars.compile($("#empty-words").html());
     let errorWords = Handlebars.compile($("#error-words").html());
 
+
+    $("#search-body").append(emptyWords(""));
+
     $("#search-btn").bind("click", function () {
         let formData = new FormData();
         if ($("#search-box").val() == ""){
-            alert("con not be empty");
+            alertWarning("search field not be empty");
             return;
         }
 
-        formData.append("title", $("#search-box").val());
+        formData.append($("#search-type").val(), $("#search-box").val());
 
         for (elem of $("#search-body").children()) elem.remove();
         $("#search-body").append(searchingWords(""));
@@ -83,6 +94,7 @@
             processData: false,
             contentType: false,
             success: function (resp){
+                console.log(resp.data);
                 for (elem of $("#search-body").children()) elem.remove();
 
                 if (resp.data.length == 0)
@@ -105,8 +117,10 @@
 <script>
     let query="[[${query}]]";
 
-    if (query != "")
+    if (query !== ""){
+        $("#search-box").val(query);
         $("#search-btn").click();
+    }
 </script>
 
 

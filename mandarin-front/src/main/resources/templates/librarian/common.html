@@ -9,10 +9,36 @@
         <link rel="stylesheet" th:href="@{/admin/vendor/font-awesome/css/fontawesome-all.min.css}">
         <link rel="stylesheet" th:href="@{/librarian/node_modules/mdi/css/materialdesignicons.min.css}">
         <link rel="stylesheet" th:href="@{/librarian/node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css}">
-        <link rel="stylesheet" th:href="@{/librarian/node_modules/icheck/skins/all.css}" />
-        <link rel="stylesheet" th:href="@{/librarian/node_modules/select2/dist/css/select2.min.css}" />
-        <link rel="stylesheet" th:href="@{/librarian/node_modules/select2-bootstrap-theme/dist/select2-bootstrap.min.css}" />
         <link rel="stylesheet" th:href="@{/librarian/css/style.css}" />
+        <link rel="stylesheet" th:href="@{/admin/vendor/font-awesome/css/fontawesome-all.min.css}">
+
+        <style>
+            #cke_content {
+                width: 100%;
+            }
+
+            .navbar .navbar-brand-wrapper .navbar-brand img {
+                width: 150px;
+                max-width: 100%;
+                height: 60px;
+                margin: auto auto auto 42px;
+                vertical-align: middle;
+            }
+
+            .book-list .text-false{
+                color: #b7b7b7 !important;
+            }
+
+            .book-list .text-true{
+                font-weight: 900;
+                color: #1976d2 !important;
+            }
+
+            .book-list .btn-true{
+                background-color: #e74a25;
+                border-color: #e74a25;
+            }
+        </style>
     </th:block>
 </head>
 <body>
@@ -20,8 +46,8 @@
 <th:block th:fragment="navbar">
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo" href="../../index.html"><img th:src="@{/librarian/images/Logo.png}" alt="Logo"/></a>
-            <a class="navbar-brand brand-logo-mini" href="../../index.html"><img th:src="@{/librarian/images/logo-mini.svg}" alt="logo"/></a>
+            <a class="navbar-brand brand-logo"><img th:src="@{/librarian/images/Logo.png}" alt="Logo"/></a>
+            <a class="navbar-brand brand-logo-mini"><img th:src="@{/librarian/images/logo-mini.svg}" alt="logo"/></a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
 
@@ -100,7 +126,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="postManage.html">
-                    <span class="menu-title">Post Manage</span>
+                    <span class="menu-title">News Manage</span>
                     <i class="mdi mdi-chart-bar menu-icon"></i>
                 </a>
             </li>
@@ -122,17 +148,11 @@
     <script th:src="@{/librarian/node_modules/popper.js/dist/umd/popper.min.js}"></script>
     <script th:src="@{/librarian/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
     <script th:src="@{/librarian/node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js}"></script>
-    <script th:src="@{/librarian/node_modules/icheck/icheck.min.js}"></script>
-    <script th:src="@{/librarian/bower_components/typeahead.js/dist/typeahead.bundle.min.js}"></script>
-    <script th:src="@{/librarian/node_modules/select2/dist/js/select2.min.js}"></script>
     <script th:src="@{/librarian/js/off-canvas.js}"></script>
     <script th:src="@{/librarian/js/misc.js}"></script>
-    <script th:src="@{/librarian/js/file-upload.js}"></script>
-    <script th:src="@{/librarian/js/iCheck.js}"></script>
-    <script th:src="@{/librarian/js/typeahead.js}"></script>
-    <script th:src="@{/librarian/js/select2.js}"></script>
     <script th:src="@{/librarian/js/JsBarcode.all.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ckeditor@4.12.1/ckeditor.js"></script>
     <script>
         function getFormData(dic) {
             formData=new FormData();
@@ -162,7 +182,7 @@
         var alertCounter = 0;
 
         $("<div />", {
-            style: "position: fixed; top: 60px; width: 30%; left: 35%",
+            style: "z-index: 10000; position: fixed; top: 60px; width: 30%; left: 35%",
             id: "alertBoxDiv"
         }).appendTo($("body"));
         function myAlert(cls, head, message, time){
@@ -185,6 +205,22 @@
                     });
                 }, time);
             })
+        }
+
+        function checkInputBoxEmpty(id) {
+            let content = $(id).val();
+
+            if (content.trim() === "") {
+                alertWarning("the field should not be empty.");
+                return false;
+            }
+            return true;
+        }
+
+        function reflash(time = 1500) {
+            setTimeout(function () {
+                window.location.href=window.location.href;
+            }, time);
         }
     </script>
 </th:block>

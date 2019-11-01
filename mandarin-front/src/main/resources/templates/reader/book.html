@@ -15,7 +15,7 @@
                 <div class="container">
                     <div class="row">
                         <!-- TODO: remove token -->
-                        <div class="col-lg-3"><img class="rounded img-fluid" th:src="${book.getCoverUrl()} + '?token=GroupA3'"></div>
+                        <div class="col-lg-3"><img style="width: 100%" class="rounded img-fluid" th:src="${book.getCoverUrl()} + '?token=GroupA3'"></div>
                         <div class="col-lg-9">
                             <h3><strong th:text="${book.getTitle()}"></strong></h3>
                             <br>
@@ -97,9 +97,9 @@
                             <td th:text="${bookModel.getBookDescription().getLocation()}"></td>
                             <td>
                                 <button th:if="${bookModel.getDeleted() == false && bookModel.getReserved() == false && bookModel.getBorrowed() == false}" class="btn btn-primary" th:onclick="reserve([[${bookModel.getBookId()}]])">+ Reserve</button>
-                                <p th:if="${bookModel.getDeleted() == true}" class="text-danger" >lost</p>
-                                <p th:if="${bookModel.getReserved()== true}" class="text-danger" >reserved</p>
-                                <p th:if="${bookModel.getBorrowed()== true}" class="text-danger" >borrowed</p>
+                                <p th:if="${bookModel.getDeleted() == true}" class="btn btn-danger disabled" >&times; deleted</p>
+                                <p th:if="${bookModel.getReserved()== true && bookModel.getDeleted() == false}" class="btn btn-danger disabled" >&times; reserved</p>
+                                <p th:if="${bookModel.getBorrowed()== true && bookModel.getDeleted() == false}" class="btn btn-danger disabled" >&times; borrowed</p>
                             </td>
                         </tr>
                     </tbody>
@@ -117,12 +117,12 @@
             url: "/api/book/reserve/"+id,
             type: "POST",
             success: function (resp){
-                alert("success");
+                alertSuccess("reserved this book succeed.");
                 window.location.href=window.location.href;
             },
             error: function (resp) {
                 console.log(resp);
-                alert(resp.responseJSON.message);
+                alertError(resp.responseJSON.message);
             }
         });
     }

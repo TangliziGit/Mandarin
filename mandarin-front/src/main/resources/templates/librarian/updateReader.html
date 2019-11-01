@@ -71,6 +71,12 @@
   <div th:replace="librarian/common :: scripts"></div>
   <script>
       function insert(){
+          if (!checkInputBoxEmpty("#id")) return;
+          if (!checkInputBoxEmpty("#name")) return;
+          if (!checkInputBoxEmpty("#phoneNumber")) return;
+          if (!checkInputBoxEmpty("#email")) return;
+          if (!checkInputBoxEmpty("#password")) return;
+
         var id = $("#Id").val();
         var name = $("#name").val();
          var phoneNumber = $("#phoneNumber").val();
@@ -94,10 +100,10 @@
           contentType: false,
           success:function(data){
                 console.log(data);
-                alert("success");
+                alertSuccess("the reader information has been modified.");
             },
            error:function (resp) {
-               alert(resp.responseJSON.message);
+               alertError(resp.responseJSON.message);
             }
         });
       }

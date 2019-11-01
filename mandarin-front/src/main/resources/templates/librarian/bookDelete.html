@@ -58,6 +58,7 @@
   <div th:replace="librarian/common :: scripts"></div>
   <script>
       function insert(){
+        if (!checkInputBoxEmpty("#register-email")) return;
         var id = $("#register-email").val();
         
         $.ajax({
@@ -66,10 +67,10 @@
           datatype:"json",
           success:function(resp){
                 console.log(resp);
-                alert("success");
+                alertSuccess("the book has been deleted");
             },
            error:function (resp) {      
-               alert(resp.responseJSON.message);
+               alertError(resp.responseJSON.message);
             }
         });
       }

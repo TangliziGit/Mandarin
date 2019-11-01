@@ -1,5 +1,6 @@
 package org.a3.mandarin.back.util;
 
+import org.a3.mandarin.common.entity.BorrowingFineHistory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +32,19 @@ public class MailUtil {
     @Resource
     private BorrowingHistoryRepository borrowingHistoryRepository;
 
-    // @Scheduled(cron = "0 0 8 * * ?")
-    @Scheduled(cron = "0 */1 * * * ?")
+    @Resource
+    private BorrowingFineHistoryRepository borrowingFineHistoryRepository;
+
+    @Scheduled(cron = "0 0 8 * * ?")
+    // @Scheduled(cron = "0 */1 * * * ?")
     public void sendAlert() {
         List<BorrowingHistory> borrowingHistory= borrowingHistoryRepository.findNoReturnHistory();
         Instant now = Instant.now();
         for (BorrowingHistory history : borrowingHistory) {
             Instant start = history.getBorrowingStartTime();
-            Instant limitation = start.plus(Duration.ofMinutes(1));
-            if (now.isAfter(limitation)){
+            Instant limitation = start.plus(Duration.ofDays(30));
+
+            if (now.isAfter(limitation) && null == history.getBorrowingFineHistory()){
                 User user = history.getReader();
 
                 // TODO: comment this code in the future
@@ -48,6 +53,12 @@ public class MailUtil {
                     continue;
                 }
                 logger.info("alert mail will send to " + user.getName());
+
+                BorrowingFineHistory fineHistory = new BorrowingFineHistory(now);
+
+                history.setBorrowingFineHistory(fineHistory);
+                borrowingFineHistoryRepository.save(fineHistory);
+                borrowingHistoryRepository.save(history);
 
                 sendMail(user.getEmail(),
                         "Mandarin Library: Your book is about to expire",

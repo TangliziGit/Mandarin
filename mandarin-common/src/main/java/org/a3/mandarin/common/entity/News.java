@@ -11,7 +11,7 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer newsId;
 
-    @Column(columnDefinition = "VARCHAR(100)", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String title;
 
     @Column(columnDefinition = "LONGTEXT", nullable = false)

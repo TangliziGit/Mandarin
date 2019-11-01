@@ -284,7 +284,7 @@
             $("#search-btn").bind("click", function () {
                 let formData = new FormData();
                 if ($("#inlineFormInput").val() == "") {
-                    alert("con not be empty");
+                    alertWarning("search field not be empty");
                     return;
                 }
 
@@ -345,7 +345,7 @@
                         }
                     },
                     error: function (resp) {
-                        alert(resp.message);
+                        alertError(resp.message);
                     }
                 });
             }
@@ -364,10 +364,10 @@
                     processData: false,
                     contentType: false,
                     success: function (resp) {
-                        alert("success");
+                        alertSuccess("success");
                     },
                     error: function (resp) {
-                        alert(resp.responseJSON.message);
+                        alertError(resp.responseJSON.message);
                     }
                 });
             }
@@ -390,6 +390,11 @@
         <script>
             $("#submit").bind("click", function () {
                 let formData = new FormData();
+                if (!checkInputBoxEmpty("#name")) return;
+                if (!checkInputBoxEmpty("#phoneNumber")) return;
+                if (!checkInputBoxEmpty("#email")) return;
+                if (!checkInputBoxEmpty("#password")) return;
+
                 formData.append("name", $("#name").val());
                 formData.append("phoneNumber", $("#phoneNumber").val());
                 formData.append("email", $("#email").val());
@@ -403,7 +408,7 @@
                     processData: false,
                     contentType: false,
                     success: function (resp) {
-                        alert("success");
+                        alertSuccess("the librarian been created.");
                         $("#name").val("");
                         $("#phoneNumber").val("");
                         $("#email").val("");

@@ -7,25 +7,36 @@
         <link rel="stylesheet" th:href="@{/reader/bootstrap/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{/reader/css/styles.min.css}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
     </th:block>
 </head>
 <body>
 
 <th:block th:fragment="navbar">
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-        <div class="container"><a class="navbar-brand logo">Mandarin-Library</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container">
+            <img th:src="@{/librarian/images/Logo2.png}" width="200px" />
+            <!-- a class="navbar-brand logo">Mandarin-Library</a -->
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
+                    class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse"
                  id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/reader/index}">Homepage</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/reader/search}">SEARCH</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/reader/index}">HOME</a>
+                    </li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/reader/newslist}">NEWS</a>
+                    </li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/reader/search}">SEARCH</a>
+                    </li>
                     <li th:switch="${session.userName}" class="nav-item" role="presentation">
                         <a th:case="null" class="nav-link" th:href="@{/reader/login}">LOG IN</a>
                         <a th:case="*" class="nav-link" th:href="@{/reader/account}">MY ACCOUNT</a>
                     </li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/librarian/login}">LIBRARIAN ENTRY</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" th:href="@{/librarian/login}">LIBRARIAN
+                        ENTRY</a></li>
                 </ul>
             </div>
         </div>
@@ -87,7 +98,7 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
     <script src="http://identicon.net/js/vendor/sha.js"></script>
     <script>
-        function get_identicon (text, size) {
+        function get_identicon(text, size) {
             let outputType = "HEX";
             let hashtype = "SHA-1";
 
@@ -97,44 +108,55 @@
             return 'data:image/png;base64,' + data;
         }
 
-        function alertSuccess(message, time=4000){
+        function alertSuccess(message, time = 4000) {
             myAlert("success", "Success!", message, time);
         }
 
-        function alertError(message, time=4000) {
+        function alertError(message, time = 4000) {
             myAlert("danger", "Error!", message, time);
         }
 
-        function alertWarning(message, time=4000) {
+        function alertWarning(message, time = 4000) {
             myAlert("warning", "Warning!", message, time);
         }
 
         var alertCounter = 0;
 
         $("<div />", {
-            style: "position: fixed; top: 100px; width: 30%; left: 35%",
+            style: "z-index: 10000; position: fixed; top: 100px; width: 30%; left: 35%",
             id: "alertBoxDiv"
         }).appendTo($("body"));
-        function myAlert(cls, head, message, time){
-            var html=
-                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\" style=\"margin-left: 10px;\">&times;</a>\n" +
-                "<strong>"+head+"</strong> " + message + " \n";
 
-            var id = "alertDiv"+ alertCounter++;
+        function myAlert(cls, head, message, time) {
+            var html =
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\" style=\"margin-left: 10px;\">&times;</a>\n" +
+                "<strong>" + head + "</strong> " + message + " \n";
+
+            var id = "alertDiv" + alertCounter++;
             $("<div />", {
-                "class": "alert alert-"+cls,
+                "class": "alert alert-" + cls,
                 id: id
             }).appendTo($("#alertBoxDiv"));
 
-            $("#"+id).append(html);
+            $("#" + id).append(html);
 
-            $("#"+id).fadeIn(100, function(){
-                setTimeout(function(){
-                    $("#"+id).fadeOut(100, function () {
-                        $("#"+id).remove();
+            $("#" + id).fadeIn(100, function () {
+                setTimeout(function () {
+                    $("#" + id).fadeOut(100, function () {
+                        $("#" + id).remove();
                     });
                 }, time);
             })
+        }
+
+        function checkInputBoxEmpty(id) {
+            let content = $(id).val();
+
+            if (content.trim() === "") {
+                alertWarning("the field should not be empty.");
+                return false;
+            }
+            return true;
         }
     </script>
 </th:block>
@@ -143,13 +165,13 @@
 <th:block th:fragment="search-templates">
     <script id="search-result-template" type="text/x-handlebars-template">
         <tr>
-            <td class="col-lg-3"><img class="rounded img-fluid" src="{{coverUrl}}?token=GroupA3">
+            <td class="col-lg-3"><img class="rounded img-fluid" style="width: 100%" src="{{coverUrl}}?token=GroupA3">
             </td>
 
             <td class="col-lg-9">
 
                 <a href="/reader/book/{{isbn}}"><h4 style="font-size:27px;">{{title}}</h4></a>
-                <span class="text-muted" style="font-size:18px;"></span>
+                <span class="text-info" style="font-size:18px;">[ {{canReserveNumber}} / {{copyNumber}} ] books can be reserved</span>
                 <br>
                 <h5 class="text-muted">{{author}}</h5>
                 <h5 class="text-muted">{{publisher}} {{publishYear}}</h5>
@@ -157,7 +179,8 @@
 
                 <span>{{location}}</span><br>
 
-                <span>ISBN: {{isbn}}</span>
+                <span>ISBN: {{isbn}}</span><br>
+                <span>Category: {{category.categoryName}}</span><br>
             </td>
         </tr>
     </script>
@@ -190,10 +213,10 @@
             <td>
                 <div class="review-item" style="width: 100%;margin-bottom: 0px;">
                     <div class="row">
-                        <div class="col-3"><img class="rounded img-fluid"
+                        <div class="col-1"><img class="rounded img-fluid" style="width: 100%"
                                                 src="http://106.13.1.40:8081/img/s24966915.jpg?token=GroupA3">
                         </div>
-                        <dic class="col-9">
+                        <dic class="col-10">
                             <h4 style="font-size:27px;">Computer Networking</h4>
                             <span
                                     class="text-muted"

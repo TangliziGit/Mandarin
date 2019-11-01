@@ -14,10 +14,11 @@
             <div class="block-content">
                 <div class="product-info">
                     <div class="row" style="height:210px;">
-                        <div style="width:371px;" class="col-3"><img id="avatar" src="assets/img/avatar_2x.png"></div>
-                        <div style="width:517px;" class="col-7 d-flex">
+                        <div class="col-3" style="width:371px;"><img id="avatar" src="assets/img/avatar_2x.png"></div>
+                        <div class="col-7 d-flex" style="width:517px;">
                             <div class="info">
-                                <h3 style="font-style: normal;font-weight: 600;" id="oriUsername" th:text="${reader.getName()}">
+                                <h3 id="oriUsername" style="font-style: normal;font-weight: 600;"
+                                    th:text="${reader.getName()}">
                                     Tanglizi</h3>
                                 <br>
                                 <table>
@@ -39,8 +40,8 @@
                                 <br>
                                 <h5 class="text-danger" th:if="${fine}>0.1">Fine: $ [[${fine}]]</h5></div>
                         </div>
-                        <div style="width:371px;" class="col-2">
-                            <button id="logout-btn" class="btn btn-primary">Logout</button>
+                        <div class="col-2" style="width:371px;">
+                            <button class="btn btn-primary" id="logout-btn">Logout</button>
                         </div>
                     </div>
                 </div>
@@ -48,36 +49,63 @@
                 <div class="product-info">
                     <div>
                         <ul class="nav nav-tabs" id="myTab">
-                            <li class="nav-item"><a class="nav-link active show" role="tab" data-toggle="tab"
-                                                    href="#reviews" id="reviews-tab" aria-selected="true">Borrowing history</a></li>
-                            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" aria-selected="false" href="#tab-2">Reserving history</a></li>
-                            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3"
-                                                    aria-selected="false">Modify information</a></li>
+                            <li class="nav-item"><a aria-selected="true" class="nav-link active show" data-toggle="tab"
+                                                    href="#reviews" id="reviews-tab" role="tab">Borrowing
+                                history</a></li>
+                            <li class="nav-item"><a aria-selected="false" class="nav-link" data-toggle="tab" href="#tab-2"
+                                                    role="tab">Reserving history</a></li>
+                            <li class="nav-item"><a aria-selected="false" class="nav-link" data-toggle="tab" href="#tab-3"
+                                                    role="tab">Modify information</a></li>
                         </ul>
                         <div class="tab-content" id="myTabContent" style="margin:40px;">
-                            <div class="tab-pane fade active show" role="tabpanel" id="reviews">
+                            <div class="tab-pane fade active show" id="reviews" role="tabpanel">
                                 <div class="reviews">
                                     <div id="history-body">
                                         <table class="table table-hover">
                                             <tbody>
-                                            <tr th:each="borrowingHist: ${borrowingHistories}">
+                                            <tr th:each="borrowingHistModel: ${borrowingHistories}" th:with="borrowingHist = ${borrowingHistModel.getBorrowingHistory()}">
                                                 <td>
                                                     <div class="review-item" style="width: 100%;margin-bottom: 0px;">
                                                         <div class="row">
-                                                            <div class="col-3"><img class="rounded img-fluid" th:src="${borrowingHist.getBook().getBookDescription().getCoverUrl()} + '?token=GroupA3'">
+                                                            <div class="col-3"><img class="rounded img-fluid" style="width: 100%"
+                                                                                    th:src="${borrowingHist.getBook().getBookDescription().getCoverUrl()} + '?token=GroupA3'">
                                                             </div>
                                                             <div class="col-9">
-                                                                <h4 style="font-size:27px;" th:text="${borrowingHist.getBook().getBookDescription().getTitle()}">Computer Networking</h4>
-                                                                <span class="text-muted" style="font-size:18px;"></span>
-                                                                <span style="text-decoration: underline;" class="text text-warning" th:text="'BookId: ' + ${borrowingHist.getBook().getBookId()}"></span>
+                                                                <h4>
+                                                                    <a style="font-size:27px;"
+                                                                       th:href="@{/reader/book/{isbn}(isbn=${borrowingHist.getBook().getBookDescription().getISBN()})}"
+                                                                       th:text="${borrowingHist.getBook().getBookDescription().getTitle()}">Computer
+                                                                        Networking</a></h4>
+                                                                <span th:if="${borrowingHist.getBorrowingEndTime()} == null" class="text-info" style="font-size:18px;">[ Borrowing / Lost ]</span>
+                                                                <span th:if="${borrowingHist.getBorrowingEndTime()} != null" class="text-info" style="font-size:18px;">[ Returned ]</span>
                                                                 <br>
-                                                                <h5 class="text-muted" th:text="${borrowingHist.getBook().getBookDescription().getAuthor()}">John Smith / Rose</h5>
-                                                                <h5 class="text-muted" th:text="${borrowingHist.getBook().getBookDescription().getPublisher()} + ' '+ ${borrowingHist.getBook().getBookDescription().getPublishYear()}">Pearson 2012</h5>
-                                                                <h3 class="text-danger" th:text="${borrowingHist.getBook().getBookDescription().getPrice()}">¥100</h3>
+                                                                <span class="text-muted" style="font-size:18px;"></span>
+                                                                <span class="text text-warning"
+                                                                      style="text-decoration: underline;"
+                                                                      th:text="'BookId: ' + ${borrowingHist.getBook().getBookId()}"></span>
+                                                                <br>
+                                                                <h5 class="text-muted"
+                                                                    th:text="${borrowingHist.getBook().getBookDescription().getAuthor()}">
+                                                                    John Smith / Rose</h5>
+                                                                <h5 class="text-muted"
+                                                                    th:text="'Publisher: ' + ${borrowingHist.getBook().getBookDescription().getPublisher()} + ' '+ ${borrowingHist.getBook().getBookDescription().getPublishYear()}">
+                                                                    Pearson 2012</h5>
+                                                                <h3 class="text-bold"
+                                                                    th:text="'¥' + ${borrowingHist.getBook().getBookDescription().getPrice()}">
+                                                                    ¥100</h3>
 
                                                                 <span th:text="${borrowingHist.getBook().getBookDescription().getLocation()}">Floor 2 - Shelf 3</span><br>
 
-                                                                <span>ISBN: [[${borrowingHist.getBook().getBookDescription().getISBN()}]]</span></div>
+                                                                <span>ISBN: [[${borrowingHist.getBook().getBookDescription().getISBN()}]]</span><br>
+
+                                                                <span th:if="${borrowingHist.getBorrowingEndTime()} != null" >Borrow Date: [[${#dates.format(borrowingHist.getBorrowingStartTime(), 'dd-MM-yyyy')}]] ~ [[${#dates.format(borrowingHist.getBorrowingEndTime(), 'dd-MM-yyyy')}]]</span>
+                                                                <span th:if="${borrowingHist.getBorrowingEndTime()} == null" >Borrow Date: [[${#dates.format(borrowingHist.getBorrowingStartTime(), 'dd-MM-yyyy')}]] ~ now</span>
+
+                                                                <div th:if="${borrowingHist.getBorrowingFineHistory()} != null">
+                                                                    <span class="text-danger" th:if="${borrowingHist.getBorrowingFineHistory().getPaid()} == true">Fine: paid $[[${borrowingHistModel.getFine()}]]</span>
+                                                                    <span class="text-danger" th:if="${borrowingHist.getBorrowingFineHistory().getPaid()} == false">Fine: unpaid $[[${borrowingHistModel.getFine()}]] </span>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -87,7 +115,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane mx-auto" role="tabpanel" id="tab-2" style="">
+                            <div class="tab-pane mx-auto" id="tab-2" role="tabpanel" style="">
                                 <div class="reviews">
                                     <div id="history2-body">
                                         <table class="table table-hover">
@@ -96,94 +124,119 @@
                                                 <td>
                                                     <div class="review-item" style="width: 100%;margin-bottom: 0px;">
                                                         <div class="row">
-                                                            <div class="col-3"><img class="rounded img-fluid" th:src="${borrowingHist.getBook().getBookDescription().getCoverUrl()} + '?token=GroupA3'">
+                                                            <div class="col-3"><img class="rounded img-fluid" style="width: 100%"
+                                                                                    th:src="${borrowingHist.getBook().getBookDescription().getCoverUrl()} + '?token=GroupA3'">
                                                             </div>
                                                             <div class="col-9">
-                                                                <h4 style="font-size:27px;" th:text="${borrowingHist.getBook().getBookDescription().getTitle()}">Computer Networking</h4>
-                                                                <span class="text-muted" style="font-size:18px;"></span>
-                                                                <span style="text-decoration: underline;" class="text text-warning" th:text="'BookId: ' + ${borrowingHist.getBook().getBookId()}"></span>
+                                                                <h4>
+                                                                    <a style="font-size:27px;"
+                                                                       th:href="@{/reader/book/{isbn}(isbn=${borrowingHist.getBook().getBookDescription().getISBN()})}"
+                                                                       th:text="${borrowingHist.getBook().getBookDescription().getTitle()}">Computer
+                                                                        Networking</a></h4>
+
+                                                                <span th:if="${borrowingHist.getReservingEndTime()} == null" class="text-info" style="font-size:18px;">[ Reserving ]</span>
+                                                                <span th:if="${borrowingHist.getReservingEndTime()} != null" class="text-info" style="font-size:18px;">[ Borrowed ]</span>
                                                                 <br>
-                                                                <h5 class="text-muted" th:text="${borrowingHist.getBook().getBookDescription().getAuthor()}">John Smith / Rose</h5>
-                                                                <h5 class="text-muted" th:text="${borrowingHist.getBook().getBookDescription().getPublisher()} + ' '+ ${borrowingHist.getBook().getBookDescription().getPublishYear()}">Pearson 2012</h5>
-                                                                <h3 class="text-danger" th:text="${borrowingHist.getBook().getBookDescription().getPrice()}">¥100</h3>
+
+                                                                <span class="text-muted" style="font-size:18px;"></span>
+                                                                <span class="text text-warning"
+                                                                      style="text-decoration: underline;"
+                                                                      th:text="'BookId: ' + ${borrowingHist.getBook().getBookId()}"></span>
+                                                                <br>
+                                                                <h5 class="text-muted"
+                                                                    th:text="${borrowingHist.getBook().getBookDescription().getAuthor()}">
+                                                                    John Smith / Rose</h5>
+                                                                <h5 class="text-muted" th:text="'Publisher: ' + ${borrowingHist.getBook().getBookDescription().getPublisher()} + ' '+ ${borrowingHist.getBook().getBookDescription().getPublishYear()}">Pearson 2012</h5>
+                                                                <h3 class="text-bold"
+                                                                    th:text="'¥' + ${borrowingHist.getBook().getBookDescription().getPrice()}">
+                                                                    ¥100</h3>
 
                                                                 <span th:text="${borrowingHist.getBook().getBookDescription().getLocation()}">Floor 2 - Shelf 3</span><br>
 
-                                                                <span>ISBN: [[${borrowingHist.getBook().getBookDescription().getISBN()}]]</span></div>
+                                                                <span>ISBN: [[${borrowingHist.getBook().getBookDescription().getISBN()}]]</span><br>
+
+                                                                <span th:if="${borrowingHist.getReservingEndTime()} != null" >Reserve Date: [[${#dates.format(borrowingHist.getReservingStartTime(), 'dd-MM-yyyy')}]] ~ [[${#dates.format(borrowingHist.getReservingEndTime(), 'dd-MM-yyyy')}]]</span>
+                                                                <span th:if="${borrowingHist.getReservingEndTime()} == null" >Reserve Date: [[${#dates.format(borrowingHist.getReservingStartTime(), 'dd-MM-yyyy')}]] ~ now</span>
+                                                            </div>
+
                                                         </div>
                                                     </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
                                     </div>
+                                    </td>
+                                    </tr>
+                                    </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div class="tab-pane mx-auto" role="tabpanel" id="tab-3" style="">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-2"></div>
-                                        <div class="col-8">
-                                            <div class="form-horizontal">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 form-control-label">Username</label>
-                                                    <div class="col-sm-9">
-                                                        <input id="username" class="form-control" th:value="${reader.getName()}" type="text">
+                        </div>
+                        <div class="tab-pane mx-auto" id="tab-3" role="tabpanel" style="">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-2"></div>
+                                    <div class="col-8">
+                                        <div class="form-horizontal">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 form-control-label">Username</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="username"
+                                                           th:value="${reader.getName()}" type="text">
 
-                                                    </div>
                                                 </div>
-                                                <div class="line"></div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 form-control-label">Email</label>
-                                                    <div class="col-sm-9">
-                                                        <input id="email" class="form-control" type="email" th:value="${reader.getEmail()}" />
+                                            </div>
+                                            <div class="line"></div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 form-control-label">Email</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="email" th:value="${reader.getEmail()}"
+                                                           type="email"/>
 
-                                                    </div>
                                                 </div>
-                                                <div class="line"></div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 form-control-label">Phone</label>
-                                                    <div class="col-sm-9">
-                                                        <input id="phoneNumber" type="number" class="form-control"  th:value="${reader.getPhoneNumber()}">
+                                            </div>
+                                            <div class="line"></div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 form-control-label">Phone</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="phoneNumber" th:value="${reader.getPhoneNumber()}"
+                                                           type="number">
 
-                                                    </div>
                                                 </div>
+                                            </div>
 
-                                                <div class="line"></div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 form-control-label">New Password</label>
-                                                    <div class="col-sm-9">
-                                                        <input id="newPassword" class="form-control" type="password">
-                                                        <small class="help-block-none">If do not want to change
-                                                            password, please keep it empty.</small>
+                                            <div class="line"></div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 form-control-label">New Password</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="newPassword" type="password">
+                                                    <small class="help-block-none">If do not want to change
+                                                        password, please keep it empty.</small>
 
-                                                    </div>
                                                 </div>
-                                                <div class="line"></div>
-                                                <div class="line"></div>
-                                                <br>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 form-control-label">Original Password</label>
-                                                    <div class="col-sm-9">
-                                                        <input id="oriPassword" class="form-control" value="" type="password">
-                                                    </div>
+                                            </div>
+                                            <!-- div class="line"></div>
+                                            <div class="line"></div>
+                                            <br>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 form-control-label">Original Password</label>
+                                                <div class="col-sm-9">
+                                                    <input id="oriPassword" class="form-control" value="" type="password">
                                                 </div>
-                                                <div class="line"></div>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-4 offset-sm-3">
-                                                        <button id="submit" class="btn btn-primary" >Save changes</button>
-                                                    </div>
+                                            </div -->
+                                            <div class="line"></div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-4 offset-sm-3">
+                                                    <button class="btn btn-primary" id="submit">Save changes</button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-2"></div>
                                     </div>
+                                    <div class="col-2"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 </main>
@@ -199,9 +252,47 @@
             url: "/api/user/token",
             method: "DELETE",
             success: function (resp) {
-                window.location.href="/reader/index";
+                window.location.href = "/reader/index";
             }
-        })
+        });
+    });
+
+    if (![[${isReader}]]) {
+        alertWarning("you are not using a reader account, so you can not do some operations.", 8000);
+    }
+
+    var userId = [[${reader.getUserId()}]];
+    $("#submit").bind("click", function () {
+        if (!checkInputBoxEmpty("#username")) return;
+        if (!checkInputBoxEmpty("#email")) return;
+        if (!checkInputBoxEmpty("#phoneNumber")) return;
+
+        var form = new FormData();
+        form.append("id", userId);
+        form.append("name", $("#username").val());
+        form.append("email", $("#email").val());
+        form.append("phoneNumber", $("#phoneNumber").val());
+        if ($('#newPassword').val() !== "")
+            form.append("password", $("#newPassword").val());
+
+        $.ajax({
+            url: "/api/reader/" + userId,
+            method: "PUT",
+            data: form,
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (resp) {
+                alertSuccess("your information has been modified.");
+
+                setTimeout(function () {
+                    window.location.href = "/reader/index";
+                }, 4000);
+            },
+            error: function (resp) {
+                alertError(resp.responseJSON.message);
+            }
+        });
     })
 </script>
 

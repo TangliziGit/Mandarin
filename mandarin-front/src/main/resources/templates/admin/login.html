@@ -37,6 +37,7 @@
             <div class="col-lg-6 bg-white">
               <div class="form d-flex align-items-center">
                 <div class="content">
+                  <img th:src="@{/librarian/images/Logo.png}" style="width: 300px; margin: auto">
                   <div method="post" class="form-validate">
                     <div class="form-group">
                       <input id="login-username" type="text" name="loginUsername" required data-msg="Please enter your username" class="input-material">
@@ -58,17 +59,14 @@
       </div>
     </div>
     <!-- JavaScript files-->
-    <script th:src="@{/admin/vendor/jquery/jquery.min.js}"></script>
-    <script th:src="@{/admin/vendor/popper.js/umd/popper.min.js}"> </script>
-    <script th:src="@{/admin/vendor/bootstrap/js/bootstrap.min.js}"></script>
-    <script th:src="@{/admin/vendor/jquery.cookie/jquery.cookie.js}"> </script>
-    <script th:src="@{/admin/vendor/chart.js/Chart.min.js}"></script>
-    <script th:src="@{/admin/vendor/jquery-validation/jquery.validate.min.js}"></script>
     <!-- Main File-->
-    <script th:src="@{/admin/js/front.js}"></script>
+    <th:block th:replace="admin/common :: scripts"></th:block>
 
     <script>
       $("#login").bind("click", function () {
+        if (!checkInputBoxEmpty("#login-username")) return;
+        if (!checkInputBoxEmpty("#login-password")) return;
+
         let formData = new FormData();
         formData.append("name", $("#login-username").val());
         formData.append("password", $("#login-password").val());
@@ -84,7 +82,7 @@
             window.location.href="/admin/welcome";
           },
           error: function (resp) {
-            alert(resp.message);
+            alertError(resp.responseJSON.message);
           }
         })
       })

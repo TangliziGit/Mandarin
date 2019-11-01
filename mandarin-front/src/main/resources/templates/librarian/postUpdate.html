@@ -86,18 +86,23 @@
                 return pair[1];
             }
         }
-        return (false);
+        return "";
     }
 
-    $.ajax(
-        {
+    CKEDITOR.config.removePlugins = 'elementspath';
+    CKEDITOR.replace("content");
+
+    if (getQueryVariable("id") === "")
+        window.location.href="/librarian/postManage";
+
+    $.ajax({
             url: "/api/news/" + getQueryVariable("id"),
             type: "GET",
             dataType: 'json',
             async: false,
             success: function (resp) {
                 $('#title').val(resp.data.title);
-                $('#content').val(resp.data.content);
+                CKEDITOR.instances.content.setData(resp.data.content);
             }
         }
     );
@@ -107,8 +112,13 @@
 <script>
     function submitNewPost() {
         var formData = new FormData();
+        if (!checkInputBoxEmpty("#title")) return;
+        if (CKEDITOR.instances.content.getData() === ""){
+            alertWarning("news content should not be empty.");
+            return;
+        }
         formData.append("title", $("#title").val());
-        formData.append("content", $("#content").val());
+        formData.append("content", CKEDITOR.instances.content.getData());
 
         $.ajax({
             url: "/api/news/" + getQueryVariable("id"),
@@ -118,14 +128,13 @@
             processData: false,
             contentType: false,
             success: function (resp) {
-                alertSuccess("this news has been updated");
+                alertSuccess("this news was posted");
             },
             error: function (resp) {
-                alert(resp.responseJSON.message);
+                alertError(resp.responseJSON.message);
             }
         });
     }
-
 
     function cancelEdit() {
         $("#title").val("");
@@ -134,5 +143,4 @@
 </script>
 
 </body>
-
 </html>
