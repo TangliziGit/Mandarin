@@ -3,6 +3,7 @@ package org.a3.mandarin.back.model;
 import org.a3.mandarin.common.entity.Book;
 import org.a3.mandarin.common.entity.BookDescription;
 import org.a3.mandarin.common.entity.Category;
+import org.a3.mandarin.common.util.ComponentUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class BookDescriptionModel {
     private Category category;
     private Integer copyNumber;
     private List<Integer> bookIdList;
+    private Integer canReserveNumber;
 
     public BookDescriptionModel() {}
 
@@ -39,8 +41,24 @@ public class BookDescriptionModel {
         this.copyNumber=copyNumber;
 
         this.bookIdList=new ArrayList<>();
-        for (Book book: bookDescription.getBooks())
-            this.bookIdList.add(book.getBookId());
+        this.canReserveNumber = this.copyNumber;
+        for (Book book: bookDescription.getBooks()){
+            Integer id = book.getBookId();
+            this.bookIdList.add(id);
+
+            if (ComponentUtil.bookRepository.isOnReserving(id)
+                || ComponentUtil.bookRepository.isOnBorrowing(id)
+                || ComponentUtil.bookRepository.isDeleted(id))
+                this.canReserveNumber--;
+        }
+    }
+
+    public Integer getCanReserveNumber() {
+        return canReserveNumber;
+    }
+
+    public void setCanReserveNumber(Integer canReserveNumber) {
+        this.canReserveNumber = canReserveNumber;
     }
 
     public String getCoverUrl() {

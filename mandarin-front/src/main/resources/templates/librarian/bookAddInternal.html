@@ -6,346 +6,476 @@
 </head>
 
 <body>
-  <div class="container-scroller">
+<div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
 
-      <div th:replace="librarian/common :: navbar"></div>
+    <div th:replace="librarian/common :: navbar"></div>
 
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
-      <div class="row row-offcanvas row-offcanvas-right">
-        <!-- partial:../../partials/_sidebar.html -->
-          <th:block th:replace="librarian/common :: sidebar"></th:block>
-        <div class="content-wrapper">
-       
-          <div class="row">
-         <!--    <div class="col-md-6 d-flex align-items-stretch grid-margin">
-              <div class="row flex-grow"> -->
-                      
-                <div class="col-12 grid-margin">
-                  <div class="card">
-                    <div class="card-body">
-                      <h4 class="card-title">Book Add by Internal ID</h4>
-                      <p class="card-description">
-                        Please add the book by Assign internal ID. 
-                      </p>
-                      <div class="container-fluid">
-                       <div class="form-group row">
-                          <label for="exampleInputtext2" class="col-sm-3 col-form-label">ISBN</label>
-                          <div class="col-sm-9"><input type="text" class="form-control" id="isbn" placeholder="Enter the ISBN"></div>
-                           
-                        </div>
-                        <div class="form-group row">
-                          <label for="exampleInputPassword2" class="col-sm-3 col-form-label">title</label>
-                          <div class="col-sm-9">
-                           
-                            <input type="text" class="form-control" id="title" placeholder="Enter the title">
-                          </div>
-                        </div>
-                               <div class="form-group row">
-                          <label for="exampleInputtext2" class="col-sm-3 col-form-label">author</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control" id="author" placeholder="Enter the author">
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <label for="exampleInputPassword2" class="col-sm-3 col-form-label">price</label>
-                          <div class="col-sm-9">
-                            <input type="number" class="form-control" id="price" placeholder="Enter the price">
-                              <small style="color: grey">must be a number</small>
-                          </div>
-                        </div>
-                         <div class="form-group row">
-                          <label for="exampleInputtext2" class="col-sm-3 col-form-label">location</label>
-                                <div>
-                                  <select id="floor" class="form-control">
-                                      <option gid="1" value="1">1f</option>
-                                      <option gid="2" value="2">2f</option>
-                                      <option gid="3" value="3">3f</option>
-                                      <option gid="4" value="4">4f</option>
-                                      <option gid="5" value="5">5f</option>
-                                      <option gid="6" value="6">6f</option>
-                                  </select>
-                                  <small style="color: grey">Please select the floor</small>
+        <div class="row row-offcanvas row-offcanvas-right">
+            <!-- partial:../../partials/_sidebar.html -->
+            <th:block th:replace="librarian/common :: sidebar"></th:block>
+            <div class="content-wrapper">
+
+                <div class="row">
+                    <!--    <div class="col-md-6 d-flex align-items-stretch grid-margin">
+                         <div class="row flex-grow"> -->
+
+                    <div class="col-12 grid-margin">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Book Add by Internal ID</h4>
+                                <p class="card-description">
+                                    Please add the book by Assign internal ID.
+                                </p>
+                                <div class="container-fluid">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="exampleInputtext2">ISBN</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="isbn" disabled="" placeholder="Enter the ISBN" type="text">
+                                            <small style="color: grey">if your book has not an ISBN code, system will create a new code.</small>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="exampleInputPassword2">title</label>
+                                        <div class="col-sm-9">
+
+                                            <input class="form-control" id="title" placeholder="Enter the title"
+                                                   type="text">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="exampleInputtext2">author</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="author" placeholder="Enter the author"
+                                                   type="text">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="exampleInputPassword2">price</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="price" placeholder="Enter the price"
+                                                   type="number">
+                                            <small style="color: grey">must be a number</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="exampleInputtext2">location</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control" data-_extension-text-contrast="" id="floor">
+                                                <option gid="1" value="1">Floor 1</option>
+                                                <option gid="2" value="2">Floor 2</option>
+                                                <option gid="3" value="3">Floor 3</option>
+                                                <option gid="4" value="4">Floor 4</option>
+                                                <option gid="5" value="5">Floor 5</option>
+                                                <option gid="6" value="6">Floor 6</option>
+                                            </select>
+                                            <small style="color: grey">Please select the floor and shelf.</small>
+                                        </div>
+
+                                        <div class="col-sm-5" id="selectlocation">
+                                            <select class="form-control" data-_extension-text-contrast="" id="floor1">
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <input class="form-control" id="coverUrl" placeholder="Enter the categoryName" style="display: none"
+                                               type="text">
+
+                                        <label class="col-sm-3 col-form-label"
+                                               for="exampleInputtext2">categoryName</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" data-_extension-text-contrast=""
+                                                    id="categoryName">
+                                                <!-- option gid="1" value="1">Floor 1</option>
+                                                <option gid="2" value="2">Floor 2</option>
+                                                <option gid="3" value="3">Floor 3</option>
+                                                <option gid="4" value="4">Floor 4</option>
+                                                <option gid="5" value="5">Floor 5</option>
+                                                <option gid="6" value="6">Floor 6</option -->
+                                            </select>
+                                            <!-- input type="text" class="form-control" id="categoryName" placeholder="Enter the categoryName" -->
+                                            <!-- small style="color: grey">category must exist</small -->
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label"
+                                               for="exampleInputtext2">publishYear</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="publishYear" placeholder="Enter the publishYear"
+                                                   type="number">
+                                            <small style="color: grey">must be a number</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="exampleInputtext2">publisher</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="publisher" placeholder="Enter the publisher"
+                                                   type="text">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label" for="exampleInputtext2">summary</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="summary" placeholder="Enter the summary"
+                                                   type="text">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label"
+                                               for="exampleInputPassword2">copyNumber</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="copyNumber" placeholder="Enter the copyNumber"
+                                                   type="number">
+                                            <small style="color: grey">must be a number</small>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn btn-success mr-2" onclick="insert()">Submit</button>
                                 </div>
-                                 <div for="exampleInputtext2" class="col-sm-3 col-form-label" id="shelf">
-                                 </div>
-                          <div id = "selectlocation">
-                          </div>
-                          </div>
-
-                       <div class="form-group row">
-                           <input style="display: none" type="text" class="form-control" id="coverUrl" placeholder="Enter the categoryName">
-
-                           <label for="exampleInputtext2" class="col-sm-3 col-form-label">categoryName</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control" id="categoryName" placeholder="Enter the categoryName">
-                              <small style="color: grey">category must exist</small>
-                          </div>
+                            </div>
                         </div>
-                                                <div class="form-group row">
-                          <label for="exampleInputtext2" class="col-sm-3 col-form-label">publishYear</label>
-                          <div class="col-sm-9">
-                            <input type="number" class="form-control" id="publishYear" placeholder="Enter the publishYear">
-                              <small style="color: grey">must be a number</small>
-                          </div>
-                        </div>
-                                                <div class="form-group row">
-                          <label for="exampleInputtext2" class="col-sm-3 col-form-label">publisher</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control" id="publisher" placeholder="Enter the publisher">
-                          </div>
-                        </div>
-                          <div class="form-group row">
-                          <label for="exampleInputtext2" class="col-sm-3 col-form-label">summary</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control" id="summary" placeholder="Enter the summary">
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <label for="exampleInputPassword2" class="col-sm-3 col-form-label">copyNumber</label>
-                          <div class="col-sm-9">
-                            <input type="number" class="form-control" id="copyNumber" placeholder="Enter the copyNumber">
-                              <small style="color: grey">must be a number</small>
-                          </div>
-                        </div>
-
-                        <button  class="btn btn-success mr-2" onclick="insert()">Submit</button>
-                        </div>
-</div>
-</div>
-</div>
-  <div class="col-12 grid-margin">
-    <div class="card">
-                        <div class="container-fluid">
-                          <div class="card-body" >
-                          <h4 class="card-title">Result</h4>
-                          <div id="imgDiv">
-                          <div id="booklocation"></div>
-                          <div id="barcode">
-                            <!-- img id="imgcode"/ -->
-                          </div>
-                          </div>
-                          <div id="download"></div>
-                          <div id="list"></div>
-                         </div>
-</div>
-</div>
-</div>
-                      
                     </div>
-                  </div>
+                    <div class="col-12 grid-margin">
+                        <div class="card">
+                            <div class="container-fluid">
+                                <div class="card-body">
+                                    <h4 class="card-title">Result</h4>
+                                    <div id="imgDiv">
+                                        <div id="booklocation"></div>
+                                        <div id="barcode">
+                                            <!-- img id="imgcode"/ -->
+                                        </div>
+                                    </div>
+                                    <div id="download"></div>
+                                    <div id="list"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- content-wrapper ends -->
-        <!-- partial:../../partials/_footer.html -->
+                </div>
+            </div>
 
-          <div th:replace="librarian/common :: footer"></div>
+            <!-- content-wrapper ends -->
+            <!-- partial:../../partials/_footer.html -->
 
-        <!-- partial -->
-      </div>
-      <!-- row-offcanvas ends -->
+            <div th:replace="librarian/common :: footer"></div>
+
+            <!-- partial -->
+        </div>
+        <!-- row-offcanvas ends -->
     </div>
     <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
-  <!-- End custom js for this page-->
+</div>
+<!-- container-scroller -->
+<!-- End custom js for this page-->
 
-  <div th:replace="librarian/common :: scripts"></div>
+<div th:replace="librarian/common :: scripts"></div>
 
-    <script>
-        function getFormData(dic) {
-            formData=new FormData();
-            for (var key in dic)
-                formData.append(key, dic[key]);
-            return formData;
+<script>
+    function getFormData(dic) {
+        formData = new FormData();
+        for (var key in dic)
+            formData.append(key, dic[key]);
+        return formData;
+    }
+</script>
+
+<!-- script>
+   jQuery(document).ready(function() {
+   jQuery("#floor").change(function() {
+     $('#shelf').empty();
+     $('#shelf').append("<label>&nbsp&nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp&nbsp;Shelf Number</label>");
+   select_value = jQuery(this).val();
+   select1(select_value);
+});
+
+   });
+ </script -->
+<!-- script>
+  function select1(select_value){
+
+
+    $('#selectlocation').empty();
+    $('#selectlocation').append("<select id=\"floor1\" class=\"form-control\"></select>");
+  var select = document.getElementById("floor1");
+  for(var i=1+100*(select_value-1);i<=select_value*100;i++){
+  var opt = document.createElement("option");
+  opt.value=i;
+  opt.innerHTML=i;
+  select.appendChild(opt);
+  }
+  jQuery(document).ready(function() {
+  jQuery("#floor1").change(function() {
+  select_shalf = jQuery(this).val();
+
+});
+  });
+    }
+</script -->
+<script>
+    function genShelf() {
+        for (var i = 1; i < 200; i++)
+            $("<option value='" + i + "'>Shelf " + i + "</option>", {
+                // value: "Shelf "+i,
+            }).appendTo($("#floor1"));
+    }
+    genShelf();
+
+    var categoryList = [];
+    function genCategory(val) {
+        $("#categoryName").html("");
+        $.ajax({
+            url: "/api/category",
+            type: 'GET',
+            success: function (resp) {
+                console.log(resp.data);
+                for (var data of resp.data) {
+                    $("#categoryName").append(
+                        "<option>" + data.categoryName + "</option>"
+                    );
+                    categoryList.push(data.categoryName);
+                }
+            }
+        });
+        if (val !== "" && val !== null)
+            $("#categoryName").val(val);
+    }
+
+
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+        if (r != null)
+            return unescape(r[2]);
+        return null;
+    }
+    genCategory();
+
+    var isbn = getUrlParam("isbn");
+    if (isbn === null){
+        $("#isbn").val(new Date().getTime());
+        $("#isbn").attr('disabled', '');
+    }
+    if (isbn != null) {
+        $.ajax({
+            url: "http://39.106.185.26:8081/isbn/" + isbn + "?token=GroupA3",
+            type: "get",
+            dataType: "json",
+            success: function (resp) {
+                console.log(resp);
+                console.log("yyy");
+                if (String(resp.price) === "undefined")
+                    $('#price').val("20.00");
+                else
+                    $('#price').val(resp.price);
+            },
+            error: function (resp) {
+            }
+        });
+
+        function exists(xs, y){
+            for (var x of xs)
+                if (x === y)
+                    return true;
+            return false;
         }
-    </script>
 
-   <script>
-      jQuery(document).ready(function() {
-      jQuery("#floor").change(function() {
-        $('#shelf').empty();
-        $('#shelf').append("<label>&nbsp&nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp&nbsp;Shelf Number</label>");
-      select_value = jQuery(this).val();
-      select1(select_value);
-  });
+        alertWarning("Please wait for searching book...", 6000);
+        // alertWarning("If it takes too long time, try refreshing the page.", 8000);
 
-      });
-    </script>
-    <script>
-      function select1(select_value){
+        $.ajax({
+            url: "http://106.13.1.40:5000/googleApi?isbn=" + isbn,
+            type: "get",
+            dataType: "json",
+            success: function (resp) {
+                console.log(resp);
 
+                if (String(resp.items) === "undefined" ||  resp.items.length === 0)
+                    alertError("No such book, please check your ISBN code.");
 
-        $('#selectlocation').empty();
-        $('#selectlocation').append("<select id=\"floor1\" class=\"form-control\"></select>");
-      var select = document.getElementById("floor1");
-      for(var i=1+100*(select_value-1);i<=select_value*100;i++){
-      var opt = document.createElement("option");
-      opt.value=i;
-      opt.innerHTML=i;
-      select.appendChild(opt);
-      }
-      jQuery(document).ready(function() {
-      jQuery("#floor1").change(function() {
-      select_shalf = jQuery(this).val();
-      
-  });
-      });
-        } 
-    </script>
-  <script>
-      function getUrlParam(name) {
-          var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-          var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
-          if(r!=null)
-              return unescape(r[2]);
-          return null;
-      }
+                resp = resp.items[0];
+                $("#coverUrl").val(resp.volumeInfo.imageLinks.thumbnail);
+                $("#isbn").val(isbn);
+                $("#isbn").attr('disabled', '');
+                $("#title").val(resp.volumeInfo.title);
+                $("#author").val(resp.volumeInfo.authors.join(' / '));
+                $("#location").val("");
+                $("#publishYear").val(resp.volumeInfo.publishedDate.split('-')[0]);
+                $("#publisher").val(resp.volumeInfo.publisher);
+                if (resp.volumeInfo.description === "")
+                    $("#summary").val(resp.volumeInfo.description);
+                else
+                    $("#summary").val("None");
+                $("#copyNumber").val("");
 
-      var isbn=getUrlParam("isbn");
-      if (isbn!=null){
-          $.ajax({
-              url:"http://39.106.185.26:8081/isbn/"+isbn+"?token=GroupA3",
-              type:"get",
-              dataType:"json",
-              success:function(resp){
-                  console.log(resp);
+                var category = resp.volumeInfo.categories[0].toLowerCase();
+                $("#categoryName").val(category);
 
-                  $("#coverUrl").val(resp.img);
-                  $("#isbn").val(isbn);
-                  $("#title").val(resp.title);
-                  $("#author").val(resp.author);
-                  $("#price").val(resp.price);
-                  $("#location").val("");
-                  $("#categoryName").val("");
-                  $("#publishYear").val(resp.publishYear);
-                  $("#publisher").val(resp.publisher);
-                  $("#summary").val(resp.summary);
-                  $("#copyNumber").val("");
-              },
-              error:function (resp) {
-                  console.log(resp);
-                  alertError(resp.responseJSON.message);
-              }
-          });
-      }
+                if (!exists(categoryList, category)){
+                    var form = new FormData();
 
-      function insert(){
-          if (!checkInputBoxEmpty("#isbn")) return;
-          if (!checkInputBoxEmpty("#title")) return;
-          if (!checkInputBoxEmpty("#author")) return;
-          if (!checkInputBoxEmpty("#price")) return;
-          if (!checkInputBoxEmpty("#floor")) return;
-          if (!checkInputBoxEmpty("#floor1")) return;
-          if (!checkInputBoxEmpty("#categoryName")) return;
-          if (!checkInputBoxEmpty("#publishYear")) return;
-          if (!checkInputBoxEmpty("#publisher")) return;
-          if (!checkInputBoxEmpty("#summary")) return;
-          if (!checkInputBoxEmpty("#copyNumber")) return;
+                    form.append("categoryName", category);
+
+                    $.ajax({
+                        url: '/api/category',
+                        type: 'post',
+                        data: form,
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false,
+                        success: function(resp){
+                            console.log(resp);
+                        },
+                        error: function (resp) {
+                            console.log(resp.responseJSON.message);
+                        }
+                    });
+                    genCategory(category);
+                }
+
+                // $("#coverUrl").val(resp.img);
+                // $("#isbn").val(isbn);
+                // $("#isbn").attr('disabled', '');
+                // $("#title").val(resp.title);
+                // $("#author").val(resp.author);
+                // $("#price").val(resp.price);
+                // $("#location").val("");
+                // $("#categoryName").val("");
+                // $("#publishYear").val(resp.publishYear);
+                // $("#publisher").val(resp.publisher);
+                // $("#summary").val(resp.summary);
+                // $("#copyNumber").val("");
+            },
+            error: function (resp) {
+                console.log(resp);
+                // alertError(resp.responseJSON.message);
+            }
+        });
+    }
+
+    function insert() {
+        if (!checkInputBoxEmpty("#isbn")) return;
+        if (!checkInputBoxEmpty("#title")) return;
+        if (!checkInputBoxEmpty("#author")) return;
+        if (!checkInputBoxEmpty("#price")) return;
+        if (!checkInputBoxEmpty("#floor")) return;
+        if (!checkInputBoxEmpty("#floor1")) return;
+        if (!checkInputBoxEmpty("#categoryName")) return;
+        if (!checkInputBoxEmpty("#publishYear")) return;
+        if (!checkInputBoxEmpty("#publisher")) return;
+        if (!checkInputBoxEmpty("#summary")) return;
+        if (!checkInputBoxEmpty("#copyNumber")) return;
 
 //         $("#imgcode").JsBarcode($("#isbn").val());
-          var url=$("#coverUrl").val();
-          var ISBN = $("#isbn").val();
+        var url = $("#coverUrl").val();
+        var ISBN = $("#isbn").val();
         var title = $("#title").val();
         var author = $("#author").val();
         var price = $("#price").val();
-        var location = 'Floor '+$('#floor').val()+' - '+'Shelf '+$('#floor1').val();
+        var location = 'Floor ' + $('#floor').val() + ' - ' + 'Shelf ' + $('#floor1').val();
         var categoryName = $("#categoryName").val();
         var publishYear = $("#publishYear").val();
         var publisher = $("#publisher").val();
         var summary = $("#summary").val();
         var copyNumber = $("#copyNumber").val();
-          $('#list').html("<h4>You add books successfully</h4>"+
-          // "<p>ISBN : "+ISBN+"</p>"+ "<p>title : "+title+"</p>"+ "<p>author : "+author+"</p>"+
-           // "<p>price : "+price+"</p>"+ "<p>location : "+location+"</p>"+ "<p>categoryName : "+categoryName+"</p>"+ "<p>publishYear : "+publishYear+"</p>"+ "<p>publisher : "+publisher+"</p>"+ "<p>summary : "+summary+"</p>"+ "<p>copyNumber : "+copyNumber+"</p>"
-          "");
+        /*$('#list').html("<h4>You add books successfully</h4>" +
+            // "<p>ISBN : "+ISBN+"</p>"+ "<p>title : "+title+"</p>"+ "<p>author : "+author+"</p>"+
+            // "<p>price : "+price+"</p>"+ "<p>location : "+location+"</p>"+ "<p>categoryName : "+categoryName+"</p>"+ "<p>publishYear : "+publishYear+"</p>"+ "<p>publisher : "+publisher+"</p>"+ "<p>summary : "+summary+"</p>"+ "<p>copyNumber : "+copyNumber+"</p>"
+            "");*/
         var data = {
             "coverUrl": url,
-            "ISBN":ISBN,
-            "title":title,
-            "author":author,
-            "price":price,
-            "location":location,
-            "categoryName":categoryName,
-            "publishYear":publishYear,
-            "publisher":publisher,
-            "summary":summary,
-            "copyNumber":copyNumber
+            "ISBN": ISBN,
+            "title": title,
+            "author": author,
+            "price": price,
+            "location": location,
+            "categoryName": categoryName,
+            "publishYear": publishYear,
+            "publisher": publisher,
+            "summary": summary,
+            "copyNumber": copyNumber
         };
 
-        function padNumber(num){
-            num=""+num
-            for (var i=num.length; i<20; i++)
-                num="0"+num;
+        function padNumber(num) {
+            num = "" + num;
+            for (var i = num.length; i < 20; i++)
+                num = "0" + num;
             return num
         }
 
-        function text(key, content){
-            JsBarcode("#"+key, padNumber(content));
+        function text(key, content) {
+            JsBarcode("#" + key, padNumber(content));
             var mycanvas = document.getElementById(key);
             var ctx = mycanvas.getContext('2d');
-            ctx.fillStyle="white";
-            ctx.fillRect(-1*mycanvas.getAttribute('width'),0,mycanvas.getAttribute('width')+20,20);
-            ctx.fillStyle="black";
-            ctx.fillText("Floor "+$('#floor').val()+" - "+"Shelf "+$('#floor').val(), -1*mycanvas.getAttribute('width')/2, 18);
+            ctx.fillStyle = "white";
+            ctx.fillRect(-1 * mycanvas.getAttribute('width'), 0, mycanvas.getAttribute('width') + 20, 20);
+            ctx.fillStyle = "black";
+            ctx.fillText("Floor " + $('#floor').val() + " - " + "Shelf " + $('#floor1').val(), -1 * mycanvas.getAttribute('width') / 2, 18);
         }
 
         $.ajax({
-          url:"/api/book",
-          type:"post",
-          dataType:"json",
-          data: getFormData(data),
-          processData: false,
-          contentType: false,
-          success:function(data){
+            url: "/api/book",
+            type: "post",
+            dataType: "json",
+            data: getFormData(data),
+            processData: false,
+            contentType: false,
+            success: function (data) {
                 console.log(data);
                 alertSuccess("the book has been added");
                 // $("#booklocation").append("<h4>"+"&nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp&nbsp;"+"Floor "+$('#floor').val()+" - "+"Shelf "+$('#floor').val()+"</h4>");
-                for (elem of data.data){
+                for (elem of data.data) {
                     console.log(elem);
 
-                    var key='barcode_img'+elem;
+                    var key = 'barcode_img' + elem;
                     $("<p />", {
-                        id: key+'p'
+                        id: key + 'p'
                     }).appendTo($("#barcode"));
                     $("<canvas />", {
                         id: key
-                    }).appendTo($("#"+key+'p'));
+                    }).appendTo($("#" + key + 'p'));
                     text(key, elem);
 
-                     $('#download').append("<button onclick=\"clickDownload()\">下载条形码</button>");
+                    // $('#download').append("<button onclick=\"clickDownload()\">下载条形码</button>");
                 }
             },
-           error:function (data) {
-              console.log(data);
-               alertError(data.responseJSON.message);
+            error: function (data) {
+                console.log(data);
+                alertError(data.responseJSON.message);
             }
         });
-      }
+    }
 
-    </script>
- 
-    <script>
+</script>
 
-       function clickDownload() {
-html2canvas(document.querySelector("#imgDiv"), {
-  onrendered: function(canvas) {
-      imgURL = canvas.toDataURL("image/png");//图片地址
-      console.log(imgURL);
-      var a = document.createElement('a');
-            a.download = 'bookifo' + new Date().getTime() || 'bookifo.jpg';
-            a.href = imgURL;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            alertSuccess("download success!");
+<script>
 
-  },
-  width: 230,
-  height: 230
-});
-            
-}
+    function clickDownload() {
+        html2canvas(document.querySelector("#imgDiv"), {
+            onrendered: function (canvas) {
+                imgURL = canvas.toDataURL("image/png");//图片地址
+                console.log(imgURL);
+                var a = document.createElement('a');
+                a.download = 'bookifo' + new Date().getTime() || 'bookifo.jpg';
+                a.href = imgURL;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                alertSuccess("download success!");
+
+            },
+            width: 230,
+            height: 230
+        });
+
+    }
 </script>
 
 </body>

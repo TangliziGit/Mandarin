@@ -165,13 +165,13 @@
 <th:block th:fragment="search-templates">
     <script id="search-result-template" type="text/x-handlebars-template">
         <tr>
-            <td class="col-lg-3"><img class="rounded img-fluid" src="{{coverUrl}}?token=GroupA3">
+            <td class="col-lg-3"><img class="rounded img-fluid" style="width: 100%" src="{{coverUrl}}?token=GroupA3">
             </td>
 
             <td class="col-lg-9">
 
                 <a href="/reader/book/{{isbn}}"><h4 style="font-size:27px;">{{title}}</h4></a>
-                <span class="text-muted" style="font-size:18px;"></span>
+                <span class="text-info" style="font-size:18px;">[ {{canReserveNumber}} / {{copyNumber}} ] books can be reserved</span>
                 <br>
                 <h5 class="text-muted">{{author}}</h5>
                 <h5 class="text-muted">{{publisher}} {{publishYear}}</h5>
@@ -179,7 +179,8 @@
 
                 <span>{{location}}</span><br>
 
-                <span>ISBN: {{isbn}}</span>
+                <span>ISBN: {{isbn}}</span><br>
+                <span>Category: {{category.categoryName}}</span><br>
             </td>
         </tr>
     </script>
@@ -212,10 +213,10 @@
             <td>
                 <div class="review-item" style="width: 100%;margin-bottom: 0px;">
                     <div class="row">
-                        <div class="col-3"><img class="rounded img-fluid"
+                        <div class="col-1"><img class="rounded img-fluid" style="width: 100%"
                                                 src="http://106.13.1.40:8081/img/s24966915.jpg?token=GroupA3">
                         </div>
-                        <dic class="col-9">
+                        <dic class="col-10">
                             <h4 style="font-size:27px;">Computer Networking</h4>
                             <span
                                     class="text-muted"

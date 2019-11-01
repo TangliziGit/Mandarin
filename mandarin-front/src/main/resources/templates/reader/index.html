@@ -22,18 +22,15 @@
             <div class="block-heading">
                 <div class="container">
                     <div class="row">
-                        <div class="col-2"></div>
-                        <div class="col-8">
+                        <div class="col-12">
                             <label for="search-field">
-                                <i class="fa fa-search" style="font-size: 36px; color: rgb(34, 34, 34);"></i>
+                                <!-- i class="fa fa-search" style="font-size: 36px; color: rgb(34, 34, 34);"></i -->
                             </label>
-                            <input id="search-box" type="search" class="fForm-control"
-                                   style="width: 80%; height: 40px; margin: 9px;">
-                            <button id="search-btn" type="button" class="btn btn-primary"
-                                    data-_extension-text-contrast="">Search
+                            <input id="search-box" placeholder="search by title" type="search" class="fForm-control" style="width: 50%; height: 40px; margin: 9px;">
+                            <button id="search-btn" type="button" class="btn btn-primary" data-_extension-text-contrast="">Search
                             </button>
+                            <a th:href="@{/reader/search}" class="btn">Advanced Search</a>
                         </div>
-                        <div class="col-2"></div>
                     </div>
                 </div>
             </div>
