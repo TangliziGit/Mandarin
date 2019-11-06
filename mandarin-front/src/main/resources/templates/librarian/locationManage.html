@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mandarin - Librarian</title>
+    <th:block th:replace="librarian/common :: head"></th:block>
+</head>
+
+<body>
+<div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <div th:replace="librarian/common :: navbar"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <div class="row row-offcanvas row-offcanvas-right">
+            <!-- partial:../../partials/_sidebar.html -->
+
+            <th:block th:replace="librarian/common :: sidebar"></th:block>
+            <!-- partial -->
+            <div class="content-wrapper">
+                <div class="row">
+
+
+                    <div class="col-lg-12">
+                        <div id="toolbar" class="btn-group">
+                            <!-- todo -->
+                            <button id="btn_add" type="button" class="btn btn-primary"
+                                    data-toggle="modal" data-target="#addLocation">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="false"></span>Add
+                            </button>
+                        </div>
+
+                        <div class="card">
+
+                            <div class="card-header d-flex align-items-center">
+                                <h3 class="h4">Location</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-sm">
+                                        <thead>
+                                        <tr>
+                                            <th>LocationId</th>
+                                            <th>Floor</th>
+                                            <th>Shelf</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="list">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:../../partials/_footer.html -->
+            <div th:replace="librarian/common :: footer"></div>
+            <!-- partial -->
+        </div>
+        <!-- row-offcanvas ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+    <div class="modal fade" id="addLocation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        Add Location
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-group">
+                            <label>Floor</label>
+                            <input id="new-floor" type="number" value="" class="form-control"
+                                   data-_extension-text-contrast="bg">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Shelf</label>
+                            <input id="new-shelf" type="number" value="" class="form-control"
+                                   data-_extension-text-contrast="bg">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-secondary"
+                            data-_extension-text-contrast="">Close
+                    </button>
+                    <button type="button" id="add" data-dismiss="modal" class="btn btn-primary"
+                            data-_extension-text-contrast="">Add
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</div>
+
+<script id="category-template" type="text/x-handlebars-template">
+    <tr id="location-{{id}}">
+        <td>{{id}}</td>
+        <td>{{floor}}</td>
+        <td>{{shelf}}</td>
+        <td>
+            <button id="btn1" class="btn btn-success mr-2" data-target="#edit-{{id}}" data-toggle="modal">Update</button>
+            <button id="btn2" class="btn btn-success mr-2" onclick="deleteR({{id}})">Delete</button>
+        </td>
+    </tr>
+</script>
+
+<script id="modal-template" type="text/x-handlebars-template">
+    <div class="modal fade" id="edit-{{id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">
+                        Edit Location
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-group">
+                            <label>Floor</label>
+                            <input id="floor-{{id}}" type="number" value="{{floor}}" class="form-control"
+                                   data-_extension-text-contrast="bg">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Shelf</label>
+                            <input id="shelf-{{id}}" type="number" value="{{shelf}}" class="form-control"
+                                   data-_extension-text-contrast="bg">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-secondary"
+                            data-_extension-text-contrast="">Close
+                    </button>
+                    <button type="button" data-dismiss="modal" onclick="editCategory({{id}})" class="btn btn-primary"
+                            data-_extension-text-contrast="">Save changes
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</script>
+
+<div th:replace="librarian/common :: scripts"></div>
+<script>
+    // $("#select1").bind("click", function(){
+    let source = $('#category-template').html();
+    let template = Handlebars.compile(source);
+    let modalTemplate = Handlebars.compile($('#modal-template').html());
+
+    $.ajax({
+        url: "/api/location",
+        type: "GET",
+        dataType: 'json',
+        async: false,
+        success: function (resp) {
+            for (var data of resp.data) {
+                $('#list').append(template(data));
+                $('#list').append(modalTemplate(data));
+            }
+            console.log(resp.data);
+        }
+    });
+
+    function editCategory(id){
+        let formData = new FormData();
+        if (!checkInputBoxEmpty("#floor-"+id)) return;
+        if (!checkInputBoxEmpty("#shelf-"+id)) return;
+
+        formData.append("floor", $("#floor-"+id).val());
+        formData.append("shelf", $("#shelf-"+id).val());
+
+        $.ajax({
+            url: "/api/location/"+id,
+            type: "PUT",
+            dataType: "json",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (resp) {
+                alertSuccess("information has been changed.");
+                reflash();
+            },
+            error: function (resp) {
+                alertError(resp.responseJSON.message);
+            }
+        });
+    }
+
+    function deleteR(id) {
+        var str = window.confirm("Delete this location?");
+        if (str == true) {
+            deleteCategory(id);
+        }
+    }
+
+    function deleteCategory(id) {
+        $.ajax({
+            url: "/api/location/" + id,
+            type: "delete",
+            datatype: "json",
+            processData: false,
+            contentType: false,
+            success: function (resp) {
+                console.log(resp);
+                alertSuccess("the location has been deleted.");
+                $("#location-"+id).remove();
+                // if(resp.code == 200||resp.code == 201){
+                //     alert("success!");
+                //     console.log(resp);
+                //   }else{
+                //     alert(resp.message);
+                //   }
+
+            },
+            error: function (resp) {
+                alertError(resp.responseJSON.message);
+                // alert(typeof(errorThrown));
+            }
+
+
+        });
+    }
+
+    $("#add").bind("click", function () {
+        let formData = new FormData();
+        if (!checkInputBoxEmpty("#new-floor")) return;
+        if (!checkInputBoxEmpty("#new-shelf")) return;
+
+        formData.append("floor", $("#new-floor").val());
+        formData.append("shelf", $("#new-shelf").val());
+
+        $.ajax({
+            url: "/api/location/",
+            type: "POST",
+            dataType: "json",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (resp) {
+                alertSuccess("new location has been added.");
+                reflash();
+            },
+            error: function (resp) {
+                alertError(resp.responseJSON.message);
+            }
+        });
+    })
+</script>
+</body>
+
+</html>

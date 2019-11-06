@@ -27,7 +27,7 @@ CREATE TABLE `book` (
   `isbn` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`book_id`),
   KEY `FKgm8oqrkr94uj3rv5w9rbq97s2` (`isbn`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (1,'9780393351378'),(2,'9780393351378'),(3,'9780132856201'),(4,'9780134177298'),(5,'9780134177298'),(6,'9780262035613'),(7,'9780262035613'),(8,'9780241987360'),(9,'9780241987360'),(10,'9780241987360'),(11,'9783531189130'),(12,'9783531189130'),(13,'9783531189130'),(14,'9780821810569'),(15,'9780821810569'),(16,'9780821810569'),(17,'9780821810569'),(18,'9783540395508'),(19,'9783540395508'),(20,'9783540395508'),(21,'9783540395508');
+INSERT INTO `book` VALUES (1,'9780393351378'),(2,'9780393351378'),(3,'9780132856201'),(4,'9780134177298'),(5,'9780134177298'),(6,'9780262035613'),(7,'9780262035613');
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,7 +69,7 @@ CREATE TABLE `book_description` (
 
 LOCK TABLES `book_description` WRITE;
 /*!40000 ALTER TABLE `book_description` DISABLE KEYS */;
-INSERT INTO `book_description` VALUES ('9780393351378','Kip Thorne','http://39.106.185.26:8081/img/s27824536.jpg','Floor 2 - Shelf 1',24.95,2014,'W. W. Norton & Company','A journey through the otherworldly science behind Christopher Nolan’s highly anticipated film, Interstellar, from executive producer and theoretical physicist Kip Thorne.','The Science of Interstellar',1),('9780132856201','James F. Kurose / Keith W. Ross','http://39.106.185.26:8081/img/s24966915.jpg','Floor 1 - Shelf 2',171.6,2012,'Pearson','Computer Networking continues with an early emphasis on application-layer paradigms and application programming interfaces (the top layer), encouraging a hands-on experience with protocols and networking concepts, before working down the protocol stack to more abstract layers.','Computer Networking',2),('9780134177298','Cay S. Horstmann','http://39.106.185.26:8081/img/s28069282.jpg','Floor 2 - Shelf 3',59.99,2016,'Prentice Hall','Core Java® has long been recognized as the leading, no-nonsense tutorial and reference for experienced programmers who want to write robust Java code for real-world applications. Now, Core Java®, Volume II—Advanced Topics, Tenth Edition, has been extensively updated to reflect the most eagerly awaited and innovative version of Java in years: Java SE 8. Rewritten and reorganized...Core Java® has long been recognized as the leading, no-nonsense tutorial and reference for experienced programmers who want to write robust Java code for real-world applications. Now, Core Java®, Volume II—Advanced Topics, Tenth Edition, has been extensively updated to reflect the most eagerly awaited and innovative version of Java in years: Java SE 8. Rewritten and reorganized to illuminate powerful new Java features, idioms, and best practices for enterprise and desktop development, it contains hundreds of up-to-date example programs—all carefully crafted for easy understanding and practical applicability.Writing for serious programmers solving real-world problems, Cay Horstmann deepens your understanding of today’s Java language and library. In this second of two updated volumes, he offers in-depth coverage of expert-level topics including the new Streams API and date/time/calendar library, advanced Swing, security, code processing, and more. This guide will help youUse the new Streams library to process collections more flexibly and efficientlyEfficiently access files and directories, read/write binary or text data, and serialize objectsWork with Java SE 8’s regular expression packageMake the most of XML in Java: parsing, validation, XPath, document generation, XSL, and moreEfficiently connect Java programs to network servicesProgram databases with JDBC 4.2Elegantly overcome date/time programming complexities with the new java.time APIWrite internationalized programs with localized dates/times, numbers, text, and GUIsProcess code with the scripting API, compiler API, and annotation processorsEnforce security via class loaders, bytecode verification, security managers, permissions, user authentication, digital signatures, code signing, and encryptionMaster advanced Swing components for lists, tables, trees, text, and progress indicatorsProduce high-quality drawings with the Java 2D APIUse JNI native methods to leverage code in other languagesIf you’re an experienced programmer moving to Java SE 8, Core Java®, Tenth Edition, will be your reliable, practical companion—now and for many years to come.Look for the companion volume, Core Java®, Volume I—Fundamentals, Tenth Edition (ISBN-13: 978-0-13-417730-4), for foundational coverage of Java 8 language concepts, UI programming, objects, generics, collections, lambda expressions, concurrency, functional programming, and more.Cay S. Horstmann is author of Core Java ® for the Impatient (2015), Java SE 8 for the Really Impatient (2014), and Scala for the Impatient (2012), all from Addison-Wesley. He has written more than a dozen other books for professional programmers and computer science students. He is a professor of computer science at San Jose State University and is a Java Champion.','Core Java, Volume II (10th Edition) : Advanced Features',2),('9780262035613','Ian Goodfellow / Yoshua Bengio / Aaron Courville','http://39.106.185.26:8081/img/s29133163.jpg','Floor 2 - Shelf 4',72,2016,'The MIT Press','Written by three experts in the field, Deep Learning is the only comprehensive book on the subject.\\\" -- Elon Musk, co-chair of OpenAI; co-founder and CEO of Tesla and SpaceXDeep learning is a form of machine learning that enables computers to learn from experience and understand the world in terms of a hierarchy of concepts. Because the computer gathers knowledge from experie...\\\"Written by three experts in the field, Deep Learning is the only comprehensive book on the subject.\\\" -- Elon Musk, co-chair of OpenAI; co-founder and CEO of Tesla and SpaceXDeep learning is a form of machine learning that enables computers to learn from experience and understand the world in terms of a hierarchy of concepts. Because the computer gathers knowledge from experience, there is no need for a human computer operator to formally specify all the knowledge that the computer needs. The hierarchy of concepts allows the computer to learn complicated concepts by building them out of simpler ones; a graph of these hierarchies would be many layers deep. This book introduces a broad range of topics in deep learning.The text offers mathematical and conceptual background, covering relevant concepts in linear algebra, probability theory and information theory, numerical computation, and machine learning. It describes deep learning techniques used by practitioners in industry, including deep feedforward networks, regularization, optimization algorithms, convolutional networks, sequence modeling, and practical methodology; and it surveys such applications as natural language processing, speech recognition, computer vision, online recommendation systems, bioinformatics, and videogames. Finally, the book offers research perspectives, covering such theoretical topics as linear factor models, autoencoders, representation learning, structured probabilistic models, Monte Carlo methods, the partition function, approximate inference, and deep generative models.Deep Learning can be used by undergraduate or graduate students planning careers in either industry or research, and by software engineers who want to begin using deep learning in their products or platforms. A website offers supplementary material for both readers and instructors.Ian Goodfellow is Research Scientist at OpenAI. Yoshua Bengio is Professor of Computer Science at the Université de Montréal. Aaron Courville is Assistant Professor of Computer Science at the Université de Montréal.','Deep Learning : Adaptive Computation and Machine Learning series',2),('9780241987360','Daniel Levitin','http://books.google.com/books/content?id=x7aMDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api','Floor 1 - Shelf 1',20,2019,'Penguin UK','This is the first book to offer a comprehensive explanation of how humans experience music and to unravel the mystery of our perennial love affair with it. Using musical examples from Bach to the Beatles, Levitin reveals the role of music in human evolution, shows how our musical preferences begin to form even before we are born and explains why music can offer such an emotional experience. Music is an obsession at the heart of human nature, even more fundamental to our species than language. In This Is Your Brain On Music Levitin offers nothing less than a new way to understand it, and its role in human life','This is Your Brain on Music',3),('9783531189130','Peter Moormann','http://books.google.com/books/content?id=JYfROhvXMPAC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api','Floor 1 - Shelf 1',20,2012,'Springer Science & Business Media','This anthology examines the various facets of video game music. Contributors from the fields of science and practice document its historical development, discuss the music’s composition techniques, interactivity and function as well as attending to its performative aspects.','Music and Game',3),('9780821810569','Ezra Getzler / Mikhail M. Kapranov','http://books.google.com/books/content?id=6UobCAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api','Floor 1 - Shelf 1',20,1998,'American Mathematical Soc.','This volume presents the proceedings of the workshop on higher category theory and mathematical physics held at Northwestern University. Exciting new developments were presented with the aim of making them better known outside the community of experts. In particular, presentations in the style, \'Higher Categories for the Working Mathematician\', were encouraged. The volume is the first to bring together developments in higher category theory with applications. This collection is a valuable introduction to this topic - one that holds great promise for future developments in mathematics.','Higher Category Theory',6),('9783540395508','K. H. Kamps / D. Pumplün / W. Tholen','http://books.google.com/books/content?id=J2t6CwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api','Floor 1 - Shelf 1',20,2006,'Springer','None','Category Theory',6);
+INSERT INTO `book_description` VALUES ('9780393351378','Kip Thorne','http://39.106.185.26:8081/img/s27824536.jpg','Floor 2 - Shelf 1',24.95,2014,'W. W. Norton & Company','A journey through the otherworldly science behind Christopher Nolan’s highly anticipated film, Interstellar, from executive producer and theoretical physicist Kip Thorne.','The Science of Interstellar',1),('9780132856201','James F. Kurose / Keith W. Ross','http://39.106.185.26:8081/img/s24966915.jpg','Floor 1 - Shelf 2',171.6,2012,'Pearson','Computer Networking continues with an early emphasis on application-layer paradigms and application programming interfaces (the top layer), encouraging a hands-on experience with protocols and networking concepts, before working down the protocol stack to more abstract layers.','Computer Networking',2),('9780134177298','Cay S. Horstmann','http://39.106.185.26:8081/img/s28069282.jpg','Floor 2 - Shelf 3',59.99,2016,'Prentice Hall','Core Java® has long been recognized as the leading, no-nonsense tutorial and reference for experienced programmers who want to write robust Java code for real-world applications. Now, Core Java®, Volume II—Advanced Topics, Tenth Edition, has been extensively updated to reflect the most eagerly awaited and innovative version of Java in years: Java SE 8. Rewritten and reorganized...Core Java® has long been recognized as the leading, no-nonsense tutorial and reference for experienced programmers who want to write robust Java code for real-world applications. Now, Core Java®, Volume II—Advanced Topics, Tenth Edition, has been extensively updated to reflect the most eagerly awaited and innovative version of Java in years: Java SE 8. Rewritten and reorganized to illuminate powerful new Java features, idioms, and best practices for enterprise and desktop development, it contains hundreds of up-to-date example programs—all carefully crafted for easy understanding and practical applicability.Writing for serious programmers solving real-world problems, Cay Horstmann deepens your understanding of today’s Java language and library. In this second of two updated volumes, he offers in-depth coverage of expert-level topics including the new Streams API and date/time/calendar library, advanced Swing, security, code processing, and more. This guide will help youUse the new Streams library to process collections more flexibly and efficientlyEfficiently access files and directories, read/write binary or text data, and serialize objectsWork with Java SE 8’s regular expression packageMake the most of XML in Java: parsing, validation, XPath, document generation, XSL, and moreEfficiently connect Java programs to network servicesProgram databases with JDBC 4.2Elegantly overcome date/time programming complexities with the new java.time APIWrite internationalized programs with localized dates/times, numbers, text, and GUIsProcess code with the scripting API, compiler API, and annotation processorsEnforce security via class loaders, bytecode verification, security managers, permissions, user authentication, digital signatures, code signing, and encryptionMaster advanced Swing components for lists, tables, trees, text, and progress indicatorsProduce high-quality drawings with the Java 2D APIUse JNI native methods to leverage code in other languagesIf you’re an experienced programmer moving to Java SE 8, Core Java®, Tenth Edition, will be your reliable, practical companion—now and for many years to come.Look for the companion volume, Core Java®, Volume I—Fundamentals, Tenth Edition (ISBN-13: 978-0-13-417730-4), for foundational coverage of Java 8 language concepts, UI programming, objects, generics, collections, lambda expressions, concurrency, functional programming, and more.Cay S. Horstmann is author of Core Java ® for the Impatient (2015), Java SE 8 for the Really Impatient (2014), and Scala for the Impatient (2012), all from Addison-Wesley. He has written more than a dozen other books for professional programmers and computer science students. He is a professor of computer science at San Jose State University and is a Java Champion.','Core Java, Volume II (10th Edition) : Advanced Features',2),('9780262035613','Ian Goodfellow / Yoshua Bengio / Aaron Courville','http://39.106.185.26:8081/img/s29133163.jpg','Floor 2 - Shelf 4',72,2016,'The MIT Press','Written by three experts in the field, Deep Learning is the only comprehensive book on the subject.\\\" -- Elon Musk, co-chair of OpenAI; co-founder and CEO of Tesla and SpaceXDeep learning is a form of machine learning that enables computers to learn from experience and understand the world in terms of a hierarchy of concepts. Because the computer gathers knowledge from experie...\\\"Written by three experts in the field, Deep Learning is the only comprehensive book on the subject.\\\" -- Elon Musk, co-chair of OpenAI; co-founder and CEO of Tesla and SpaceXDeep learning is a form of machine learning that enables computers to learn from experience and understand the world in terms of a hierarchy of concepts. Because the computer gathers knowledge from experience, there is no need for a human computer operator to formally specify all the knowledge that the computer needs. The hierarchy of concepts allows the computer to learn complicated concepts by building them out of simpler ones; a graph of these hierarchies would be many layers deep. This book introduces a broad range of topics in deep learning.The text offers mathematical and conceptual background, covering relevant concepts in linear algebra, probability theory and information theory, numerical computation, and machine learning. It describes deep learning techniques used by practitioners in industry, including deep feedforward networks, regularization, optimization algorithms, convolutional networks, sequence modeling, and practical methodology; and it surveys such applications as natural language processing, speech recognition, computer vision, online recommendation systems, bioinformatics, and videogames. Finally, the book offers research perspectives, covering such theoretical topics as linear factor models, autoencoders, representation learning, structured probabilistic models, Monte Carlo methods, the partition function, approximate inference, and deep generative models.Deep Learning can be used by undergraduate or graduate students planning careers in either industry or research, and by software engineers who want to begin using deep learning in their products or platforms. A website offers supplementary material for both readers and instructors.Ian Goodfellow is Research Scientist at OpenAI. Yoshua Bengio is Professor of Computer Science at the Université de Montréal. Aaron Courville is Assistant Professor of Computer Science at the Université de Montréal.','Deep Learning : Adaptive Computation and Machine Learning series',2);
 /*!40000 ALTER TABLE `book_description` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +97,7 @@ CREATE TABLE `borrowing_fine_history` (
 
 LOCK TABLES `borrowing_fine_history` WRITE;
 /*!40000 ALTER TABLE `borrowing_fine_history` DISABLE KEYS */;
-INSERT INTO `borrowing_fine_history` VALUES (1,NULL,'2019-10-21 16:58:42',_binary '\0',1),(2,NULL,'2019-10-21 16:58:42',_binary '\0',2);
+INSERT INTO `borrowing_fine_history` VALUES (1,NULL,'2019-10-27 13:07:25',_binary '\0',1),(2,NULL,'2019-10-27 13:07:25',_binary '\0',2);
 /*!40000 ALTER TABLE `borrowing_fine_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,7 +128,7 @@ CREATE TABLE `borrowing_history` (
 
 LOCK TABLES `borrowing_history` WRITE;
 /*!40000 ALTER TABLE `borrowing_history` DISABLE KEYS */;
-INSERT INTO `borrowing_history` VALUES (1,NULL,'2019-10-21 16:58:42',1,1,3),(2,NULL,'2019-10-21 16:58:42',2,2,3);
+INSERT INTO `borrowing_history` VALUES (1,NULL,'2019-10-27 13:07:25',1,1,3),(2,NULL,'2019-10-27 13:07:25',2,2,3);
 /*!40000 ALTER TABLE `borrowing_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +144,7 @@ CREATE TABLE `category` (
   `category_name` varchar(40) NOT NULL,
   PRIMARY KEY (`category_id`),
   UNIQUE KEY `UK_lroeo5fvfdeg4hpicn4lw7x9b` (`category_name`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +153,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'science'),(2,'technology'),(3,'music'),(4,'reference'),(5,'language arts & disciplines'),(6,'mathematics');
+INSERT INTO `category` VALUES (1,'science'),(2,'technology');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,8 +181,30 @@ CREATE TABLE `deleting_history` (
 
 LOCK TABLES `deleting_history` WRITE;
 /*!40000 ALTER TABLE `deleting_history` DISABLE KEYS */;
-INSERT INTO `deleting_history` VALUES (1,'2019-10-21 16:58:42',1,1);
+INSERT INTO `deleting_history` VALUES (1,'2019-10-27 13:07:25',1,1);
 /*!40000 ALTER TABLE `deleting_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `hibernate_sequence`
+--
+
+DROP TABLE IF EXISTS `hibernate_sequence`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `hibernate_sequence` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hibernate_sequence`
+--
+
+LOCK TABLES `hibernate_sequence` WRITE;
+/*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
+INSERT INTO `hibernate_sequence` VALUES (96);
+/*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -209,8 +231,33 @@ CREATE TABLE `income` (
 
 LOCK TABLES `income` WRITE;
 /*!40000 ALTER TABLE `income` DISABLE KEYS */;
-INSERT INTO `income` VALUES (1,300,'2019-10-31 16:58:42','DEPOSIT',3),(2,300,'2019-10-31 16:58:42','DEPOSIT',4);
+INSERT INTO `income` VALUES (1,300,'2019-11-06 13:07:25','DEPOSIT',3),(2,300,'2019-11-06 13:07:25','DEPOSIT',4);
 /*!40000 ALTER TABLE `income` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `location`
+--
+
+DROP TABLE IF EXISTS `location`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `location` (
+  `id` int(11) NOT NULL,
+  `floor` int(11) NOT NULL,
+  `shelf` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `location`
+--
+
+LOCK TABLES `location` WRITE;
+/*!40000 ALTER TABLE `location` DISABLE KEYS */;
+INSERT INTO `location` VALUES (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,1,5),(6,1,6),(7,1,7),(8,1,8),(9,1,9),(10,1,10),(11,1,11),(12,1,12),(13,1,13),(14,1,14),(15,1,15),(16,1,16),(17,1,17),(18,1,18),(19,1,19),(20,2,1),(21,2,2),(22,2,3),(23,2,4),(24,2,5),(25,2,6),(26,2,7),(27,2,8),(28,2,9),(29,2,10),(30,2,11),(31,2,12),(32,2,13),(33,2,14),(34,2,15),(35,2,16),(36,2,17),(37,2,18),(38,2,19),(39,3,1),(40,3,2),(41,3,3),(42,3,4),(43,3,5),(44,3,6),(45,3,7),(46,3,8),(47,3,9),(48,3,10),(49,3,11),(50,3,12),(51,3,13),(52,3,14),(53,3,15),(54,3,16),(55,3,17),(56,3,18),(57,3,19),(58,4,1),(59,4,2),(60,4,3),(61,4,4),(62,4,5),(63,4,6),(64,4,7),(65,4,8),(66,4,9),(67,4,10),(68,4,11),(69,4,12),(70,4,13),(71,4,14),(72,4,15),(73,4,16),(74,4,17),(75,4,18),(76,4,19),(77,5,1),(78,5,2),(79,5,3),(80,5,4),(81,5,5),(82,5,6),(83,5,7),(84,5,8),(85,5,9),(86,5,10),(87,5,11),(88,5,12),(89,5,13),(90,5,14),(91,5,15),(92,5,16),(93,5,17),(94,5,18),(95,5,19);
+/*!40000 ALTER TABLE `location` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -237,7 +284,7 @@ CREATE TABLE `news` (
 
 LOCK TABLES `news` WRITE;
 /*!40000 ALTER TABLE `news` DISABLE KEYS */;
-INSERT INTO `news` VALUES (1,'For the further implementation of the national education conference spirit, explore the deepening the reform of digital instructional innovation model, promote new media and the integration of traditional culture, with the development of teaching resources sharing needs, on the morning of November 1, and higher education press office jointly sponsored digital textbook construction and publishing communication meeting. ','2019-10-31 16:58:42','The party branch of the library reader service department held party classes on the theme of \"never forget the original intention and bear the mission in mind\"',1),(2,'Scientific research and paper writing are inseparable from scientific and technological information retrieval and database resources. In order to facilitate teachers and students to effectively use various database resources to carry out their work and study, the graduate school specially invites \"cnknet\" technical personnel to introduce functions and services of various data resources and answer questions from teachers and students on site. This paper will focus on the application of the academic misconduct detection system of cnki and how to interpret the detection report. Welcome to join teachers and students.','2019-10-31 16:58:42','\"China National Knowledge Infrastructure\" function and use method information session',1);
+INSERT INTO `news` VALUES (1,'For the further implementation of the national education conference spirit, explore the deepening the reform of digital instructional innovation model, promote new media and the integration of traditional culture, with the development of teaching resources sharing needs, on the morning of November 1, and higher education press office jointly sponsored digital textbook construction and publishing communication meeting. ','2019-11-06 13:07:25','The party branch of the library reader service department held party classes on the theme of \"never forget the original intention and bear the mission in mind\"',1),(2,'Scientific research and paper writing are inseparable from scientific and technological information retrieval and database resources. In order to facilitate teachers and students to effectively use various database resources to carry out their work and study, the graduate school specially invites \"cnknet\" technical personnel to introduce functions and services of various data resources and answer questions from teachers and students on site. This paper will focus on the application of the academic misconduct detection system of cnki and how to interpret the detection report. Welcome to join teachers and students.','2019-11-06 13:07:25','\"China National Knowledge Infrastructure\" function and use method information session',1);
 /*!40000 ALTER TABLE `news` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -267,7 +314,7 @@ CREATE TABLE `reserving_history` (
 
 LOCK TABLES `reserving_history` WRITE;
 /*!40000 ALTER TABLE `reserving_history` DISABLE KEYS */;
-INSERT INTO `reserving_history` VALUES (1,_binary '\0',NULL,'2019-10-21 16:58:42',1,3);
+INSERT INTO `reserving_history` VALUES (1,_binary '\0',NULL,'2019-10-27 13:07:25',1,3);
 /*!40000 ALTER TABLE `reserving_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,7 +396,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'librarian@mandarin.com','librarian','passwd','18681941718','2019-10-31 16:58:42'),(2,'admin@mandarin.com','admin','passwd','18681941717','2019-10-31 16:58:42'),(3,'reader1@mandarin.com','reader1','passwd','18681941716','2019-10-31 16:58:42'),(4,'reader2@mandarin.com','reader2','passwd','18681941715','2019-10-31 16:58:42');
+INSERT INTO `user` VALUES (1,'librarian@mandarin.com','librarian','passwd','18681941718','2019-11-06 13:07:25'),(2,'admin@mandarin.com','admin','passwd','18681941717','2019-11-06 13:07:25'),(3,'reader1@mandarin.com','reader1','passwd','18681941716','2019-11-06 13:07:25'),(4,'reader2@mandarin.com','reader2','passwd','18681941715','2019-11-06 13:07:25');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -387,4 +434,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-31 17:25:55
+-- Dump completed on 2019-11-06 13:09:41

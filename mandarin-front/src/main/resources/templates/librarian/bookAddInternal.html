@@ -71,7 +71,6 @@
                                                 <option gid="3" value="3">Floor 3</option>
                                                 <option gid="4" value="4">Floor 4</option>
                                                 <option gid="5" value="5">Floor 5</option>
-                                                <option gid="6" value="6">Floor 6</option>
                                             </select>
                                             <small style="color: grey">Please select the floor and shelf.</small>
                                         </div>
@@ -221,7 +220,7 @@
 </script -->
 <script>
     function genShelf() {
-        for (var i = 1; i < 200; i++)
+        for (var i = 1; i < 20; i++)
             $("<option value='" + i + "'>Shelf " + i + "</option>", {
                 // value: "Shelf "+i,
             }).appendTo($("#floor1"));

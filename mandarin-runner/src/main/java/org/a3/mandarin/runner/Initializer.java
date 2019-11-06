@@ -23,6 +23,7 @@ class Initializer {
     private final SettingRepository settingRepository;
     private final IncomeRepository incomeRepository;
     private final NewsRepository newsRepository;
+    private final LocationQueryRepository locationQueryRepository;
 
     Initializer(ApplicationContext applicationContext){
         this.roleRepository=applicationContext.getBean(RoleRepository.class);
@@ -36,6 +37,7 @@ class Initializer {
         this.settingRepository=applicationContext.getBean(SettingRepository.class);
         this.incomeRepository=applicationContext.getBean(IncomeRepository.class);
         this.newsRepository=applicationContext.getBean(NewsRepository.class);
+        this.locationQueryRepository =applicationContext.getBean(LocationQueryRepository.class);
     }
 
     void init(){
@@ -44,6 +46,7 @@ class Initializer {
         generateMockBooks();
         generateMockUserBookRelation();
         generateMockNews();
+        generateMockLocations();
     }
 
     private void generateInitialData(){
@@ -172,5 +175,13 @@ class Initializer {
 
         newsRepository.save(news1);
         newsRepository.save(news2);
+    }
+
+    private void generateMockLocations(){
+        for (int floor = 1; floor < 6; floor++)
+            for (int shelf = 1; shelf < 20; shelf++){
+                Location location = new Location(null, floor, shelf);
+                locationQueryRepository.save(location);
+            }
     }
 }
