@@ -4,9 +4,10 @@ pipeline{
 
     environment {
         REPOSITORY="https://github.com/TangliziGit/Mandarin.git"
+        SERVICE_DIR="mandarin-runner"
 
         DOCKER_REGISTRY_HOST="172.29.7.157:85"
-        DOCKER_REGISTRY="172.29.7.157:85/tanglizi/mandarin"
+        DOCKER_REGISTRY="172.29.7.157:85/dop/mandarin"
 
         EMAIL_HOST=credentials('email-host')
         EMAIL_PORT=credentials('email-port')
@@ -52,22 +53,18 @@ pipeline{
             steps {
                 echo "building image"
                 echo "image tag : ${build_tag}"
-                dir(SERVICE_DIR){
-                    sh "ls -l"
-                    sh "docker build -t ${DOCKER_REGISTRY}:${build_tag} ."
-                }
+                sh "ls -l"
+                sh "docker build -t ${DOCKER_REGISTRY}:${build_tag} ."
             }
         }
 
        stage('push docker') {
             steps {
                 echo "start push image"
-                dir(SERVICE_DIR){
-                  sh "ls -l"
-                  withCredentials([usernamePassword(credentialsId: 'docker_registry', passwordVariable: 'docker_registryPassword', usernameVariable: 'docker_registryUsername')]) {
-                      sh "docker login -u ${docker_registryUsername} -p ${docker_registryPassword} ${DOCKER_REGISTRY_HOST}"
-                      sh "docker push ${DOCKER_REGISTRY}:${build_tag}"
-                  }
+                sh "ls -l"
+                withCredentials([usernamePassword(credentialsId: 'docker_registry', passwordVariable: 'docker_registryPassword', usernameVariable: 'docker_registryUsername')]) {
+                    sh "docker login -u ${docker_registryUsername} -p ${docker_registryPassword} ${DOCKER_REGISTRY_HOST}"
+                    sh "docker push ${DOCKER_REGISTRY}:${build_tag}"
                 }
             }
         }
@@ -75,10 +72,9 @@ pipeline{
         stage('deploy') {
             steps {
                 echo "start deploy"
-                dir(SERVICE_DIR){
-                    sh "ls -l"
-                    sh "docker run --name mandarin -d --network=host ${DOCKER_REGISTRY}"
-                }
+                sh "ls -l"
+                sh "docker rm -f mandarin"
+                sh "docker run --name mandarin -d --network=host ${DOCKER_REGISTRY}:${build_tag}"
             }
         }
     }
