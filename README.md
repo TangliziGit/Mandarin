@@ -107,6 +107,3 @@ java -jar mandarin-runner.jar
 visit `http://HOST:PORT/` to enter reader index page.
 And `http://HOST:PORT/admin/`is the administrator's entry
 
-
-### On Windows
-to be continued...
